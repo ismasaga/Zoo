@@ -5,7 +5,7 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-holallslas
+
 <VBox id="VBox" alignment="center" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zoo.FXMLDocumentController">
     <children>
         <Label layoutX="126" layoutY="120" text="Login" minHeight="16" minWidth="69" fx:id="label1" />
