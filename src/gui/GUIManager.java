@@ -1,5 +1,6 @@
 package gui;
 
+import aplicacion.Controller.CoidadorController;
 import aplicacion.Controller.ContableController;
 import aplicacion.Controller.LoginController;
 import aplicacion.FachadaAplicacion;
@@ -26,7 +27,7 @@ public class GUIManager {
     public void mostrarVentanaLogin() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("../aplicacion/FXML/Login.fxml")
+                    getClass().getResource("FXML/Login.fxml")
             );
             if (stage != null)
                 stage.close();
@@ -46,7 +47,7 @@ public class GUIManager {
     private void mostrarVentanaContable(Usuario usuario) {
 
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("../aplicacion/FXML/Contable.fxml")
+                getClass().getResource("FXML/Contable.fxml")
         );
 
         try {
@@ -68,7 +69,7 @@ public class GUIManager {
     private void mostrarVentanaCoidador(Usuario usuario) {
 
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("../aplicacion/FXML/Coidador.fxml")
+                getClass().getResource("FXML/Coidador.fxml")
         );
 
         try {
@@ -78,7 +79,7 @@ public class GUIManager {
             CoidadorController controller =
                     loader.<CoidadorController>getController();
             controller.initUser(this, usuario);
-            stage.setTitle("Ventana Contable");
+            stage.setTitle("Ventana Coidador");
             stage.setScene(scene);
             stage.show();
 
@@ -94,7 +95,7 @@ public class GUIManager {
             if (u.getTipo().toString().equals("Contable")) {
                 this.mostrarVentanaContable(u);
             } else {
-
+                this.mostrarVentanaCoidador(u);
             }
             return true;
         } else {

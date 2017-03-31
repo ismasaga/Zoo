@@ -1,0 +1,11 @@
+DROP TABLE USUARIOS;
+CREATE TABLE usuarios(
+	dni char(10) not null,
+	nombre varchar(50) not null,
+	tipo varchar(10) not null,
+	pass varchar(10) not null,
+	PRIMARY KEY(dni)
+);
+
+INSERT INTO usuarios (dni, nombre, tipo, pass) VALUES ('12345678A', 'Rosa', 'Coidador', 'pass');
+INSERT INTO usuarios (dni, nombre, tipo, pass) VALUES ('12345678B', 'Isma', 'Contable', 'pass');
