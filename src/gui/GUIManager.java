@@ -30,7 +30,7 @@ public class GUIManager {
             );
             if (stage != null)
                 stage.close();
-            Scene scene = new Scene(loader.load(), 300, 200);
+            Scene scene = new Scene(loader.load(), 310, 188);
             this.stage = new Stage();
             LoginController controller = loader.<LoginController>getController();
             controller.initManager(this);
