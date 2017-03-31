@@ -1,4 +1,4 @@
-package aplicacion.Manager;
+package gui;
 
 import aplicacion.Controller.ContableController;
 import aplicacion.Controller.LoginController;
@@ -15,18 +15,18 @@ import java.util.logging.Logger;
 /**
  * Created by miguel on 31/03/17.
  */
-public class LoginManager {
+public class GUIManager {
     private Stage stage;
     private FachadaAplicacion fa;
 
-    public LoginManager(FachadaAplicacion fa) {
+    public GUIManager(FachadaAplicacion fa) {
         this.fa = fa;
     }
 
     public void mostrarVentanaLogin() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("../FXML/Login.fxml")
+                    getClass().getResource("../aplicacion/FXML/Login.fxml")
             );
             if (stage != null)
                 stage.close();
@@ -39,15 +39,15 @@ public class LoginManager {
             stage.show();
 
         } catch (IOException ex) {
-            Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GUIManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void mostrarVentanaContable(Usuario usuario) {
 
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("../FXML/Contable.fxml")
-            );
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("../aplicacion/FXML/Contable.fxml")
+        );
 
         try {
             this.stage.close();
@@ -69,9 +69,9 @@ public class LoginManager {
         Usuario u = fa.comprobarAutentificacion(dni, pass);
         if (u != null) {
             fa.setUsuarioActual(u);
-            if (u.getTipo().toString().equals("Contable")){
+            if (u.getTipo().toString().equals("Contable")) {
                 this.mostrarVentanaContable(u);
-            }else{
+            } else {
 
             }
             return true;

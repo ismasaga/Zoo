@@ -5,10 +5,8 @@
  */
 package aplicacion;
 
-import aplicacion.Manager.LoginManager;
+import gui.GUIManager;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -24,7 +22,7 @@ public class FachadaAplicacion extends Application {
     public FachadaAplicacion() {
         fgui = new gui.FachadaGui(this);
         fbd = new baseDatos.FachadaBaseDatos(this);
-        gu = new GestionUsuarios(fgui, fbd);
+        gu = new GestionUsuarios(fbd);
     }
 
     public static void main(String[] args) throws Exception {
@@ -42,8 +40,8 @@ public class FachadaAplicacion extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        LoginManager loginManager = new LoginManager(this);
-        loginManager.mostrarVentanaLogin();
+        GUIManager GUIManager = new GUIManager(this);
+        GUIManager.mostrarVentanaLogin();
     }
 
     public void muestraExcepcion(String e) {

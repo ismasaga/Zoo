@@ -5,7 +5,7 @@
  */
 package aplicacion.Controller;
 
-import aplicacion.Manager.LoginManager;
+import gui.GUIManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import sun.util.resources.be.LocaleNames_be;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,14 +37,13 @@ public class LoginController implements Initializable {
 
     }
 
-    public void initManager(final LoginManager loginManager) {
+    public void initManager(final GUIManager GUIManager) {
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(!loginManager.logeado(dni.getText(), passwordField.getText())){
+                if (!GUIManager.logeado(dni.getText(), passwordField.getText())) {
                     error.setText("Usuario o clave incorrectos");
-                }
-                else{
+                } else {
                     error.setText("");
                 }
             }

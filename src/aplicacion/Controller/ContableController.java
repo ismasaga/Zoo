@@ -1,9 +1,7 @@
 package aplicacion.Controller;
 
-import aplicacion.Manager.LoginManager;
 import aplicacion.Usuario;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import gui.GUIManager;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -17,12 +15,14 @@ public class ContableController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-    public void initUser(final LoginManager loginManager, Usuario usuario) {
+
+    public void initUser(final GUIManager GUIManager, Usuario usuario) {
         /*sessionLabel.setText(sessionID);
         logoutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent event) {
-                loginManager.logout();
+                GUIManager.logout();
             }
         });
-    */}
+    */
+    }
 }
