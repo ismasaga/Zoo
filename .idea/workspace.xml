@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="70cbafe1-937c-4b9b-9d53-821306736e36" name="Default" comment="Login funcionando">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SCRIPTSBD" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/nbproject/private/retriever/catalog.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/nbproject/private/retriever/www.oracle.com/technetwork/java/javase/overview/index.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/aplicacion/FXML/Coidador.fxml" afterPath="$PROJECT_DIR$/src/gui/FXML/Coidador.fxml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/aplicacion/FXML/Contable.fxml" afterPath="$PROJECT_DIR$/src/gui/FXML/Contable.fxml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/aplicacion/FXML/Login.fxml" afterPath="$PROJECT_DIR$/src/gui/FXML/Login.fxml" />
+    <list default="true" id="70cbafe1-937c-4b9b-9d53-821306736e36" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aplicacion/Controller/CoidadorController.java" afterPath="$PROJECT_DIR$/src/aplicacion/Controller/CoidadorController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/GUIManager.java" afterPath="$PROJECT_DIR$/src/gui/GUIManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nbproject/private/retriever/www.oracle.com/technetwork/java/javase/overview/index.html" afterPath="$PROJECT_DIR$/nbproject/private/retriever/www.oracle.com/technetwork/java/javase/overview/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/FXML/Login.fxml" afterPath="$PROJECT_DIR$/src/gui/FXML/Login.fxml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -98,7 +91,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SCRIPTSBD" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SCRIPTSBD" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SCRIPTSBD">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
@@ -131,14 +124,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Login.fxml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Login.fxml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/FXML/Login.fxml">
           <provider editor-type-id="JavaFX-Scene-Builder">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="204">
+              <caret line="12" column="52" lean-forward="false" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -217,6 +210,7 @@
         <option value="$PROJECT_DIR$/src/gui/GUIManager.java" />
         <option value="$PROJECT_DIR$/src/gui/FXML/Coidador.fxml" />
         <option value="$PROJECT_DIR$/SCRIPTSBD" />
+        <option value="$PROJECT_DIR$/src/gui/FXML/Login.fxml" />
       </list>
     </option>
   </component>
@@ -228,7 +222,7 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1">
+    <navigator currentView="PackagesPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -857,7 +851,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490972704489</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Final Dia 1">
+      <created>1490973137646</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1490973137646</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -878,7 +879,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22105263" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22105263" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24947369" sideWeight="0.5" order="8" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -901,7 +902,8 @@
     <MESSAGE value="prueba2" />
     <MESSAGE value="Inicio" />
     <MESSAGE value="Login funcionando" />
-    <option name="LAST_COMMIT_MESSAGE" value="Login funcionando" />
+    <MESSAGE value="Final Dia 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final Dia 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1126,17 +1128,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/FXML/Login.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/aplicacion/Controller/LoginController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1195,6 +1186,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="27" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/FXML/Login.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="52" lean-forward="false" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
           <folding />
         </state>
       </provider>
