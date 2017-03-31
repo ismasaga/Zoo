@@ -65,6 +65,28 @@ public class GUIManager {
         }
     }
 
+    private void mostrarVentanaCoidador(Usuario usuario) {
+
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("../aplicacion/FXML/Coidador.fxml")
+        );
+
+        try {
+            this.stage.close();
+            Scene scene = new Scene(loader.load(), 600, 400);
+            stage = new Stage();
+            CoidadorController controller =
+                    loader.<CoidadorController>getController();
+            controller.initUser(this, usuario);
+            stage.setTitle("Ventana Contable");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean logeado(String dni, String pass) {
         Usuario u = fa.comprobarAutentificacion(dni, pass);
         if (u != null) {
