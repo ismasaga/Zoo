@@ -9,10 +9,14 @@ import gui.FachadaGui;
 public class GestionUsuarios {
     FachadaGui fgui;
     FachadaBaseDatos fbd;
-    
-   
-    public GestionUsuarios(FachadaGui fgui, FachadaBaseDatos fbd){
-     this.fgui=fgui;
-     this.fbd=fbd;
+
+
+    public GestionUsuarios(FachadaGui fgui, FachadaBaseDatos fbd) {
+        this.fgui = fgui;
+        this.fbd = fbd;
+    }
+
+    public Usuario comprobarAutentificacion(String name, String pass) {
+        return fbd.comprobarAutentificacion(name, pass);
     }
 }

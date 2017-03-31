@@ -6,7 +6,6 @@
 package baseDatos;
 
 /**
- *
  * @author miguel
  */
 public abstract class DAOAbstracto {
@@ -14,20 +13,20 @@ public abstract class DAOAbstracto {
     private aplicacion.FachadaAplicacion fa;
     private java.sql.Connection conexion;
 
-    protected java.sql.Connection getConexion(){
+    protected java.sql.Connection getConexion() {
         return this.conexion;
     }
 
-    protected void setConexion(java.sql.Connection conexion){
-        this.conexion=conexion;
+    protected void setConexion(java.sql.Connection conexion) {
+        this.conexion = conexion;
     }
 
-    protected void setFachadaAplicacion(aplicacion.FachadaAplicacion fa){
-        this.fa=fa;
-    }
-
-    protected aplicacion.FachadaAplicacion getFachadaAplicacion(){
+    protected aplicacion.FachadaAplicacion getFachadaAplicacion() {
         return fa;
     }
-    
+
+    protected void setFachadaAplicacion(aplicacion.FachadaAplicacion fa) {
+        this.fa = fa;
+    }
+
 }
