@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70cbafe1-937c-4b9b-9d53-821306736e36" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/aplicacion/Login.fxml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/zoo/FXMLDocument.fxml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zoo/FXMLDocumentController.java" afterPath="$PROJECT_DIR$/src/aplicacion/LoginController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/zoo/Zoo.java" afterPath="$PROJECT_DIR$/src/aplicacion/Zoo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nbproject/project.properties" afterPath="$PROJECT_DIR$/nbproject/project.properties" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -393,7 +387,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490897500981</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="prueba2">
+      <created>1490945209240</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1490945209240</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -434,7 +435,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="prueba" />
-    <option name="LAST_COMMIT_MESSAGE" value="prueba" />
+    <MESSAGE value="prueba2" />
+    <option name="LAST_COMMIT_MESSAGE" value="prueba2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
