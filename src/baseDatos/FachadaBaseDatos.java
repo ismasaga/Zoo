@@ -53,7 +53,7 @@ public class FachadaBaseDatos {
         }
     }
 
-    public Usuario comprobarAutentificacion(String name, String pass) {
-        return daoUsuarios.comprobarAutentificacion(name, pass);
+    public Usuario comprobarAutentificacion(String dni, String pass) {
+        return daoUsuarios.comprobarAutentificacion(dni, pass);
     }
 }

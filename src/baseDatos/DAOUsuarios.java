@@ -1,5 +1,6 @@
 package baseDatos;
 
+import aplicacion.TipoUsuario;
 import aplicacion.Usuario;
 
 import java.sql.Connection;
@@ -17,7 +18,7 @@ public class DAOUsuarios extends DAOAbstracto {
         super.setFachadaAplicacion(fa);
     }
 
-    public Usuario comprobarAutentificacion(String id, String pass) {
+    public Usuario comprobarAutentificacion(String dni, String pass) {
         Usuario resultado = null;
         Connection con;
         PreparedStatement stmUsuario = null;
@@ -26,14 +27,14 @@ public class DAOUsuarios extends DAOAbstracto {
         con = this.getConexion();
 
         try {
-            stmUsuario = con.prepareStatement("select id, pass " +
+            stmUsuario = con.prepareStatement("select dni, nombre, tipo, pass " +
                     "from usuarios " +
-                    "where id = ? and pass = ?");
-            stmUsuario.setString(1, id);
+                    "where dni = ? and pass = ?");
+            stmUsuario.setString(1, dni);
             stmUsuario.setString(2, pass);
             rsUsuario = stmUsuario.executeQuery();
             if (rsUsuario.next()) {
-                resultado = new Usuario(rsUsuario.getString("id"), rsUsuario.getString("pass"));
+                resultado = new Usuario(rsUsuario.getString("dni"),rsUsuario.getString("nombre"), TipoUsuario.valueOf(rsUsuario.getString("tipo")), rsUsuario.getString("pass"));
 
             }
         } catch (SQLException e) {

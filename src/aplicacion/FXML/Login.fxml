@@ -10,13 +10,14 @@
     </padding>
     <children>
         <Label text="Usuario:"/>
-        <TextField fx:id="name"/>
+        <TextField fx:id="dni"/>
         <Label text="Clave:">
             <VBox.margin>
                 <Insets top="10.0"/>
             </VBox.margin>
         </Label>
         <PasswordField fx:id="passwordField"/>
+        <Label fx:id="error" text=""/>
         <Button fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" text="Entrar">
             <VBox.margin>
                 <Insets top="10.0"/>

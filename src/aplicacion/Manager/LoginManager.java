@@ -1,10 +1,12 @@
 package aplicacion.Manager;
 
+import aplicacion.Controller.ContableController;
 import aplicacion.Controller.LoginController;
 import aplicacion.FachadaAplicacion;
+import aplicacion.Usuario;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -14,11 +16,10 @@ import java.util.logging.Logger;
  * Created by miguel on 31/03/17.
  */
 public class LoginManager {
-    private Scene scene;
+    private Stage stage;
     private FachadaAplicacion fa;
 
-    public LoginManager(Scene scene, FachadaAplicacion fa) {
-        this.scene = scene;
+    public LoginManager(FachadaAplicacion fa) {
         this.fa = fa;
     }
 
@@ -27,17 +28,56 @@ public class LoginManager {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("../FXML/Login.fxml")
             );
-            scene.setRoot((Parent) loader.load());
+            if (stage != null)
+                stage.close();
+            Scene scene = new Scene(loader.load(), 300, 200);
+            this.stage = new Stage();
             LoginController controller = loader.<LoginController>getController();
             controller.initManager(this);
+            stage.setTitle("Login");
+            stage.setScene(scene);
+            stage.show();
+
         } catch (IOException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void logeado(String name, String pass) {
-        System.out.println(fa.comprobarAutentificacion(name, pass).getId());
+    private void mostrarVentanaContable(Usuario usuario) {
 
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("../FXML/Contable.fxml")
+            );
 
+        try {
+            this.stage.close();
+            Scene scene = new Scene(loader.load(), 600, 400);
+            stage = new Stage();
+            ContableController controller =
+                    loader.<ContableController>getController();
+            controller.initUser(this, usuario);
+            stage.setTitle("Ventana Contable");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public boolean logeado(String dni, String pass) {
+        Usuario u = fa.comprobarAutentificacion(dni, pass);
+        if (u != null) {
+            fa.setUsuarioActual(u);
+            if (u.getTipo().toString().equals("Contable")){
+                this.mostrarVentanaContable(u);
+            }else{
+
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

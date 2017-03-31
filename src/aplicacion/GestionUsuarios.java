@@ -16,7 +16,7 @@ public class GestionUsuarios {
         this.fbd = fbd;
     }
 
-    public Usuario comprobarAutentificacion(String name, String pass) {
-        return fbd.comprobarAutentificacion(name, pass);
+    public Usuario comprobarAutentificacion(String dni, String pass) {
+        return fbd.comprobarAutentificacion(dni, pass);
     }
 }

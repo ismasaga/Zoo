@@ -41,21 +41,17 @@ public class FachadaAplicacion extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(new StackPane());
 
-        LoginManager loginManager = new LoginManager(scene, this);
+        LoginManager loginManager = new LoginManager(this);
         loginManager.mostrarVentanaLogin();
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     public void muestraExcepcion(String e) {
         fgui.muestraExcepcion(e);
     }
 
-    public Usuario comprobarAutentificacion(String name, String pass) {
-        return gu.comprobarAutentificacion(name, pass);
+    public Usuario comprobarAutentificacion(String dni, String pass) {
+        return gu.comprobarAutentificacion(dni, pass);
     }
 
 }
