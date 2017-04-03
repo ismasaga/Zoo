@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox layoutX="14.0" layoutY="14.0" prefHeight="75.0" prefWidth="583.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox prefHeight="55.0" prefWidth="505.0">
+            <children>
+                <Label text="Tarefa:" />
+                <Label text="Descripcion da tarefa" />
+            </children>
+        </VBox>
+        <AnchorPane prefHeight="55.0" prefWidth="127.0">
+            <children>
+                <CheckBox alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="79.0" layoutY="5.0" mnemonicParsing="false" />
+            </children>
+        </AnchorPane>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+</HBox>

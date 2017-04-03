@@ -1,6 +1,5 @@
 package aplicacion.Controller;
 
-import aplicacion.GestionUsuarios;
 import aplicacion.Usuario;
 import gui.GUIManager;
 import javafx.event.ActionEvent;

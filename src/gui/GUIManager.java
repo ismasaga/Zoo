@@ -49,7 +49,7 @@ public class GUIManager {
             ContableController controller =
                     loader.<ContableController>getController();
             controller.initUser(this, usuario);
-            stage.setTitle("Ventana Coidador");
+            stage.setTitle("Ventana Contable: " + usuario.getNombre());
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
@@ -66,11 +66,11 @@ public class GUIManager {
         );
 
         try {
-            Scene scene = new Scene(loader.load(), 600, 400);
+            Scene scene = new Scene(loader.load(), 600, 600);
             CoidadorController controller =
                     loader.<CoidadorController>getController();
             controller.initUser(this, usuario);
-            stage.setTitle("Ventana Coidador");
+            stage.setTitle("Ventana Coidador: " + usuario.getNombre());
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
@@ -91,11 +91,11 @@ public class GUIManager {
             }
             return true;
         } else {
-            //return false; ********************************************************************************************************** DESCOMENTAR PARA ENTREGAR
-            if(dni.equals("a")) {//**********************************************************************************************************ELIMINAR PARA ENTREGAR
-                this.mostrarVentanaContable(new Usuario("11111111A", "nombre", TipoUsuario.Contable, "pass"));//******************ELIMINAR PARA ENTREGAR
-            } else this.mostrarVentanaCoidador(new Usuario("22222222B", "nombre2", TipoUsuario.Coidador, "pass2"));//******************ELIMINAR PARA ENTREGAR
-            return true;//**********************************************************************************************************************************ELIMINAR PARA ENTREGAR
+            //return false; ********************************************************************************************************************* DESCOMENTAR PARA ENTREGAR
+            if(dni.equals("a")) {//********************************************************************************************************************************ELIMINAR PARA ENTREGAR
+                this.mostrarVentanaContable(new Usuario("12345678A", "Rosa", TipoUsuario.Contable, "pass","612121212",null));//******************ELIMINAR PARA ENTREGAR
+            } else this.mostrarVentanaCoidador(new Usuario("12345678B", "Isma", TipoUsuario.Coidador, "pass","634343434", "email@example.com"));//******************ELIMINAR PARA ENTREGAR
+            return true;//********************************************************************************************************************************************ELIMINAR PARA ENTREGAR
         }
     }
 

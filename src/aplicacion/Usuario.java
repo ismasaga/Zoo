@@ -5,12 +5,16 @@ public class Usuario {
     private String nombre;
     private TipoUsuario tipo;
     private String pass;
+    private String telefono;
+    private String email;
 
-    public Usuario(String dni, String nombre, TipoUsuario tipo, String pass) {
+    public Usuario(String dni, String nombre, TipoUsuario tipo, String pass, String telefono, String email) {
         this.dni = dni;
         this.nombre = nombre;
         this.tipo = tipo;
         this.pass = pass;
+        this.telefono=telefono;
+        this.email=email;
     }
 
     public String getDni() {
@@ -43,5 +47,21 @@ public class Usuario {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

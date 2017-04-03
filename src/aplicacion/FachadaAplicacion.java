@@ -5,7 +5,6 @@
  */
 package aplicacion;
 
-import gui.GUIManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -15,13 +14,13 @@ public class FachadaAplicacion extends Application {
 
     gui.GUIManager fgui;
     baseDatos.FachadaBaseDatos fbd;
-    GestionUsuarios gu;
+    XestionUsuarios xu;
     Usuario usuarioActual = null;
 
     public FachadaAplicacion() {
         fgui = new gui.GUIManager(this);
         fbd = new baseDatos.FachadaBaseDatos(this);
-        gu = new GestionUsuarios(this);
+        xu = new XestionUsuarios(this);
     }
 
     public static void main(String[] args) throws Exception {
@@ -46,11 +45,11 @@ public class FachadaAplicacion extends Application {
     }
 
     public Usuario comprobarAutentificacion(String dni, String pass) {
-        return gu.comprobarAutentificacion(dni, pass);
+        return xu.comprobarAutentificacion(dni, pass);
     }
 
     public void logout(){
-        gu.logout();
+        xu.logout();
     }
     public void sair(){
         exit(1);

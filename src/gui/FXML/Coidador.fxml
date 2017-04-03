@@ -1,58 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="353.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplicacion.Controller.CoidadorController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplicacion.Controller.CoidadorController">
     <tabs>
-        <Tab text="Horario">
+        <Tab text="Tarefas">
          <content>
-            <Pane prefHeight="200.0" prefWidth="600.0">
-               <children>
-                  <HBox layoutX="14.0" layoutY="14.0" prefHeight="75.0" prefWidth="570.0" style="-fx-background-color: #EFEFEF; -fx-border-radius: 10;">
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Estado:" />
-                              <Label text="Label" />
-                           </children>
-                        </VBox>
-                        <AnchorPane prefHeight="55.0" prefWidth="472.0">
-                           <children>
-                              <CheckBox alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="351.0" layoutY="14.0" mnemonicParsing="false" text="Atendido Hoxe" />
-                           </children>
-                        </AnchorPane>
-                     </children>
-                     <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                     </padding>
-                  </HBox>
-               </children></Pane>
+            <ScrollPane prefHeight="320.0" prefWidth="564.0">
+               <content>
+                  <VBox fx:id="tarefasVBox" prefHeight="349.0" prefWidth="583.0" />
+               </content>
+            </ScrollPane>
          </content></Tab>
         <Tab text="Animais">
          <content>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="Perfil">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </Tab>
-                <Tab text="Historial">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <AnchorPane prefHeight="53.0" prefWidth="600.0">
+                     <children>
+                        <TextField layoutX="242.0" layoutY="13.0" />
+                        <Button fx:id="buscarButton" layoutX="426.0" layoutY="13.0" mnemonicParsing="false" text="Buscar" />
+                        <Button fx:id="todosButton" layoutX="502.0" layoutY="13.0" mnemonicParsing="false" text="Ver Todos" />
+                     </children>
+                  </AnchorPane>
+                  <Pane fx:id="panelAnimaisTabla" prefHeight="517.0" prefWidth="600.0" />
+               </children>
+            </VBox>
          </content></Tab>
         <Tab text="Pechar Sesion">
             <content>

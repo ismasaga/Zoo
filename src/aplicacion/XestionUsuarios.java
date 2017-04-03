@@ -2,12 +2,12 @@ package aplicacion;
 
 import baseDatos.FachadaBaseDatos;
 
-public class GestionUsuarios {
+public class XestionUsuarios {
     FachadaBaseDatos fbd;
     FachadaAplicacion fa;
 
 
-    public GestionUsuarios(FachadaAplicacion fa) {
+    public XestionUsuarios(FachadaAplicacion fa) {
         this.fa = fa;
     }
 
@@ -15,7 +15,7 @@ public class GestionUsuarios {
         return fa.fbd.comprobarAutentificacion(dni, pass);
     }
 
-    public void logout(){
+    public void logout() {
         fa.setUsuarioActual(null);
         fa.fgui.mostrarVentanaLogin();
     }

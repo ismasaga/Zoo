@@ -24,14 +24,16 @@ public class DAOUsuarios extends DAOAbstracto {
         con = this.getConexion();
 
         try {
-            stmUsuario = con.prepareStatement("select dni, nombre, tipo, pass " +
+            stmUsuario = con.prepareStatement("select dni, nombre, tipo, pass, telefono, email " +
                     "from usuarios " +
                     "where dni = ? and pass = ?");
             stmUsuario.setString(1, dni);
             stmUsuario.setString(2, pass);
             rsUsuario = stmUsuario.executeQuery();
             if (rsUsuario.next()) {
-                resultado = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("nombre"), TipoUsuario.valueOf(rsUsuario.getString("tipo")), rsUsuario.getString("pass"));
+                resultado = new Usuario(rsUsuario.getString("dni"),
+                        rsUsuario.getString("nombre"), TipoUsuario.valueOf(rsUsuario.getString("tipo")),
+                        rsUsuario.getString("pass"),rsUsuario.getString("telefono"),rsUsuario.getString("email"));
 
             }
         } catch (SQLException e) {
