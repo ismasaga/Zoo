@@ -8,9 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by miguel on 31/03/17.
- */
 public class DAOUsuarios extends DAOAbstracto {
 
     public DAOUsuarios(Connection conexion, aplicacion.FachadaAplicacion fa) {

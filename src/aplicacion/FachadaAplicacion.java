@@ -9,20 +9,17 @@ import gui.GUIManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-/**
- * @author miguel
- */
 public class FachadaAplicacion extends Application {
 
-    gui.FachadaGui fgui;
+    gui.GUIManager fgui;
     baseDatos.FachadaBaseDatos fbd;
     GestionUsuarios gu;
     Usuario usuarioActual = null;
 
     public FachadaAplicacion() {
-        fgui = new gui.FachadaGui(this);
+        fgui = new gui.GUIManager(this);
         fbd = new baseDatos.FachadaBaseDatos(this);
-        gu = new GestionUsuarios(fbd);
+        gu = new GestionUsuarios(this);
     }
 
     public static void main(String[] args) throws Exception {
@@ -39,9 +36,7 @@ public class FachadaAplicacion extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        GUIManager GUIManager = new GUIManager(this);
-        GUIManager.mostrarVentanaLogin();
+        fgui.mostrarVentanaLogin();
     }
 
     public void muestraExcepcion(String e) {
@@ -50,6 +45,10 @@ public class FachadaAplicacion extends Application {
 
     public Usuario comprobarAutentificacion(String dni, String pass) {
         return gu.comprobarAutentificacion(dni, pass);
+    }
+
+    public void logout(){
+        gu.logout();
     }
 
 }

@@ -2,18 +2,21 @@ package aplicacion;
 
 import baseDatos.FachadaBaseDatos;
 
-/**
- * Created by miguel on 31/03/17.
- */
 public class GestionUsuarios {
     FachadaBaseDatos fbd;
+    FachadaAplicacion fa;
 
 
-    public GestionUsuarios(FachadaBaseDatos fbd) {
-        this.fbd = fbd;
+    public GestionUsuarios(FachadaAplicacion fa) {
+        this.fa = fa;
     }
 
     public Usuario comprobarAutentificacion(String dni, String pass) {
-        return fbd.comprobarAutentificacion(dni, pass);
+        return fa.fbd.comprobarAutentificacion(dni, pass);
+    }
+
+    public void logout(){
+        fa.setUsuarioActual(null);
+        fa.fgui.mostrarVentanaLogin();
     }
 }

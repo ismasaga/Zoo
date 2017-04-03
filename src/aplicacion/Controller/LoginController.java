@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,8 +45,22 @@ public class LoginController implements Initializable {
             public void handle(ActionEvent event) {
                 if (!GUIManager.logeado(dni.getText(), passwordField.getText())) {
                     error.setText("Usuario o clave incorrectos");
-                } else {
-                    error.setText("");
+                }
+            }
+        });
+        passwordField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER)){
+                    loginButton.fire();
+                }
+            }
+        });
+        dni.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER)){
+                    passwordField.requestFocus();
                 }
             }
         });

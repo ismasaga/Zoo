@@ -5,9 +5,6 @@
  */
 package baseDatos;
 
-/**
- * @author miguel
- */
 public abstract class DAOAbstracto {
 
     private aplicacion.FachadaAplicacion fa;

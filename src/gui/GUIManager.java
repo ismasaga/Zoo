@@ -4,6 +4,7 @@ import aplicacion.Controller.CoidadorController;
 import aplicacion.Controller.ContableController;
 import aplicacion.Controller.LoginController;
 import aplicacion.FachadaAplicacion;
+import aplicacion.TipoUsuario;
 import aplicacion.Usuario;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,11 +14,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created by miguel on 31/03/17.
- */
 public class GUIManager {
-    private Stage stage;
+    private Stage stage = new Stage();
     private FachadaAplicacion fa;
 
     public GUIManager(FachadaAplicacion fa) {
@@ -25,18 +23,14 @@ public class GUIManager {
     }
 
     public void mostrarVentanaLogin() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/Login.fxml"));
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("FXML/Login.fxml")
-            );
-            if (stage != null)
-                stage.close();
             Scene scene = new Scene(loader.load(), 310, 188);
-            this.stage = new Stage();
             LoginController controller = loader.<LoginController>getController();
             controller.initManager(this);
             stage.setTitle("Login");
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {
@@ -51,14 +45,13 @@ public class GUIManager {
         );
 
         try {
-            this.stage.close();
             Scene scene = new Scene(loader.load(), 600, 400);
-            stage = new Stage();
             ContableController controller =
                     loader.<ContableController>getController();
             controller.initUser(this, usuario);
-            stage.setTitle("Ventana Contable");
+            stage.setTitle("Ventana Coidador");
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException e) {
@@ -73,14 +66,13 @@ public class GUIManager {
         );
 
         try {
-            this.stage.close();
             Scene scene = new Scene(loader.load(), 600, 400);
-            stage = new Stage();
             CoidadorController controller =
                     loader.<CoidadorController>getController();
             controller.initUser(this, usuario);
             stage.setTitle("Ventana Coidador");
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (IOException e) {
@@ -99,8 +91,20 @@ public class GUIManager {
             }
             return true;
         } else {
-            return false;
+            //return false; ********************************************************************************************************** DESCOMENTAR PARA ENTREGAR
+            if(dni.equals("a")) {//**********************************************************************************************************ELIMINAR PARA ENTREGAR
+                this.mostrarVentanaContable(new Usuario("11111111A", "nombre", TipoUsuario.Contable, "pass"));//******************ELIMINAR PARA ENTREGAR
+            } else this.mostrarVentanaCoidador(new Usuario("22222222B", "nombre2", TipoUsuario.Coidador, "pass2"));//******************ELIMINAR PARA ENTREGAR
+            return true;//**********************************************************************************************************************************ELIMINAR PARA ENTREGAR
         }
+    }
+
+    public void logout(){
+        fa.logout();
+    }
+
+    public void muestraExcepcion(String txtExcepcion){
+
     }
 
 }
