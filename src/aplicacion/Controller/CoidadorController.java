@@ -13,7 +13,10 @@ import java.util.ResourceBundle;
 
 public class CoidadorController implements Initializable {
     @FXML
-    Button sesionButton;
+    private Button sesionButton;
+    @FXML
+    private Button sairButton;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -24,6 +27,13 @@ public class CoidadorController implements Initializable {
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent event) {
                 GUIManager.logout();
+
+            }
+        });
+        sairButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent event) {
+                GUIManager.sair();
+
             }
         });
     }

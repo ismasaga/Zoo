@@ -102,6 +102,9 @@ public class GUIManager {
     public void logout(){
         fa.logout();
     }
+    public void sair(){
+        fa.sair();
+    }
 
     public void muestraExcepcion(String txtExcepcion){
 

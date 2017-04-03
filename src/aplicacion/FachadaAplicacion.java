@@ -9,6 +9,8 @@ import gui.GUIManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import static java.lang.System.exit;
+
 public class FachadaAplicacion extends Application {
 
     gui.GUIManager fgui;
@@ -49,6 +51,9 @@ public class FachadaAplicacion extends Application {
 
     public void logout(){
         gu.logout();
+    }
+    public void sair(){
+        exit(1);
     }
 
 }

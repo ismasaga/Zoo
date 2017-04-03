@@ -15,6 +15,8 @@ import java.util.ResourceBundle;
 public class ContableController implements Initializable {
     @FXML
     private Button sesionButton;
+    @FXML
+    private Button sairButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -29,6 +31,11 @@ public class ContableController implements Initializable {
 
             }
         });
+        sairButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent event) {
+                GUIManager.sair();
 
+            }
+        });
     }
 }

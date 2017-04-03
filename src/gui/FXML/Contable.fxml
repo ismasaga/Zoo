@@ -26,7 +26,7 @@
                <children>
                   <Label layoutX="168.0" layoutY="152.0" text="Desexa pechar a sesion ou a aplicacion?" />
                   <Button fx:id="sesionButton" layoutX="168.0" layoutY="187.0" mnemonicParsing="false" text="Pechar sesion" />
-                  <Button layoutX="309.0" layoutY="187.0" mnemonicParsing="false" text="Pechar aplicacion" />
+                  <Button fx:id="sairButton" layoutX="309.0" layoutY="187.0" mnemonicParsing="false" text="Pechar aplicacion" />
                </children>
             </AnchorPane>
          </content>
