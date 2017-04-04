@@ -6,6 +6,7 @@
 package aplicacion;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
 import static java.lang.System.exit;
@@ -48,11 +49,16 @@ public class FachadaAplicacion extends Application {
         return xu.comprobarAutentificacion(dni, pass);
     }
 
-    public void logout(){
+    public void logout() {
         xu.logout();
     }
-    public void sair(){
+
+    public void sair() {
         exit(1);
+    }
+
+    public ObservableList buscarAnimal(String animal) {
+        return fbd.buscarAnimal(animal);
     }
 
 }

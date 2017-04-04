@@ -13,8 +13,8 @@ public class Usuario {
         this.nombre = nombre;
         this.tipo = tipo;
         this.pass = pass;
-        this.telefono=telefono;
-        this.email=email;
+        this.telefono = telefono;
+        this.email = email;
     }
 
     public String getDni() {

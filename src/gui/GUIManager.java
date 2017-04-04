@@ -6,6 +6,7 @@ import aplicacion.Controller.LoginController;
 import aplicacion.FachadaAplicacion;
 import aplicacion.TipoUsuario;
 import aplicacion.Usuario;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -26,7 +27,7 @@ public class GUIManager {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/Login.fxml"));
         try {
             Scene scene = new Scene(loader.load(), 310, 188);
-            LoginController controller = loader.<LoginController>getController();
+            LoginController controller = loader.getController();
             controller.initManager(this);
             stage.setTitle("Login");
             stage.setScene(scene);
@@ -45,9 +46,9 @@ public class GUIManager {
         );
 
         try {
-            Scene scene = new Scene(loader.load(), 600, 400);
+            Scene scene = new Scene(loader.load(), 800, 400);
             ContableController controller =
-                    loader.<ContableController>getController();
+                    loader.getController();
             controller.initUser(this, usuario);
             stage.setTitle("Ventana Contable: " + usuario.getNombre());
             stage.setScene(scene);
@@ -66,9 +67,9 @@ public class GUIManager {
         );
 
         try {
-            Scene scene = new Scene(loader.load(), 600, 600);
+            Scene scene = new Scene(loader.load(), 800, 600);
             CoidadorController controller =
-                    loader.<CoidadorController>getController();
+                    loader.getController();
             controller.initUser(this, usuario);
             stage.setTitle("Ventana Coidador: " + usuario.getNombre());
             stage.setScene(scene);
@@ -92,21 +93,27 @@ public class GUIManager {
             return true;
         } else {
             //return false; ********************************************************************************************************************* DESCOMENTAR PARA ENTREGAR
-            if(dni.equals("a")) {//********************************************************************************************************************************ELIMINAR PARA ENTREGAR
-                this.mostrarVentanaContable(new Usuario("12345678A", "Rosa", TipoUsuario.Contable, "pass","612121212",null));//******************ELIMINAR PARA ENTREGAR
-            } else this.mostrarVentanaCoidador(new Usuario("12345678B", "Isma", TipoUsuario.Coidador, "pass","634343434", "email@example.com"));//******************ELIMINAR PARA ENTREGAR
+            if (dni.equals("a")) {//********************************************************************************************************************************ELIMINAR PARA ENTREGAR
+                this.mostrarVentanaContable(new Usuario("12345678A", "Rosa", TipoUsuario.Contable, "pass", "612121212", null));//******************ELIMINAR PARA ENTREGAR
+            } else
+                this.mostrarVentanaCoidador(new Usuario("12345678B", "Isma", TipoUsuario.Coidador, "pass", "634343434", "email@example.com"));//******************ELIMINAR PARA ENTREGAR
             return true;//********************************************************************************************************************************************ELIMINAR PARA ENTREGAR
         }
     }
 
-    public void logout(){
+    public void logout() {
         fa.logout();
     }
-    public void sair(){
+
+    public void sair() {
         fa.sair();
     }
 
-    public void muestraExcepcion(String txtExcepcion){
+    public ObservableList buscarAnimal(String animal) {
+        return fa.buscarAnimal(animal);
+    }
+
+    public void muestraExcepcion(String txtExcepcion) {
 
     }
 

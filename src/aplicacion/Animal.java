@@ -29,48 +29,48 @@ public class Animal {
         return id.get();
     }
 
-    public StringProperty idProperty() {
-        return id;
-    }
-
     public void setId(String id) {
         this.id.set(id);
+    }
+
+    public StringProperty idProperty() {
+        return id;
     }
 
     public String getNombre() {
         return nombre.get();
     }
 
-    public StringProperty nombreProperty() {
-        return nombre;
-    }
-
     public void setNombre(String nombre) {
         this.nombre.set(nombre);
+    }
+
+    public StringProperty nombreProperty() {
+        return nombre;
     }
 
     public String getEspecie() {
         return especie.get();
     }
 
-    public StringProperty especieProperty() {
-        return especie;
-    }
-
     public void setEspecie(String especie) {
         this.especie.set(especie);
+    }
+
+    public StringProperty especieProperty() {
+        return especie;
     }
 
     public int getEdad() {
         return edad.get();
     }
 
-    public IntegerProperty edadProperty() {
-        return edad;
-    }
-
     public void setEdad(int edad) {
         this.edad.set(edad);
+    }
+
+    public IntegerProperty edadProperty() {
+        return edad;
     }
 
     public ArrayList<Comida> getComidas() {

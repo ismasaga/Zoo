@@ -1,6 +1,7 @@
 package baseDatos;
 
 import aplicacion.Usuario;
+import javafx.collections.ObservableList;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,6 +12,7 @@ public class FachadaBaseDatos {
     private aplicacion.FachadaAplicacion fa;
     private java.sql.Connection conexion;
     private DAOUsuarios daoUsuarios;
+    private DAOAnimales daoAnimales;
 
     public FachadaBaseDatos(aplicacion.FachadaAplicacion fa) {
         Properties configuracion = new Properties();
@@ -36,6 +38,7 @@ public class FachadaBaseDatos {
                     usuario);
 
             daoUsuarios = new DAOUsuarios(conexion, fa);
+            daoAnimales = new DAOAnimales(conexion, fa);
 
 
         } catch (FileNotFoundException f) {
@@ -52,5 +55,9 @@ public class FachadaBaseDatos {
 
     public Usuario comprobarAutentificacion(String dni, String pass) {
         return daoUsuarios.comprobarAutentificacion(dni, pass);
+    }
+
+    public ObservableList buscarAnimal(String animal) {
+        return daoAnimales.buscarAnimal(animal);
     }
 }

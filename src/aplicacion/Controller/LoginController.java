@@ -51,7 +51,7 @@ public class LoginController implements Initializable {
         passwordField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode().equals(KeyCode.ENTER)){
+                if (event.getCode().equals(KeyCode.ENTER)) {
                     loginButton.fire();
                 }
             }
@@ -59,7 +59,7 @@ public class LoginController implements Initializable {
         dni.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode().equals(KeyCode.ENTER)){
+                if (event.getCode().equals(KeyCode.ENTER)) {
                     passwordField.requestFocus();
                 }
             }

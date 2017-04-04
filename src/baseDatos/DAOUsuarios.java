@@ -33,7 +33,7 @@ public class DAOUsuarios extends DAOAbstracto {
             if (rsUsuario.next()) {
                 resultado = new Usuario(rsUsuario.getString("dni"),
                         rsUsuario.getString("nombre"), TipoUsuario.valueOf(rsUsuario.getString("tipo")),
-                        rsUsuario.getString("pass"),rsUsuario.getString("telefono"),rsUsuario.getString("email"));
+                        rsUsuario.getString("pass"), rsUsuario.getString("telefono"), rsUsuario.getString("email"));
 
             }
         } catch (SQLException e) {

@@ -25,13 +25,15 @@ public class ContableController implements Initializable {
     public void initUser(final GUIManager GUIManager, Usuario usuario) {
         //sessionLabel.setText(sessionID);
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent event) {
+            @Override
+            public void handle(ActionEvent event) {
                 GUIManager.logout();
 
             }
         });
         sairButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent event) {
+            @Override
+            public void handle(ActionEvent event) {
                 GUIManager.sair();
 
             }
