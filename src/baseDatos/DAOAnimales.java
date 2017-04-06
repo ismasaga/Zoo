@@ -22,12 +22,12 @@ public class DAOAnimales extends DAOAbstracto {
         Connection con;
         PreparedStatement stmAnimales = null;
         ResultSet rsAnimales;
-
         con = this.getConexion();
         try {
             if (animal.equals("")) {
                 stmAnimales = con.prepareStatement("select * from animales;");
             } else {
+                animal = animal.substring(0, 1).toUpperCase() + animal.substring(1);
                 stmAnimales = con.prepareStatement("select * from animales where id = ? or nombre = ? or especie = ?;");
                 stmAnimales.setString(1, animal);
                 stmAnimales.setString(2, animal);

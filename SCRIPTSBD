@@ -4,8 +4,35 @@ CREATE TABLE usuarios(
 	nombre varchar(50) not null,
 	tipo varchar(10) not null,
 	pass varchar(10) not null,
+	telefono varchar(15) not null,
+	email varchar(50),
 	PRIMARY KEY(dni)
 );
+DROP TABLE ANIMALES;
+CREATE TABLE animales(
+	id char(10) not null,
+	nombre varchar(50) not null,
+	especie varchar(10) not null,
+	edad integer not null,
+	PRIMARY KEY(id)
+);
 
-INSERT INTO usuarios (dni, nombre, tipo, pass) VALUES ('12345678A', 'Rosa', 'Coidador', 'pass');
-INSERT INTO usuarios (dni, nombre, tipo, pass) VALUES ('12345678B', 'Isma', 'Contable', 'pass');
+INSERT INTO usuarios (dni, nombre, tipo, pass, telefono) VALUES ('12345678A', 'Rosa', 'Coidador', 'pass', '612121212');
+INSERT INTO usuarios (dni, nombre, tipo, pass, telefono, email) VALUES ('12345678B', 'Isma', 'Contable', 'pass', '634343434', 'email@example.com');
+
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00001', 'Simba', 'Leon', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00002', 'Baloo', ' ', 7);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00003', 'Timon', 'Suricato', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00004', 'Pumba', 'Jabalí', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00005', 'Simba', 'Leon', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00006', 'Simba', 'Leon', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00007', 'Simba', 'Leon', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00008', 'Baloo', 'Oso', 7);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00009', 'Timon', 'Suricato', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00010', 'Pumba', 'Jabalí', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00011', 'Simba', 'Leon', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00012', 'Simba', 'Leon', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00013', 'Simba', 'Leon', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00014', 'Pumba', 'Jabalí', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00015', 'Simba', 'Leon', 5);
+INSERT INTO animales (id, nombre, especie, edad) VALUES ('00016', 'Simba', 'Leon', 5);
