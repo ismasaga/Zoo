@@ -14,5 +14,7 @@ hs_err_pid*
 /dist/
 
 # Engadidos por min 
-/nbproject/*
-/.idea/*
+nbproject/*
+.idea/*
+.Rhistory
+.directory
