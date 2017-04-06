@@ -72,7 +72,7 @@ public class CoidadorController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    tabla = (FXMLLoader.load(getClass().getResource("../../gui/FXML/TaboaAnimais.fxml")));
+                    tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
                     panelAnimaisTabla.getChildren().add(tabla);
                     String animal = buscarTextField.getText();
                     animales = GUIManager.buscarAnimal(animal);

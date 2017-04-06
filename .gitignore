@@ -22,4 +22,9 @@ nbproject/project.properties
 .idea/*
 .Rhistory
 .directory
+<<<<<<< HEAD
 baseDatos.properties
+=======
+/nbproject/
+/.idea/
+>>>>>>> 5292d80ad7304bad0fed6bedfaf0b72b651961fa

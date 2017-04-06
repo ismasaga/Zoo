@@ -46,7 +46,7 @@ public class GUIManager {
         );
 
         try {
-            Scene scene = new Scene(loader.load(), 800, 400);
+            Scene scene = new Scene(loader.load(), 800, 600);
             ContableController controller =
                     loader.getController();
             controller.initUser(this, usuario);
