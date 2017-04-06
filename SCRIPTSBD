@@ -1,4 +1,9 @@
-DROP TABLE IF EXISTS USUARIOS;
+-- Comando para executar o script por linha comando
+-- psql -h host -U usuario -W -f fichero.sql BaseDatos
+-- donde -h host indica al nombre del servidor (localhost si no se especifica esta opcion),
+-- -U indica el usuario de base de datos, -W es para que nos pida la password, -f indica el
+-- fichero.sql que queremos ejecutar y BaseDatos el nombre de la base de datos
+DROP TABLE IF EXISTS usuarios;
 CREATE TABLE usuarios(
 	dni char(10) not null,
 	nombre varchar(50) not null,
@@ -8,7 +13,7 @@ CREATE TABLE usuarios(
 	email varchar(50),
 	PRIMARY KEY(dni)
 );
-DROP TABLE IF EXISTS ANIMALES;
+DROP TABLE IF EXISTS animales;
 CREATE TABLE animales(
 	id char(10) not null,
 	nombre varchar(50) not null,

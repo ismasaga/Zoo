@@ -13,8 +13,13 @@ hs_err_pid*
 /build/
 /dist/
 
-# Engadidos por min 
+# Engadidos por min
 nbproject/*
+nbproject/jfx-impl.xml
+nbproject/private/private.properties
+nbproject/private/private.xml
+nbproject/project.properties
 .idea/*
 .Rhistory
 .directory
+baseDatos.properties
