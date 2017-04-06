@@ -1,4 +1,4 @@
-DROP TABLE USUARIOS;
+DROP TABLE IF EXISTS USUARIOS;
 CREATE TABLE usuarios(
 	dni char(10) not null,
 	nombre varchar(50) not null,
@@ -8,7 +8,7 @@ CREATE TABLE usuarios(
 	email varchar(50),
 	PRIMARY KEY(dni)
 );
-DROP TABLE ANIMALES;
+DROP TABLE IF EXISTS ANIMALES;
 CREATE TABLE animales(
 	id char(10) not null,
 	nombre varchar(50) not null,

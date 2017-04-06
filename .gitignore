@@ -12,3 +12,7 @@
 hs_err_pid*
 /build/
 /dist/
+
+# Engadidos por min 
+/nbproject/*
+/.idea/*
