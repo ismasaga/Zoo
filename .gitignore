@@ -18,3 +18,5 @@ nbproject/*
 .idea/*
 .Rhistory
 .directory
+/nbproject/
+/.idea/
