@@ -15,14 +15,18 @@ public class Animal {
     private StringProperty nombre;
     private StringProperty especie;
     private IntegerProperty edad;
+    private StringProperty area;
+    private StringProperty xaula;
     private ArrayList<Comida> comidas;
 
-    public Animal(String id, String nombre, String especie, Integer edad, ArrayList<Comida> comidas) {
+    public Animal(String id, String nombre, String especie, Integer edad, ArrayList<Comida> comidas, String area, String xaula) {
         this.id = new SimpleStringProperty(id);
         this.nombre = new SimpleStringProperty(nombre);
         this.especie = new SimpleStringProperty(especie);
         this.edad = new SimpleIntegerProperty(edad);
         this.comidas = comidas;
+        this.area = new SimpleStringProperty(area);
+        this.xaula = new SimpleStringProperty(xaula);
     }
 
     public String getId() {
@@ -79,5 +83,29 @@ public class Animal {
 
     public void setComidas(ArrayList<Comida> comidas) {
         this.comidas = comidas;
+    }
+
+    public String getArea() {
+        return area.get();
+    }
+
+    public void setArea(String area) {
+        this.area.set(area);
+    }
+
+    public StringProperty areaProperty() {
+        return area;
+    }
+
+    public String getXaula() {
+        return xaula.get();
+    }
+
+    public void setXaula(String xaula) {
+        this.xaula.set(xaula);
+    }
+
+    public StringProperty xaulaProperty() {
+        return xaula;
     }
 }
