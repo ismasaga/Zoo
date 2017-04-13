@@ -4,7 +4,6 @@ import aplicacion.Controller.CoidadorController;
 import aplicacion.Controller.ContableController;
 import aplicacion.Controller.LoginController;
 import aplicacion.FachadaAplicacion;
-import aplicacion.TipoUsuario;
 import aplicacion.Usuario;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -47,8 +46,7 @@ public class GUIManager {
 
         try {
             Scene scene = new Scene(loader.load(), 800, 600);
-            ContableController controller =
-                    loader.getController();
+            ContableController controller = loader.getController();
             controller.initUser(this, usuario);
             stage.setTitle("Ventana Contable: " + usuario.getNombre());
             stage.setScene(scene);
@@ -68,8 +66,7 @@ public class GUIManager {
 
         try {
             Scene scene = new Scene(loader.load(), 800, 600);
-            CoidadorController controller =
-                    loader.getController();
+            CoidadorController controller = loader.getController();
             controller.initUser(this, usuario);
             stage.setTitle("Ventana Coidador: " + usuario.getNombre());
             stage.setScene(scene);
@@ -91,14 +88,7 @@ public class GUIManager {
                 this.mostrarVentanaCoidador(u);
             }
             return true;
-        } else {
-            //return false; ********************************************************************************************************************* DESCOMENTAR PARA ENTREGAR
-            if (dni.equals("a")) {//********************************************************************************************************************************ELIMINAR PARA ENTREGAR
-                this.mostrarVentanaContable(new Usuario("12345678A", "Rosa", TipoUsuario.Contable, "pass", "612121212", null));//******************ELIMINAR PARA ENTREGAR
-            } else
-                this.mostrarVentanaCoidador(new Usuario("12345678B", "Isma", TipoUsuario.Coidador, "pass", "634343434", "email@example.com"));//******************ELIMINAR PARA ENTREGAR
-            return true;//********************************************************************************************************************************************ELIMINAR PARA ENTREGAR
-        }
+        } else return false;
     }
 
     public void logout() {

@@ -1,43 +1,93 @@
--- Comando para executar o script por linha comando
--- psql -h host -U usuario -W -f fichero.sql BaseDatos
--- donde -h host indica al nombre del servidor (localhost si no se especifica esta opcion),
--- -U indica el usuario de base de datos, -W es para que nos pida la password, -f indica el
--- fichero.sql que queremos ejecutar y BaseDatos el nombre de la base de datos
+DROP TABLE IF EXISTS eventoshistorial;
+DROP TABLE IF EXISTS comer;
+DROP TABLE IF EXISTS comidas;
+DROP TABLE IF EXISTS animais;
+DROP TABLE IF EXISTS xaulas;
+DROP TABLE IF EXISTS areas;
+DROP TABLE IF EXISTS coidadores;
 DROP TABLE IF EXISTS usuarios;
-CREATE TABLE usuarios(
-	dni char(10) not null,
-	nombre varchar(50) not null,
-	tipo varchar(10) not null,
-	pass varchar(10) not null,
-	telefono varchar(15) not null,
-	email varchar(50),
-	PRIMARY KEY(dni)
-);
-DROP TABLE IF EXISTS animales;
-CREATE TABLE animales(
-	id char(10) not null,
-	nombre varchar(50) not null,
-	especie varchar(10) not null,
-	edad integer not null,
-	PRIMARY KEY(id)
+
+CREATE TABLE usuarios (
+dni char(10) not null,
+pass varchar(50) not null,
+nome varchar(100) not null,
+telefono varchar(30) not null,
+email varchar(50),
+PRIMARY KEY (dni)
 );
 
-INSERT INTO usuarios (dni, nombre, tipo, pass, telefono) VALUES ('12345678A', 'Rosa', 'Coidador', 'pass', '612121212');
-INSERT INTO usuarios (dni, nombre, tipo, pass, telefono, email) VALUES ('12345678B', 'Isma', 'Contable', 'pass', '634343434', 'email@example.com');
+CREATE TABLE coidadores (
+dni char(10) not null,
+PRIMARY KEY (dni),
+FOREIGN KEY (dni) REFERENCES usuarios(dni) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00001', 'Simba', 'Leon', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00002', 'Baloo', ' ', 7);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00003', 'Timon', 'Suricato', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00004', 'Pumba', 'Jabalí', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00005', 'Simba', 'Leon', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00006', 'Simba', 'Leon', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00007', 'Simba', 'Leon', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00008', 'Baloo', 'Oso', 7);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00009', 'Timon', 'Suricato', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00010', 'Pumba', 'Jabalí', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00011', 'Simba', 'Leon', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00012', 'Simba', 'Leon', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00013', 'Simba', 'Leon', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00014', 'Pumba', 'Jabalí', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00015', 'Simba', 'Leon', 5);
-INSERT INTO animales (id, nombre, especie, edad) VALUES ('00016', 'Simba', 'Leon', 5);
+CREATE TABLE areas (
+id char(10) not null,
+climatizacion varchar(50),
+PRIMARY KEY (id)
+);
+
+CREATE TABLE xaulas (
+id char(10) not null,
+idArea char(10) not null,
+PRIMARY KEY (id, idArea),
+FOREIGN KEY (idArea) REFERENCES areas(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE animais (
+id char(10) not null,
+nome varchar(50) not null,
+especie varchar(50) not null,
+edad integer not null,
+peso integer not null,
+sexo varchar(10) not null,
+idXaula char(10) not null,
+idArea char(10) not null,
+PRIMARY KEY (id),
+FOREIGN KEY (idXaula, idArea) REFERENCES xaulas(id, idArea) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+CREATE TABLE comidas (
+id char(10) not null,
+nome varchar(50) not null,
+cantidadeRestante integer not null,
+unidades varchar(10) not null,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE comer (
+cantidad integer not null,
+animal char(10) not null,
+comida char(10) not null,
+PRIMARY KEY (animal, comida),
+FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (comida) references comidas(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE eventosHistorial (
+tipo varchar(50) not null,
+animal char(10) not null,
+nome varchar(50) not null,
+descripcion varchar(300) not null,
+dataInicio date not null,
+dataFin date,
+tratamento varchar(100),
+PRIMARY KEY (nome, dataInicio),
+FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO usuarios (dni, nome, pass, telefono) VALUES ('12345678A', 'Rosa', 'pass', '612121212');
+INSERT INTO usuarios (dni, nome, pass, telefono, email) VALUES ('12345678B', 'Isma', 'pass', '634343434', 'email@example.com');
+
+INSERT INTO Areas (id, climatizacion) VALUES ('00001','Tropical');
+
+INSERT INTO XAULAS (id, idArea) VALUES ('00001','00001');
+INSERT INTO XAULAS (id, idArea) VALUES ('00002','00001');
+INSERT INTO XAULAS (id, idArea) VALUES ('00003','00001');
+INSERT INTO XAULAS (id, idArea) VALUES ('00004','00001');
+
+INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00001', 'Simba', 'Leon', 5, 100, 'Macho', '00001','00001');
+INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00002', 'Baloo', 'Oso', 7, 80, 'Macho', '00002','00001');
+INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00003', 'Timon', 'Suricato', 5, 10, 'Macho', '00003','00001');
+INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00004', 'Pumba', 'Jabalí', 5, 55, 'Macho', '00004','00001');
