@@ -80,6 +80,8 @@ FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE
 INSERT INTO usuarios (dni, nome, pass, telefono) VALUES ('12345678A', 'Rosa', 'pass', '612121212');
 INSERT INTO usuarios (dni, nome, pass, telefono, email) VALUES ('12345678B', 'Isma', 'pass', '634343434', 'email@example.com');
 
+INSERT INTO coidadores (dni) VALUES ('12345678B');
+
 INSERT INTO Areas (id, climatizacion) VALUES ('00001','Tropical');
 
 INSERT INTO XAULAS (id, idArea) VALUES ('00001','00001');
