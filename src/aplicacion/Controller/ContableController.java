@@ -1,8 +1,8 @@
 package aplicacion.Controller;
 
 import aplicacion.Animal;
+import aplicacion.FachadaAplicacion;
 import aplicacion.Usuario;
-import gui.GUIManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,6 +36,8 @@ public class ContableController implements Initializable {
     @FXML
     private Button buttonGuardar;
     @FXML
+    private Button buttonNovo;
+    @FXML
     private TextField textFieldNombre;
     @FXML
     private TextField textFieldID;
@@ -62,25 +64,25 @@ public class ContableController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
-    public void initUser(final GUIManager GUIManager, Usuario usuario) {
+    public void initUser(final FachadaAplicacion fa, Usuario usuario) {
         //sessionLabel.setText(sessionID);
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIManager.logout();
+                fa.logout();
 
             }
         });
+
         sairButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIManager.sair();
-
+                fa.sair();
             }
         });
+
         buscarButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -88,7 +90,7 @@ public class ContableController implements Initializable {
                     tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
                     panelAnimaisTabla.getChildren().add(tabla);
                     String animal = buscarTextField.getText();
-                    animales = GUIManager.buscarAnimal(animal);
+                    animales = fa.buscarAnimal(animal);
                     tabla.setItems(animales);
                     first.setCellValueFactory(cellData -> cellData.getValue().idProperty());
                     second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
@@ -102,7 +104,6 @@ public class ContableController implements Initializable {
                 }
             }
         });
-
 
         buscarTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -129,6 +130,15 @@ public class ContableController implements Initializable {
                 Animal animal = (Animal) tabla.getSelectionModel().getSelectedItem();
                 textFieldNombre.setText(animal.getNombre());
                 textFieldArea.setText(animal.getArea());
+            }
+        });
+
+        buttonNovo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (textFieldID.getText().equals("")) {
+                    fa.muestraExcepcion("El ID no puede estar vacio");
+                }
             }
         });
 

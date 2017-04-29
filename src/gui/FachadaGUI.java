@@ -2,23 +2,25 @@ package gui;
 
 import aplicacion.Controller.CoidadorController;
 import aplicacion.Controller.ContableController;
+import aplicacion.Controller.ExcepcionController;
 import aplicacion.Controller.LoginController;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Usuario;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GUIManager {
+public class FachadaGUI {
     private Stage stage = new Stage();
     private FachadaAplicacion fa;
 
-    public GUIManager(FachadaAplicacion fa) {
+    public FachadaGUI(FachadaAplicacion fa) {
         this.fa = fa;
     }
 
@@ -27,18 +29,18 @@ public class GUIManager {
         try {
             Scene scene = new Scene(loader.load(), 310, 188);
             LoginController controller = loader.getController();
-            controller.initManager(this);
+            controller.initManager(fa);
             stage.setTitle("Login");
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
 
         } catch (IOException ex) {
-            Logger.getLogger(GUIManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FachadaGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void mostrarVentanaContable(Usuario usuario) {
+    public void mostrarVentanaContable(Usuario usuario) {
 
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("FXML/Contable.fxml")
@@ -47,7 +49,7 @@ public class GUIManager {
         try {
             Scene scene = new Scene(loader.load(), 800, 600);
             ContableController controller = loader.getController();
-            controller.initUser(this, usuario);
+            controller.initUser(fa, usuario);
             stage.setTitle("Ventana Contable: " + usuario.getNombre());
             stage.setScene(scene);
             stage.centerOnScreen();
@@ -58,7 +60,7 @@ public class GUIManager {
         }
     }
 
-    private void mostrarVentanaCoidador(Usuario usuario) {
+    public void mostrarVentanaCoidador(Usuario usuario) {
 
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("FXML/Coidador.fxml")
@@ -67,7 +69,7 @@ public class GUIManager {
         try {
             Scene scene = new Scene(loader.load(), 800, 600);
             CoidadorController controller = loader.getController();
-            controller.initUser(this, usuario);
+            controller.initUser(fa, usuario);
             stage.setTitle("Ventana Coidador: " + usuario.getNombre());
             stage.setScene(scene);
             stage.centerOnScreen();
@@ -78,18 +80,6 @@ public class GUIManager {
         }
     }
 
-    public boolean logeado(String dni, String pass) {
-        Usuario u = fa.comprobarAutentificacion(dni, pass);
-        if (u != null) {
-            fa.setUsuarioActual(u);
-            if (u.getTipo().toString().equals("Contable")) {
-                this.mostrarVentanaContable(u);
-            } else {
-                this.mostrarVentanaCoidador(u);
-            }
-            return true;
-        } else return false;
-    }
 
     public void logout() {
         fa.logout();
@@ -104,7 +94,22 @@ public class GUIManager {
     }
 
     public void muestraExcepcion(String txtExcepcion) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/Excepcion.fxml"));
+        try {
+            Stage stage2 = new Stage();
+            Scene scene = new Scene(loader.load());
+            ExcepcionController controller = loader.getController();
+            controller.initExcepcion(txtExcepcion, stage2);
+            stage2.initOwner(stage);
+            stage2.initModality(Modality.APPLICATION_MODAL);
+            stage2.setTitle("Error");
+            stage2.setScene(scene);
+            stage2.centerOnScreen();
+            stage2.show();
 
+        } catch (IOException ex) {
+            Logger.getLogger(FachadaGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

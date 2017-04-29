@@ -3,8 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-         minWidth="-Infinity"
+<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
          prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE"
          xmlns="http://javafx.com/javafx/8.0.111" fx:controller="aplicacion.Controller.ContableController">
     <tabs>
@@ -41,6 +40,8 @@
                                                 mnemonicParsing="false" text="Eliminar"/>
                                         <Button fx:id="buttonGuardar" layoutX="240.0" layoutY="455.0"
                                                 mnemonicParsing="false" text="Guardar"/>
+                                        <Button fx:id="buttonNovo" layoutX="166.0" layoutY="455.0"
+                                                mnemonicParsing="false" text="Novo"/>
                                         <Label layoutX="235.0" layoutY="65.0" text="Identificador:"/>
                                         <TextField fx:id="textFieldID" layoutX="235.0" layoutY="81.0"/>
                                     </children>

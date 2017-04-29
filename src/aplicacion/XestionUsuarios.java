@@ -2,9 +2,9 @@ package aplicacion;
 
 import baseDatos.FachadaBaseDatos;
 
-public class XestionUsuarios {
-    FachadaBaseDatos fbd;
-    FachadaAplicacion fa;
+class XestionUsuarios {
+    private FachadaBaseDatos fbd;
+    private FachadaAplicacion fa;
 
 
     public XestionUsuarios(FachadaAplicacion fa) {
@@ -18,5 +18,18 @@ public class XestionUsuarios {
     public void logout() {
         fa.setUsuarioActual(null);
         fa.fgui.mostrarVentanaLogin();
+    }
+
+    public boolean logeado(String dni, String pass) {
+        Usuario u = fa.comprobarAutentificacion(dni, pass);
+        if (u != null) {
+            fa.setUsuarioActual(u);
+            if (u.getTipo().toString().equals("Contable")) {
+                fa.fgui.mostrarVentanaContable(u);
+            } else {
+                fa.fgui.mostrarVentanaCoidador(u);
+            }
+            return true;
+        } else return false;
     }
 }

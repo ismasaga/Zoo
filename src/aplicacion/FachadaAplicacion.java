@@ -5,6 +5,7 @@
  */
 package aplicacion;
 
+import gui.FachadaGUI;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
@@ -13,13 +14,13 @@ import static java.lang.System.exit;
 
 public class FachadaAplicacion extends Application {
 
-    gui.GUIManager fgui;
+    FachadaGUI fgui;
     baseDatos.FachadaBaseDatos fbd;
     XestionUsuarios xu;
     Usuario usuarioActual = null;
 
     public FachadaAplicacion() {
-        fgui = new gui.GUIManager(this);
+        fgui = new FachadaGUI(this);
         fbd = new baseDatos.FachadaBaseDatos(this);
         xu = new XestionUsuarios(this);
     }
@@ -28,17 +29,18 @@ public class FachadaAplicacion extends Application {
         launch(args);
     }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        fgui.mostrarVentanaLogin();
+    }
+
+
     public Usuario getUsuarioActual() {
         return usuarioActual;
     }
 
     public void setUsuarioActual(Usuario usuarioActual) {
         this.usuarioActual = usuarioActual;
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        fgui.mostrarVentanaLogin();
     }
 
     public void muestraExcepcion(String e) {
@@ -59,6 +61,10 @@ public class FachadaAplicacion extends Application {
 
     public ObservableList buscarAnimal(String animal) {
         return fbd.buscarAnimal(animal);
+    }
+
+    public boolean logeado(String dni, String pass) {
+        return xu.logeado(dni, pass);
     }
 
 }

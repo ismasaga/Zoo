@@ -1,8 +1,8 @@
 package aplicacion.Controller;
 
 import aplicacion.Animal;
+import aplicacion.FachadaAplicacion;
 import aplicacion.Usuario;
-import gui.GUIManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -51,19 +51,19 @@ public class CoidadorController implements Initializable {
 
     }
 
-    public void initUser(final GUIManager GUIManager, Usuario usuario) throws IOException {
+    public void initUser(final FachadaAplicacion fa, Usuario usuario) throws IOException {
         //sessionLabel.setText(sessionID);
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIManager.logout();
+                fa.logout();
 
             }
         });
         sairButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIManager.sair();
+                fa.sair();
 
             }
         });
@@ -75,7 +75,7 @@ public class CoidadorController implements Initializable {
                     tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
                     panelAnimaisTabla.getChildren().add(tabla);
                     String animal = buscarTextField.getText();
-                    animales = GUIManager.buscarAnimal(animal);
+                    animales = fa.buscarAnimal(animal);
                     tabla.setItems(animales);
                     first.setCellValueFactory(cellData -> cellData.getValue().idProperty());
                     second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
@@ -114,19 +114,13 @@ public class CoidadorController implements Initializable {
 }
 
 
-
-
-
-
-
-
 /******************************************************************************/
 
 /*package aplicacion.Controller;
 
 import aplicacion.Animal;
 import aplicacion.Usuario;
-import gui.GUIManager;
+import gui.FachadaGUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -165,7 +159,7 @@ public class CoidadorController {
     //private TableColumn<Animal, String> third = new TableColumn<Animal, String>("Especie");
     //@FXML
     //private TableColumn<Animal, Integer> fourth = new TableColumn<Animal, Integer>("Edad");
-    private GUIManager GUIManager;
+    private FachadaGUI FachadaGUI;
 
     @FXML
     private void initialize() {*/
@@ -174,11 +168,11 @@ public class CoidadorController {
          */
     /*}
 
-    public void initUser(final GUIManager GUIManager, Usuario usuario) throws IOException {
-        // Gardo a referencia o GUIManager para poder chamalo dende calquer metodo
-        this.GUIManager = GUIManager;
+    public void initUser(final FachadaGUI FachadaGUI, Usuario usuario) throws IOException {
+        // Gardo a referencia o FachadaGUI para poder chamalo dende calquer metodo
+        this.FachadaGUI = FachadaGUI;
         // Fago a primeira busca para ter os datos cargados por defecto
-        tabla.setItems(GUIManager.buscarAnimal(""));
+        tabla.setItems(FachadaGUI.buscarAnimal(""));
         //Referenciamos as columnas da vista
         this.colId.setCellValueFactory(animal -> animal.getValue().idProperty());
         this.colName.setCellValueFactory(animal -> animal.getValue().nombreProperty());
@@ -186,14 +180,14 @@ public class CoidadorController {
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIManager.logout();
+                FachadaGUI.logout();
 
             }
         });
         sairButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                GUIManager.sair();
+                FachadaGUI.sair();
 
             }
         });
@@ -205,7 +199,7 @@ public class CoidadorController {
                     tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
                     panelAnimaisTabla.getChildren().add(tabla);
                     String animal = buscarTextField.getText();
-                    animales = GUIManager.buscarAnimal(animal);
+                    animales = FachadaGUI.buscarAnimal(animal);
                     tabla.setItems(animales);
                     first.setCellValueFactory(cellData -> cellData.getValue().idProperty());
                     second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
@@ -242,12 +236,12 @@ public class CoidadorController {
     @FXML
     private void buscarAnimais() {
         String animal = buscarTextField.getText();
-        tabla.setItems(GUIManager.buscarAnimal(animal));
+        tabla.setItems(FachadaGUI.buscarAnimal(animal));
         try {
             tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
             panelAnimaisTabla.getChildren().add(tabla);
             String animal = buscarTextField.getText();
-            animales = GUIManager.buscarAnimal(animal);
+            animales = FachadaGUI.buscarAnimal(animal);
             tabla.setItems(animales);
             first.setCellValueFactory(cellData -> cellData.getValue().idProperty());
             second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
