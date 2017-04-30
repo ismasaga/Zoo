@@ -3,8 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-         prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE"
+<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE"
          xmlns="http://javafx.com/javafx/8.0.111" fx:controller="aplicacion.Controller.ContableController">
     <tabs>
         <Tab text="Avisos"/>
@@ -23,27 +23,34 @@
                         </AnchorPane>
                         <HBox prefHeight="510.0" prefWidth="800.0">
                             <children>
-                                <Pane fx:id="panelAnimaisTabla" prefHeight="495.0" prefWidth="360.0"/>
+                                <Pane fx:id="panelAnimaisTabla" prefHeight="495.0" prefWidth="360.0">
+                                    <HBox.margin>
+                                        <Insets left="10.0"/>
+                                    </HBox.margin>
+                                </Pane>
                                 <AnchorPane prefHeight="495.0" prefWidth="422.0">
                                     <children>
-                                        <Label layoutX="34.0" layoutY="65.0" text="Nombre:"/>
-                                        <Label layoutX="235.0" layoutY="167.0" text="Especie:"/>
-                                        <Label layoutX="34.0" layoutY="167.0" text="Edad:"/>
-                                        <Label layoutX="235.0" layoutY="271.0" text="Area:"/>
-                                        <Label layoutX="32.0" layoutY="271.0" text="Xaula:"/>
-                                        <TextField fx:id="textFieldNombre" layoutX="32.0" layoutY="81.0"/>
-                                        <TextField fx:id="textFieldEspecie" layoutX="235.0" layoutY="183.0"/>
-                                        <TextField fx:id="textFieldEdad" layoutX="32.0" layoutY="183.0"/>
-                                        <TextField fx:id="textFieldArea" layoutX="235.0" layoutY="287.0"/>
-                                        <TextField fx:id="textFieldXaula" layoutX="32.0" layoutY="287.0"/>
+                                        <Label layoutX="26.0" layoutY="14.0" text="Nombre:"/>
+                                        <Label layoutX="227.0" layoutY="69.0" text="Especie:"/>
+                                        <Label layoutX="26.0" layoutY="69.0" text="Edad:"/>
+                                        <Label layoutX="227.0" layoutY="128.0" text="Area:"/>
+                                        <Label layoutX="24.0" layoutY="128.0" text="Xaula:"/>
+                                        <TextField fx:id="textFieldNombre" layoutX="24.0" layoutY="30.0"/>
+                                        <TextField fx:id="textFieldEspecie" layoutX="227.0" layoutY="85.0"/>
+                                        <TextField fx:id="textFieldEdad" layoutX="24.0" layoutY="85.0"/>
+                                        <TextField fx:id="textFieldArea" layoutX="227.0" layoutY="144.0"/>
+                                        <TextField fx:id="textFieldXaula" layoutX="24.0" layoutY="144.0"/>
                                         <Button fx:id="buttonEliminar" layoutX="333.0" layoutY="455.0"
                                                 mnemonicParsing="false" text="Eliminar"/>
                                         <Button fx:id="buttonGuardar" layoutX="240.0" layoutY="455.0"
                                                 mnemonicParsing="false" text="Guardar"/>
-                                        <Button fx:id="buttonNovo" layoutX="166.0" layoutY="455.0"
-                                                mnemonicParsing="false" text="Novo"/>
-                                        <Label layoutX="235.0" layoutY="65.0" text="Identificador:"/>
-                                        <TextField fx:id="textFieldID" layoutX="235.0" layoutY="81.0"/>
+                                        <Label layoutX="227.0" layoutY="14.0" text="Identificador:"/>
+                                        <TextField fx:id="textFieldID" layoutX="227.0" layoutY="30.0"/>
+                                        <Label layoutX="26.0" layoutY="188.0" text="Peso:"/>
+                                        <Label layoutX="229.0" layoutY="188.0" text="Sexo:"/>
+                                        <TextField fx:id="textFieldPeso" layoutX="26.0" layoutY="204.0"/>
+                                        <ChoiceBox fx:id="choiceBoxSexo" layoutX="229.0" layoutY="204.0"
+                                                   prefHeight="26.0" prefWidth="166.0"/>
                                     </children>
                                     <padding>
                                         <Insets left="15.0"/>

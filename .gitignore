@@ -28,3 +28,8 @@ baseDatos.properties
 /nbproject/
 /.idea/
 >>>>>>> 5292d80ad7304bad0fed6bedfaf0b72b651961fa
+Zoo.iml
+out/
+/nbproject/jfx-impl.xml
+/nbproject/private/
+/nbproject/configs/

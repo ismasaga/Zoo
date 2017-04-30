@@ -6,8 +6,8 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="155.0" prefWidth="488.0"
             xmlns="http://javafx.com/javafx/8.0.111" fx:controller="aplicacion.Controller.ExcepcionController">
     <children>
-        <Label fx:id="excepcionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="25.0"
-               prefHeight="75.0" prefWidth="482.0" text="Label" textAlignment="CENTER"/>
         <Button fx:id="buttonOK" layoutX="226.0" layoutY="115.0" mnemonicParsing="false" text="OK"/>
+        <Label fx:id="excepcionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="22.0"
+               prefHeight="82.0" prefWidth="439.0" text="Label" textAlignment="CENTER" wrapText="true"/>
     </children>
 </AnchorPane>

@@ -63,6 +63,14 @@ public class FachadaAplicacion extends Application {
         return fbd.buscarAnimal(animal);
     }
 
+    public void updateAnimal(Animal a) {
+        fbd.updateAnimal(a);
+    }
+
+    public void borrarAnimal(Integer integer) {
+        fbd.borrarAnimal(integer);
+    }
+
     public boolean logeado(String dni, String pass) {
         return xu.logeado(dni, pass);
     }

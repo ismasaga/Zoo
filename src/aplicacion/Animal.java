@@ -11,33 +11,61 @@ import java.util.ArrayList;
  * Created by miguel on 3/04/17.
  */
 public class Animal {
-    private StringProperty id;
+    private IntegerProperty id;
     private StringProperty nombre;
     private StringProperty especie;
     private IntegerProperty edad;
-    private StringProperty area;
-    private StringProperty xaula;
+    private IntegerProperty peso;
+    private StringProperty sexo;
+    private IntegerProperty area;
+    private IntegerProperty xaula;
     private ArrayList<Comida> comidas;
 
-    public Animal(String id, String nombre, String especie, Integer edad, ArrayList<Comida> comidas, String area, String xaula) {
-        this.id = new SimpleStringProperty(id);
+    public Animal(Integer id, String nombre, String especie, Integer edad, Integer peso, String sexo, Integer area, Integer xaula, ArrayList<Comida> comidas) {
+        this.id = new SimpleIntegerProperty(id);
         this.nombre = new SimpleStringProperty(nombre);
         this.especie = new SimpleStringProperty(especie);
         this.edad = new SimpleIntegerProperty(edad);
+        this.peso = new SimpleIntegerProperty(peso);
+        this.sexo = new SimpleStringProperty(sexo);
+        this.area = new SimpleIntegerProperty(area);
+        this.xaula = new SimpleIntegerProperty(xaula);
         this.comidas = comidas;
-        this.area = new SimpleStringProperty(area);
-        this.xaula = new SimpleStringProperty(xaula);
     }
 
-    public String getId() {
+    public int getPeso() {
+        return peso.get();
+    }
+
+    public void setPeso(int peso) {
+        this.peso.set(peso);
+    }
+
+    public IntegerProperty pesoProperty() {
+        return peso;
+    }
+
+    public String getSexo() {
+        return sexo.get();
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo.set(sexo);
+    }
+
+    public StringProperty sexoProperty() {
+        return sexo;
+    }
+
+    public int getId() {
         return id.get();
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id.set(id);
     }
 
-    public StringProperty idProperty() {
+    public IntegerProperty idProperty() {
         return id;
     }
 
@@ -85,27 +113,27 @@ public class Animal {
         this.comidas = comidas;
     }
 
-    public String getArea() {
+    public int getArea() {
         return area.get();
     }
 
-    public void setArea(String area) {
+    public void setArea(Integer area) {
         this.area.set(area);
     }
 
-    public StringProperty areaProperty() {
+    public IntegerProperty areaProperty() {
         return area;
     }
 
-    public String getXaula() {
+    public int getXaula() {
         return xaula.get();
     }
 
-    public void setXaula(String xaula) {
+    public void setXaula(Integer xaula) {
         this.xaula.set(xaula);
     }
 
-    public StringProperty xaulaProperty() {
+    public IntegerProperty xaulaProperty() {
         return xaula;
     }
 }

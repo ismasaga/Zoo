@@ -23,43 +23,43 @@ FOREIGN KEY (dni) REFERENCES usuarios(dni) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE areas (
-id char(10) not null,
+id numeric not null,
 climatizacion varchar(50),
 PRIMARY KEY (id)
 );
 
 CREATE TABLE xaulas (
-id char(10) not null,
-idArea char(10) not null,
+id numeric not null,
+idArea numeric not null,
 PRIMARY KEY (id, idArea),
 FOREIGN KEY (idArea) REFERENCES areas(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE animais (
-id char(10) not null,
+id numeric not null,
 nome varchar(50) not null,
 especie varchar(50) not null,
 edad integer not null,
 peso integer not null,
 sexo varchar(10) not null,
-idXaula char(10) not null,
-idArea char(10) not null,
+idXaula numeric not null,
+idArea numeric not null,
 PRIMARY KEY (id),
 FOREIGN KEY (idXaula, idArea) REFERENCES xaulas(id, idArea) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE comidas (
-id char(10) not null,
+id numeric not null,
 nome varchar(50) not null,
-cantidadeRestante integer not null,
+cantidadeRestante numeric not null,
 unidades varchar(10) not null,
 PRIMARY KEY (id)
 );
 
 CREATE TABLE comer (
 cantidad integer not null,
-animal char(10) not null,
-comida char(10) not null,
+animal numeric not null,
+comida numeric not null,
 PRIMARY KEY (animal, comida),
 FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (comida) references comidas(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -67,7 +67,7 @@ FOREIGN KEY (comida) references comidas(id) ON DELETE CASCADE ON UPDATE CASCADE
 
 CREATE TABLE eventosHistorial (
 tipo varchar(50) not null,
-animal char(10) not null,
+animal numeric not null,
 nome varchar(50) not null,
 descripcion varchar(300) not null,
 dataInicio date not null,

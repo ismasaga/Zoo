@@ -7,7 +7,7 @@ package baseDatos;
 
 public abstract class DAOAbstracto {
 
-    private aplicacion.FachadaAplicacion fa;
+    protected aplicacion.FachadaAplicacion fa;
     private java.sql.Connection conexion;
 
     protected java.sql.Connection getConexion() {

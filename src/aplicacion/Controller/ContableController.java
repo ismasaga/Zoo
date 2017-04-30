@@ -1,6 +1,7 @@
 package aplicacion.Controller;
 
 import aplicacion.Animal;
+import aplicacion.Comida;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Usuario;
 import javafx.collections.FXCollections;
@@ -10,10 +11,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -21,6 +19,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ContableController implements Initializable {
@@ -56,23 +55,37 @@ public class ContableController implements Initializable {
     @FXML
     private Pane panelAnimaisTabla;
     @FXML
+    private ChoiceBox choiceBoxSexo;
+    @FXML
+    private TextField textFieldPeso;
+    @FXML
     private TableView tabla;
-    private TableColumn<Animal, String> first = new TableColumn<Animal, String>("ID");
+    private TableColumn<Animal, Integer> first = new TableColumn<Animal, Integer>("ID");
     private TableColumn<Animal, String> second = new TableColumn<Animal, String>("Nombre");
     private TableColumn<Animal, String> third = new TableColumn<Animal, String>("Especie");
     private TableColumn<Animal, Integer> fourth = new TableColumn<Animal, Integer>("Edad");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        choiceBoxSexo.setItems(FXCollections.observableArrayList("Macho", "Femia"));
     }
 
-    public void initUser(final FachadaAplicacion fa, Usuario usuario) {
+    public void initUser(final FachadaAplicacion fa, Usuario usuario) throws IOException {
         //sessionLabel.setText(sessionID);
+        tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
+        panelAnimaisTabla.getChildren().add(tabla);
+        first.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        third.setCellValueFactory(cellData -> cellData.getValue().especieProperty());
+        tabla.getColumns().add(first);
+        tabla.getColumns().add(second);
+        tabla.getColumns().add(third);
+
+
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 fa.logout();
-
             }
         });
 
@@ -86,22 +99,10 @@ public class ContableController implements Initializable {
         buscarButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
-                    panelAnimaisTabla.getChildren().add(tabla);
-                    String animal = buscarTextField.getText();
-                    animales = fa.buscarAnimal(animal);
-                    tabla.setItems(animales);
-                    first.setCellValueFactory(cellData -> cellData.getValue().idProperty());
-                    second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
-                    third.setCellValueFactory(cellData -> cellData.getValue().especieProperty());
-                    tabla.getColumns().add(first);
-                    tabla.getColumns().add(second);
-                    tabla.getColumns().add(third);
-                    tabla.getSelectionModel().select(0);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                animales.removeAll();
+                String animal = buscarTextField.getText();
+                animales = fa.buscarAnimal(animal);
+                tabla.setItems(animales);
             }
         });
 
@@ -127,20 +128,83 @@ public class ContableController implements Initializable {
         tabla.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Animal animal = (Animal) tabla.getSelectionModel().getSelectedItem();
-                textFieldNombre.setText(animal.getNombre());
-                textFieldArea.setText(animal.getArea());
-            }
-        });
-
-        buttonNovo.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (textFieldID.getText().equals("")) {
-                    fa.muestraExcepcion("El ID no puede estar vacio");
+                if (tabla.getSelectionModel().getSelectedItem() != null) {
+                    Animal animal = (Animal) tabla.getSelectionModel().getSelectedItem();
+                    textFieldNombre.setText(animal.getNombre());
+                    textFieldID.setText(String.valueOf(animal.getId()));
+                    textFieldEspecie.setText(animal.getEspecie());
+                    textFieldEdad.setText(String.valueOf(animal.getEdad()));
+                    textFieldXaula.setText(String.valueOf(animal.getXaula()));
+                    textFieldPeso.setText(String.valueOf(animal.getPeso()));
+                    textFieldArea.setText(String.valueOf(animal.getArea()));
+                    if (animal.getSexo().equals("Macho"))
+                        choiceBoxSexo.getSelectionModel().select(0);
+                    else
+                        choiceBoxSexo.getSelectionModel().select(1);
                 }
             }
         });
 
+
+        buttonGuardar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (comprobarCampos(fa)) {
+                    if (textFieldID.getText().matches("^\\d+$")) {
+                        Animal animal = new Animal(Integer.valueOf(textFieldID.getText()), textFieldNombre.getText(), textFieldEspecie.getText(), Integer.valueOf(textFieldEdad.getText()), Integer.valueOf(textFieldPeso.getText()), choiceBoxSexo.getSelectionModel().getSelectedItem().toString(), Integer.valueOf(textFieldArea.getText()), Integer.valueOf(textFieldXaula.getText()), new ArrayList<Comida>());
+                        fa.updateAnimal(animal);
+                        buscarButton.fire();
+                    } else fa.muestraExcepcion("El ID debe ser numérico");
+                }
+            }
+        });
+
+        buttonEliminar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (tabla.getSelectionModel().getSelectedItem() != null) {
+                    fa.borrarAnimal(((Animal) tabla.getItems().get(tabla.getSelectionModel().getSelectedIndex())).getId());
+                    buscarButton.fire();
+                    textFieldNombre.setText("");
+                    textFieldID.setText("");
+                    textFieldEspecie.setText("");
+                    textFieldEdad.setText("");
+                    textFieldXaula.setText("");
+                    textFieldPeso.setText("");
+                    textFieldArea.setText("");
+                } else fa.muestraExcepcion("Selecciona un animal en la tabla para borrarlo");
+            }
+        });
+
+    }
+
+    private boolean comprobarCampos(FachadaAplicacion fa) {
+        String texto = "";
+        if (textFieldID.getText().equals("")) {
+            texto = texto + "ID, ";
+        }
+        if (textFieldNombre.getText().equals("")) {
+            texto = texto + "NOMBRE, ";
+        }
+        if (textFieldArea.getText().equals("")) {
+            texto = texto + "AREA, ";
+        }
+        if (textFieldEdad.getText().equals("")) {
+            texto = texto + "EDAD, ";
+        }
+        if (textFieldPeso.getText().equals("")) {
+            texto = texto + "PESO, ";
+        }
+        if (textFieldEspecie.getText().equals("")) {
+            texto = texto + "ESPECIE, ";
+        }
+        if (textFieldXaula.getText().equals("")) {
+            texto = texto + "XAULA, ";
+        }
+        if (!texto.isEmpty()) {
+            texto = "Os campos: " + texto + " están vacíos";
+            fa.muestraExcepcion(texto);
+        }
+        return texto.isEmpty();
     }
 }

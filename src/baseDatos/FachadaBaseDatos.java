@@ -1,5 +1,6 @@
 package baseDatos;
 
+import aplicacion.Animal;
 import aplicacion.Usuario;
 import javafx.collections.ObservableList;
 
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class FachadaBaseDatos {
-    private aplicacion.FachadaAplicacion fa;
+    public aplicacion.FachadaAplicacion fa;
     private java.sql.Connection conexion;
     private DAOUsuarios daoUsuarios;
     private DAOAnimales daoAnimales;
@@ -59,5 +60,17 @@ public class FachadaBaseDatos {
 
     public ObservableList buscarAnimal(String animal) {
         return daoAnimales.buscarAnimal(animal);
+    }
+
+    public void updateAnimal(Animal a) {
+        if (buscarAnimal(String.valueOf(a.getId())).size() == 1) {
+            daoAnimales.updateAnimal(a);
+        } else {
+            daoAnimales.novoAnimal(a);
+        }
+    }
+
+    public void borrarAnimal(Integer integer) {
+        daoAnimales.borrarAnimal(integer);
     }
 }

@@ -41,7 +41,7 @@ public class CoidadorController implements Initializable {
     private Pane panelAnimaisTabla;
     @FXML
     private TableView tabla;
-    private TableColumn<Animal, String> first = new TableColumn<Animal, String>("ID");
+    private TableColumn<Animal, Integer> first = new TableColumn<Animal, Integer>("ID");
     private TableColumn<Animal, String> second = new TableColumn<Animal, String>("Nombre");
     private TableColumn<Animal, String> third = new TableColumn<Animal, String>("Especie");
     private TableColumn<Animal, Integer> fourth = new TableColumn<Animal, Integer>("Edad");
@@ -77,7 +77,7 @@ public class CoidadorController implements Initializable {
                     String animal = buscarTextField.getText();
                     animales = fa.buscarAnimal(animal);
                     tabla.setItems(animales);
-                    first.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+                    first.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
                     second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
                     third.setCellValueFactory(cellData -> cellData.getValue().especieProperty());
                     tabla.getColumns().add(first);
