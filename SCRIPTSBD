@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS avisosAreas;
+DROP TABLE IF EXISTS avisosXaulas;
 DROP TABLE IF EXISTS eventoshistorial;
 DROP TABLE IF EXISTS comer;
 DROP TABLE IF EXISTS comidas;
@@ -75,6 +77,29 @@ dataFin date,
 tratamento varchar(100),
 PRIMARY KEY (nome, dataInicio),
 FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE AvisosAreas (
+area numeric not null,
+nome varchar(50) not null,
+descripcion varchar(2000) not null,
+dataInicio date not null,
+dataFin date,
+tratamento varchar(100),
+PRIMARY KEY (area, nome, dataInicio),
+FOREIGN KEY (area) references areas(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE AvisosXaulas (
+area numeric not null,
+xaula numeric not null,
+nome varchar(50) not null,
+descripcion varchar(2000) not null,
+dataInicio date not null,
+dataFin date,
+tratamento varchar(100),
+PRIMARY KEY (area, xaula, nome, dataInicio),
+FOREIGN KEY (xaula, area) references xaulas(id, idArea) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO usuarios (dni, nome, pass, telefono) VALUES ('12345678A', 'Rosa', 'pass', '612121212');
