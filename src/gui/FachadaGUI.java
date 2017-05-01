@@ -21,7 +21,7 @@ public class FachadaGUI {
     private Stage stage = new Stage();
     private FachadaAplicacion fa;
     private Integer width = 800;
-    private Integer height = 700;
+    private Integer height = 600;
     private String icon = "iconlion.png";
     public FachadaGUI(FachadaAplicacion fa) {
         this.fa = fa;
