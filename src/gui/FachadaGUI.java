@@ -9,6 +9,7 @@ import aplicacion.Usuario;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -19,7 +20,9 @@ import java.util.logging.Logger;
 public class FachadaGUI {
     private Stage stage = new Stage();
     private FachadaAplicacion fa;
-
+    private Integer width = 800;
+    private Integer height = 700;
+    private String icon = "iconlion.png";
     public FachadaGUI(FachadaAplicacion fa) {
         this.fa = fa;
     }
@@ -31,6 +34,7 @@ public class FachadaGUI {
             LoginController controller = loader.getController();
             controller.initManager(fa);
             stage.setTitle("Login");
+            stage.getIcons().add(new Image("iconlion.png"));
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
@@ -47,7 +51,7 @@ public class FachadaGUI {
         );
 
         try {
-            Scene scene = new Scene(loader.load(), 800, 600);
+            Scene scene = new Scene(loader.load(), width, height);
             ContableController controller = loader.getController();
             controller.initUser(fa, usuario);
             stage.setTitle("Ventana Contable: " + usuario.getNombre());
@@ -67,7 +71,7 @@ public class FachadaGUI {
         );
 
         try {
-            Scene scene = new Scene(loader.load(), 800, 600);
+            Scene scene = new Scene(loader.load(), width, height);
             CoidadorController controller = loader.getController();
             controller.initUser(fa, usuario);
             stage.setTitle("Ventana Coidador: " + usuario.getNombre());

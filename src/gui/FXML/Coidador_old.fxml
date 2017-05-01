@@ -4,7 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity"
          prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE"
          xmlns="http://javafx.com/javafx/8.0.111" fx:controller="aplicacion.Controller.CoidadorController">
     <tabs>

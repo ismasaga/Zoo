@@ -14,6 +14,7 @@ public class FachadaBaseDatos {
     private java.sql.Connection conexion;
     private DAOUsuarios daoUsuarios;
     private DAOAnimales daoAnimales;
+    private DAOAreasXaulas daoAreasXaulas;
 
     public FachadaBaseDatos(aplicacion.FachadaAplicacion fa) {
         Properties configuracion = new Properties();
@@ -40,6 +41,7 @@ public class FachadaBaseDatos {
 
             daoUsuarios = new DAOUsuarios(conexion, fa);
             daoAnimales = new DAOAnimales(conexion, fa);
+            daoAreasXaulas = new DAOAreasXaulas(conexion, fa);
 
 
         } catch (FileNotFoundException f) {
@@ -72,5 +74,13 @@ public class FachadaBaseDatos {
 
     public void borrarAnimal(Integer integer) {
         daoAnimales.borrarAnimal(integer);
+    }
+
+    public ObservableList updateAreas() {
+        return daoAreasXaulas.updateAreas();
+    }
+
+    public ObservableList updateXaulas(Integer area) {
+        return daoAreasXaulas.updateXaulas(area);
     }
 }

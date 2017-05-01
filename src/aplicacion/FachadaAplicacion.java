@@ -71,6 +71,14 @@ public class FachadaAplicacion extends Application {
         fbd.borrarAnimal(integer);
     }
 
+    public ObservableList updateAreas() {
+        return fbd.updateAreas();
+    }
+
+    public ObservableList updateXaulas(Integer area) {
+        return fbd.updateXaulas(area);
+    }
+
     public boolean logeado(String dni, String pass) {
         return xu.logeado(dni, pass);
     }

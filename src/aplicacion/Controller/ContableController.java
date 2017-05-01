@@ -4,6 +4,8 @@ import aplicacion.Animal;
 import aplicacion.Comida;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Usuario;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,8 +37,6 @@ public class ContableController implements Initializable {
     @FXML
     private Button buttonGuardar;
     @FXML
-    private Button buttonNovo;
-    @FXML
     private TextField textFieldNombre;
     @FXML
     private TextField textFieldID;
@@ -45,9 +45,9 @@ public class ContableController implements Initializable {
     @FXML
     private TextField textFieldEspecie;
     @FXML
-    private TextField textFieldArea;
+    private ChoiceBox choiceBoxArea;
     @FXML
-    private TextField textFieldXaula;
+    private ChoiceBox choiceBoxXaula;
     @FXML
     private TextField buscarTextField;
     @FXML
@@ -60,6 +60,7 @@ public class ContableController implements Initializable {
     private TextField textFieldPeso;
     @FXML
     private TableView tabla;
+
     private TableColumn<Animal, Integer> first = new TableColumn<Animal, Integer>("ID");
     private TableColumn<Animal, String> second = new TableColumn<Animal, String>("Nombre");
     private TableColumn<Animal, String> third = new TableColumn<Animal, String>("Especie");
@@ -134,13 +135,25 @@ public class ContableController implements Initializable {
                     textFieldID.setText(String.valueOf(animal.getId()));
                     textFieldEspecie.setText(animal.getEspecie());
                     textFieldEdad.setText(String.valueOf(animal.getEdad()));
-                    textFieldXaula.setText(String.valueOf(animal.getXaula()));
+                    choiceBoxArea.setItems(updateAreas(fa));
+                    choiceBoxArea.getSelectionModel().select(choiceBoxArea.getItems().indexOf(String.valueOf(animal.getArea())));
                     textFieldPeso.setText(String.valueOf(animal.getPeso()));
-                    textFieldArea.setText(String.valueOf(animal.getArea()));
+                    choiceBoxXaula.setItems(updateXaulas(fa, animal.getArea()));
+                    choiceBoxXaula.getSelectionModel().select(choiceBoxXaula.getItems().indexOf(String.valueOf(animal.getXaula())));
                     if (animal.getSexo().equals("Macho"))
                         choiceBoxSexo.getSelectionModel().select(0);
                     else
                         choiceBoxSexo.getSelectionModel().select(1);
+                }
+            }
+        });
+
+        choiceBoxArea.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                if (newValue != null) {
+                    choiceBoxXaula.setItems(updateXaulas(fa, Integer.valueOf(newValue.toString())));
+                    choiceBoxXaula.getSelectionModel().clearSelection();
                 }
             }
         });
@@ -151,7 +164,7 @@ public class ContableController implements Initializable {
             public void handle(MouseEvent event) {
                 if (comprobarCampos(fa)) {
                     if (textFieldID.getText().matches("^\\d+$")) {
-                        Animal animal = new Animal(Integer.valueOf(textFieldID.getText()), textFieldNombre.getText(), textFieldEspecie.getText(), Integer.valueOf(textFieldEdad.getText()), Integer.valueOf(textFieldPeso.getText()), choiceBoxSexo.getSelectionModel().getSelectedItem().toString(), Integer.valueOf(textFieldArea.getText()), Integer.valueOf(textFieldXaula.getText()), new ArrayList<Comida>());
+                        Animal animal = new Animal(Integer.valueOf(textFieldID.getText()), textFieldNombre.getText(), textFieldEspecie.getText(), Integer.valueOf(textFieldEdad.getText()), Integer.valueOf(textFieldPeso.getText()), choiceBoxSexo.getSelectionModel().getSelectedItem().toString(), Integer.valueOf(choiceBoxArea.getSelectionModel().getSelectedItem().toString()), Integer.valueOf(choiceBoxXaula.getSelectionModel().getSelectedItem().toString()), new ArrayList<Comida>());
                         fa.updateAnimal(animal);
                         buscarButton.fire();
                     } else fa.muestraExcepcion("El ID debe ser numérico");
@@ -169,9 +182,9 @@ public class ContableController implements Initializable {
                     textFieldID.setText("");
                     textFieldEspecie.setText("");
                     textFieldEdad.setText("");
-                    textFieldXaula.setText("");
+                    choiceBoxArea.getSelectionModel().clearSelection();
                     textFieldPeso.setText("");
-                    textFieldArea.setText("");
+                    choiceBoxXaula.getSelectionModel().clearSelection();
                 } else fa.muestraExcepcion("Selecciona un animal en la tabla para borrarlo");
             }
         });
@@ -186,7 +199,7 @@ public class ContableController implements Initializable {
         if (textFieldNombre.getText().equals("")) {
             texto = texto + "NOMBRE, ";
         }
-        if (textFieldArea.getText().equals("")) {
+        if (choiceBoxArea.getSelectionModel().getSelectedItem().toString().equals("")) {
             texto = texto + "AREA, ";
         }
         if (textFieldEdad.getText().equals("")) {
@@ -198,7 +211,7 @@ public class ContableController implements Initializable {
         if (textFieldEspecie.getText().equals("")) {
             texto = texto + "ESPECIE, ";
         }
-        if (textFieldXaula.getText().equals("")) {
+        if (choiceBoxXaula.getSelectionModel().getSelectedItem().toString().equals("")) {
             texto = texto + "XAULA, ";
         }
         if (!texto.isEmpty()) {
@@ -206,5 +219,13 @@ public class ContableController implements Initializable {
             fa.muestraExcepcion(texto);
         }
         return texto.isEmpty();
+    }
+
+    private ObservableList updateAreas(FachadaAplicacion fa) {
+        return fa.updateAreas();
+    }
+
+    private ObservableList updateXaulas(FachadaAplicacion fa, Integer area) {
+        return fa.updateXaulas(area);
     }
 }
