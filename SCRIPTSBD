@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS animais;
 DROP TABLE IF EXISTS xaulas;
 DROP TABLE IF EXISTS areas;
 DROP TABLE IF EXISTS coidadores;
+DROP TABLE IF EXISTS contables;
 DROP TABLE IF EXISTS usuarios;
 
 CREATE TABLE usuarios (
@@ -19,6 +20,12 @@ PRIMARY KEY (dni)
 );
 
 CREATE TABLE coidadores (
+dni char(10) not null,
+PRIMARY KEY (dni),
+FOREIGN KEY (dni) REFERENCES usuarios(dni) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE contables (
 dni char(10) not null,
 PRIMARY KEY (dni),
 FOREIGN KEY (dni) REFERENCES usuarios(dni) ON DELETE CASCADE ON UPDATE CASCADE
@@ -74,9 +81,13 @@ nome varchar(50) not null,
 descripcion varchar(300) not null,
 dataInicio date not null,
 dataFin date,
+coidador char(10) not null,
+contable char(10),
 tratamento varchar(100),
 PRIMARY KEY (nome, dataInicio),
-FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE
+FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (coidador) references coidadores(dni) ON DELETE RESTRICT ON UPDATE CASCADE,
+FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE AvisosAreas (
@@ -85,9 +96,13 @@ nome varchar(50) not null,
 descripcion varchar(2000) not null,
 dataInicio date not null,
 dataFin date,
+coidador char(10) not null,
+contable char(10),
 tratamento varchar(100),
 PRIMARY KEY (area, nome, dataInicio),
-FOREIGN KEY (area) references areas(id) ON DELETE CASCADE ON UPDATE CASCADE
+FOREIGN KEY (area) references areas(id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (coidador) references coidadores(dni) ON DELETE RESTRICT ON UPDATE CASCADE,
+FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE AvisosXaulas (
@@ -97,9 +112,13 @@ nome varchar(50) not null,
 descripcion varchar(2000) not null,
 dataInicio date not null,
 dataFin date,
+coidador char(10) not null,
+contable char(10),
 tratamento varchar(100),
 PRIMARY KEY (area, xaula, nome, dataInicio),
-FOREIGN KEY (xaula, area) references xaulas(id, idArea) ON DELETE CASCADE ON UPDATE CASCADE
+FOREIGN KEY (xaula, area) references xaulas(id, idArea) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (coidador) references coidadores(dni) ON DELETE RESTRICT ON UPDATE CASCADE,
+FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 INSERT INTO usuarios (dni, nome, pass, telefono) VALUES ('12345678A', 'Rosa', 'pass', '612121212');
