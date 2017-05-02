@@ -23,6 +23,7 @@ class XestionUsuarios {
     public boolean logeado(String dni, String pass) {
         Usuario u = fa.comprobarAutentificacion(dni, pass);
         if (u != null) {
+            u.setDni(u.getDni().substring(0, u.getDni().length() - 1));
             fa.setUsuarioActual(u);
             if (u.getTipo().toString().equals("Contable")) {
                 fa.fgui.mostrarVentanaContable(u);
