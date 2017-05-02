@@ -83,4 +83,14 @@ public class FachadaAplicacion extends Application {
         return xu.logeado(dni, pass);
     }
 
+    public ObservableList buscarAvisos() {
+        return fbd.buscarAvisos();
+    }
+
+    public void resolverAviso(Aviso aviso) {
+        if (aviso.getTipo().equals("area")) {
+            fbd.resolverAvisoArea(aviso);
+        }
+    }
+
 }

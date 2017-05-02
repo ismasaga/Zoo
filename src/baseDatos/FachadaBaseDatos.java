@@ -1,6 +1,7 @@
 package baseDatos;
 
 import aplicacion.Animal;
+import aplicacion.Aviso;
 import aplicacion.Usuario;
 import javafx.collections.ObservableList;
 
@@ -15,6 +16,7 @@ public class FachadaBaseDatos {
     private DAOUsuarios daoUsuarios;
     private DAOAnimales daoAnimales;
     private DAOAreasXaulas daoAreasXaulas;
+    private DAOAvisos daoAvisos;
 
     public FachadaBaseDatos(aplicacion.FachadaAplicacion fa) {
         Properties configuracion = new Properties();
@@ -42,6 +44,7 @@ public class FachadaBaseDatos {
             daoUsuarios = new DAOUsuarios(conexion, fa);
             daoAnimales = new DAOAnimales(conexion, fa);
             daoAreasXaulas = new DAOAreasXaulas(conexion, fa);
+            daoAvisos = new DAOAvisos(conexion, fa);
 
 
         } catch (FileNotFoundException f) {
@@ -82,5 +85,13 @@ public class FachadaBaseDatos {
 
     public ObservableList updateXaulas(Integer area) {
         return daoAreasXaulas.updateXaulas(area);
+    }
+
+    public ObservableList buscarAvisos() {
+        return daoAvisos.buscarAvisos();
+    }
+
+    public void resolverAvisoArea(Aviso aviso) {
+        daoAvisos.resolverAvisoArea(aviso);
     }
 }

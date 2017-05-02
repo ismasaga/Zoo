@@ -42,7 +42,6 @@ public class DAOAnimales extends DAOAbstracto {
             }
         } catch (SQLException e) {
             fa.muestraExcepcion(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
                 stmAnimales.close();

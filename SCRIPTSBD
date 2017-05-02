@@ -83,7 +83,7 @@ dataInicio date not null,
 dataFin date,
 coidador char(10) not null,
 contable char(10),
-tratamento varchar(100),
+tratamento varchar(500),
 PRIMARY KEY (nome, dataInicio),
 FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (coidador) references coidadores(dni) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -98,7 +98,7 @@ dataInicio date not null,
 dataFin date,
 coidador char(10) not null,
 contable char(10),
-tratamento varchar(100),
+tratamento varchar(500),
 PRIMARY KEY (area, nome, dataInicio),
 FOREIGN KEY (area) references areas(id) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (coidador) references coidadores(dni) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -114,14 +114,14 @@ dataInicio date not null,
 dataFin date,
 coidador char(10) not null,
 contable char(10),
-tratamento varchar(100),
+tratamento varchar(500),
 PRIMARY KEY (area, xaula, nome, dataInicio),
 FOREIGN KEY (xaula, area) references xaulas(id, idArea) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (coidador) references coidadores(dni) ON DELETE RESTRICT ON UPDATE CASCADE,
 FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-INSERT INTO usuarios (dni, nome, pass, telefono) VALUES ('12345678A', 'Rosa', 'pass', '612121212');
+INSERT INTO usuarios (dni, nome, pass, telefono) VALUES ('12345678A', 'Miguel', 'pass', '612121212');
 INSERT INTO usuarios (dni, nome, pass, telefono, email) VALUES ('12345678B', 'Isma', 'pass', '634343434', 'email@example.com');
 
 INSERT INTO coidadores (dni) VALUES ('12345678B');

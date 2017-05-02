@@ -1,9 +1,6 @@
 package aplicacion.Controller;
 
-import aplicacion.Animal;
-import aplicacion.Comida;
-import aplicacion.FachadaAplicacion;
-import aplicacion.Usuario;
+import aplicacion.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,6 +23,7 @@ import java.util.ResourceBundle;
 
 public class ContableController implements Initializable {
     ObservableList<Animal> animales = FXCollections.observableArrayList();
+    ObservableList<Aviso> avisos = FXCollections.observableArrayList();
     @FXML
     private Button sesionButton;
     @FXML
@@ -37,6 +35,12 @@ public class ContableController implements Initializable {
     @FXML
     private Button buttonGuardar;
     @FXML
+    private Button buttonResolver;
+    @FXML
+    private Button buttonReabrir;
+    @FXML
+    private Button buttonEliminarAviso;
+    @FXML
     private TextField textFieldNombre;
     @FXML
     private TextField textFieldID;
@@ -44,6 +48,10 @@ public class ContableController implements Initializable {
     private TextField textFieldEdad;
     @FXML
     private TextField textFieldEspecie;
+    @FXML
+    private TextArea textAreaDescripcion;
+    @FXML
+    private TextArea textAreaTratamento;
     @FXML
     private ChoiceBox choiceBoxArea;
     @FXML
@@ -59,12 +67,19 @@ public class ContableController implements Initializable {
     @FXML
     private TextField textFieldPeso;
     @FXML
-    private TableView tabla;
+    private TableView tablaAnimais;
 
-    private TableColumn<Animal, Integer> first = new TableColumn<Animal, Integer>("ID");
-    private TableColumn<Animal, String> second = new TableColumn<Animal, String>("Nombre");
-    private TableColumn<Animal, String> third = new TableColumn<Animal, String>("Especie");
-    private TableColumn<Animal, Integer> fourth = new TableColumn<Animal, Integer>("Edad");
+    private TableColumn<Animal, Integer> animalFirst = new TableColumn<Animal, Integer>("ID");
+    private TableColumn<Animal, String> animalSecond = new TableColumn<Animal, String>("Nombre");
+    private TableColumn<Animal, String> animalThird = new TableColumn<Animal, String>("Especie");
+
+    @FXML
+    private TableView tablaAvisos;
+
+    private TableColumn<Aviso, String> avisoFirst = new TableColumn<Aviso, String>("Suxeito");
+    private TableColumn<Aviso, String> avisoSecond = new TableColumn<Aviso, String>("Asunto");
+    private TableColumn<Aviso, String> avisoThird = new TableColumn<Aviso, String>("Data");
+    private TableColumn<Aviso, String> avisoFourth = new TableColumn<Aviso, String>("Resolto");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -73,14 +88,23 @@ public class ContableController implements Initializable {
 
     public void initUser(final FachadaAplicacion fa, Usuario usuario) throws IOException {
         //sessionLabel.setText(sessionID);
-        tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
-        panelAnimaisTabla.getChildren().add(tabla);
-        first.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
-        third.setCellValueFactory(cellData -> cellData.getValue().especieProperty());
-        tabla.getColumns().add(first);
-        tabla.getColumns().add(second);
-        tabla.getColumns().add(third);
+        tablaAnimais = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
+        panelAnimaisTabla.getChildren().add(tablaAnimais);
+        animalFirst.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        animalSecond.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        animalThird.setCellValueFactory(cellData -> cellData.getValue().especieProperty());
+        tablaAnimais.getColumns().add(animalFirst);
+        tablaAnimais.getColumns().add(animalSecond);
+        tablaAnimais.getColumns().add(animalThird);
+
+        avisoFirst.setCellValueFactory(cellData -> cellData.getValue().suxeitoProperty());
+        avisoSecond.setCellValueFactory(cellData -> cellData.getValue().asuntoProperty());
+        avisoThird.setCellValueFactory(cellData -> cellData.getValue().dataInicioProperty());
+        avisoFourth.setCellValueFactory(cellData -> cellData.getValue().dataFinProperty());
+        tablaAvisos.getColumns().add(avisoFirst);
+        tablaAvisos.getColumns().add(avisoSecond);
+        tablaAvisos.getColumns().add(avisoThird);
+        tablaAvisos.getColumns().add(avisoFourth);
 
 
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -103,7 +127,7 @@ public class ContableController implements Initializable {
                 animales.removeAll();
                 String animal = buscarTextField.getText();
                 animales = fa.buscarAnimal(animal);
-                tabla.setItems(animales);
+                tablaAnimais.setItems(animales);
             }
         });
 
@@ -124,13 +148,12 @@ public class ContableController implements Initializable {
             }
         });
 
-        buscarButton.fire();
 
-        tabla.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        tablaAnimais.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (tabla.getSelectionModel().getSelectedItem() != null) {
-                    Animal animal = (Animal) tabla.getSelectionModel().getSelectedItem();
+                if (tablaAnimais.getSelectionModel().getSelectedItem() != null) {
+                    Animal animal = (Animal) tablaAnimais.getSelectionModel().getSelectedItem();
                     textFieldNombre.setText(animal.getNombre());
                     textFieldID.setText(String.valueOf(animal.getId()));
                     textFieldEspecie.setText(animal.getEspecie());
@@ -148,8 +171,24 @@ public class ContableController implements Initializable {
             }
         });
 
-        choiceBoxArea.valueProperty().addListener(new ChangeListener() {
+        tablaAvisos.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
+            public void handle(MouseEvent event) {
+                if (tablaAvisos.getSelectionModel().getSelectedItem() != null) {
+                    Aviso aviso = (Aviso) tablaAvisos.getSelectionModel().getSelectedItem();
+                    textAreaDescripcion.setText(aviso.getDescripcion());
+                }
+            }
+        });
+
+        buttonResolver.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                fa.resolverAviso((Aviso) tablaAvisos.getSelectionModel().getSelectedItem());
+            }
+        });
+
+        choiceBoxArea.valueProperty().addListener(new ChangeListener() {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 if (newValue != null) {
                     choiceBoxXaula.setItems(updateXaulas(fa, Integer.valueOf(newValue.toString())));
@@ -175,8 +214,8 @@ public class ContableController implements Initializable {
         buttonEliminar.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (tabla.getSelectionModel().getSelectedItem() != null) {
-                    fa.borrarAnimal(((Animal) tabla.getItems().get(tabla.getSelectionModel().getSelectedIndex())).getId());
+                if (tablaAnimais.getSelectionModel().getSelectedItem() != null) {
+                    fa.borrarAnimal(((Animal) tablaAnimais.getItems().get(tablaAnimais.getSelectionModel().getSelectedIndex())).getId());
                     buscarButton.fire();
                     textFieldNombre.setText("");
                     textFieldID.setText("");
@@ -189,6 +228,9 @@ public class ContableController implements Initializable {
             }
         });
 
+
+        buscarButton.fire();
+        updateAvisos(fa);
     }
 
     private boolean comprobarCampos(FachadaAplicacion fa) {
@@ -227,5 +269,11 @@ public class ContableController implements Initializable {
 
     private ObservableList updateXaulas(FachadaAplicacion fa, Integer area) {
         return fa.updateXaulas(area);
+    }
+
+    private void updateAvisos(FachadaAplicacion fa) {
+        avisos.removeAll();
+        avisos = fa.buscarAvisos();
+        tablaAvisos.setItems(avisos);
     }
 }
