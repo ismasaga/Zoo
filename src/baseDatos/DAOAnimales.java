@@ -32,7 +32,9 @@ public class DAOAnimales extends DAOAbstracto {
                 stmAnimales = con.prepareStatement("select * from animais where id = ? or nome = ? or especie = ?;");
                 if (animal.matches("^\\d+$")) {
                     stmAnimales.setInt(1, Integer.valueOf(animal));
-                } else stmAnimales.setInt(1, 0);
+                } else {
+                    stmAnimales.setInt(1, 0);
+                }
                 stmAnimales.setString(2, animal);
                 stmAnimales.setString(3, animal);
             }
