@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS coidadores;
 DROP TABLE IF EXISTS contables;
 DROP TABLE IF EXISTS usuarios;
 
-CREATE TABLE usuarios (
+CREATE TABLE coidadores (
 dni char(10) not null,
 pass varchar(50) not null,
 nome varchar(100) not null,
@@ -19,16 +19,13 @@ email varchar(50),
 PRIMARY KEY (dni)
 );
 
-CREATE TABLE coidadores (
-dni char(10) not null,
-PRIMARY KEY (dni),
-FOREIGN KEY (dni) REFERENCES usuarios(dni) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE contables (
-dni char(10) not null,
-PRIMARY KEY (dni),
-FOREIGN KEY (dni) REFERENCES usuarios(dni) ON DELETE CASCADE ON UPDATE CASCADE
+dni char(10) not null ,
+pass varchar(50) not null,
+nome varchar(100) not null,
+telefono varchar(30) not null,
+email varchar(50),
+PRIMARY KEY (dni)
 );
 
 CREATE TABLE areas (
