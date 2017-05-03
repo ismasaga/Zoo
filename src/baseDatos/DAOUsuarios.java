@@ -71,7 +71,7 @@ public class DAOUsuarios extends DAOAbstracto {
             rsUsuario = stmUsuario.executeQuery();
 
             if (!rsUsuario.isBeforeFirst()) { // Non está en coidadores
-                stmUsuario = con.prepareStatement("select * from contables"
+                stmUsuario = con.prepareStatement("select * from contables "
                         + "where dni = ? and pass = ?;");
 
                 stmUsuario.setString(1, dni);
