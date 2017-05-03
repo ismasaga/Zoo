@@ -17,6 +17,7 @@ public class Aviso {
     private StringProperty contable;
     private IntegerProperty area;
     private IntegerProperty xaula;
+    private IntegerProperty animal;
     private StringProperty tratamento;
     private StringProperty dataInicio;
     private StringProperty dataFin;
@@ -47,6 +48,31 @@ public class Aviso {
         this.dataFin = new SimpleStringProperty(dataFin);
         this.tratamento = new SimpleStringProperty(tratamento);
         this.tipo = tipo;
+    }
+
+    public Aviso(Integer animal, String suxeito, String asunto, String descripcion, String coidador, String contable, String dataInicio, String dataFin, String tratamento, String tipo) {
+        this.suxeito = new SimpleStringProperty("Animal: " + animal + ", " + suxeito);
+        this.asunto = new SimpleStringProperty(asunto);
+        this.descripcion = new SimpleStringProperty(descripcion);
+        this.coidador = new SimpleStringProperty(coidador);
+        this.contable = new SimpleStringProperty(contable);
+        this.animal = new SimpleIntegerProperty(animal);
+        this.dataInicio = new SimpleStringProperty(dataInicio);
+        this.dataFin = new SimpleStringProperty(dataFin);
+        this.tratamento = new SimpleStringProperty(tratamento);
+        this.tipo = tipo;
+    }
+
+    public int getAnimal() {
+        return animal.get();
+    }
+
+    public void setAnimal(int animal) {
+        this.animal.set(animal);
+    }
+
+    public IntegerProperty animalProperty() {
+        return animal;
     }
 
     public String getTipo() {

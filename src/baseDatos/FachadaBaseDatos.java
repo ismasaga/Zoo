@@ -91,7 +91,15 @@ public class FachadaBaseDatos {
         return daoAvisos.buscarAvisos();
     }
 
-    public void resolverAvisoArea(Aviso aviso) {
-        daoAvisos.resolverAvisoArea(aviso);
+    public void resolverAviso(Aviso aviso) {
+        daoAvisos.resolverAviso(aviso);
+    }
+
+    public void reabrirAviso(Aviso aviso) {
+        daoAvisos.reabrirAviso(aviso);
+    }
+
+    public void borrarAviso(Aviso aviso) {
+        daoAvisos.borrarAviso(aviso);
     }
 }
