@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS avisosAreas;
 DROP TABLE IF EXISTS avisosXaulas;
-DROP TABLE IF EXISTS eventoshistorial;
+DROP TABLE IF EXISTS avisosanimais;
 DROP TABLE IF EXISTS comer;
 DROP TABLE IF EXISTS comidas;
 DROP TABLE IF EXISTS animais;
@@ -8,10 +8,11 @@ DROP TABLE IF EXISTS xaulas;
 DROP TABLE IF EXISTS areas;
 DROP TABLE IF EXISTS coidadores;
 DROP TABLE IF EXISTS contables;
-DROP TABLE IF EXISTS usuarios;
+DROP FUNCTION IF EXISTS checkcoidadores(char(10));
+DROP FUNCTION IF EXISTS checkcontables(char(10));
 
 CREATE TABLE coidadores (
-dni char(10) not null,
+dni char(9) not null,
 pass varchar(50) not null,
 nome varchar(100) not null,
 telefono varchar(30) not null,
@@ -20,13 +21,33 @@ PRIMARY KEY (dni)
 );
 
 CREATE TABLE contables (
-dni char(10) not null ,
+dni char(9) not null ,
 pass varchar(50) not null,
 nome varchar(100) not null,
 telefono varchar(30) not null,
 email varchar(50),
 PRIMARY KEY (dni)
 );
+
+CREATE FUNCTION checkContables(_dni char(9))
+RETURNS BIGINT AS
+$$
+   SELECT count(*) FROM contables WHERE dni = _dni
+$$ LANGUAGE SQL IMMUTABLE;
+
+ALTER TABLE coidadores
+  ADD CONSTRAINT comprobacion
+  CHECK(checkContables(dni) = 0);
+
+CREATE FUNCTION checkCoidadores(_dni char(9))
+RETURNS BIGINT AS
+$$
+   SELECT count(*) FROM coidadores WHERE dni = _dni
+$$ LANGUAGE SQL IMMUTABLE;
+
+ALTER TABLE contables
+  ADD CONSTRAINT comprobacion
+  CHECK(checkCoidadores(dni) = 0);
 
 CREATE TABLE areas (
 id numeric not null,
@@ -71,15 +92,14 @@ FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (comida) references comidas(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE eventosHistorial (
-tipo varchar(50) not null,
+CREATE TABLE avisosAnimais (
 animal numeric not null,
 nome varchar(50) not null,
 descripcion varchar(300) not null,
 dataInicio date not null,
 dataFin date,
-coidador char(10) not null,
-contable char(10),
+coidador char(9) not null,
+contable char(9),
 tratamento varchar(500),
 PRIMARY KEY (nome, dataInicio),
 FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -87,14 +107,14 @@ FOREIGN KEY (coidador) references coidadores(dni) ON DELETE RESTRICT ON UPDATE C
 FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE AvisosAreas (
+CREATE TABLE avisosAreas (
 area numeric not null,
 nome varchar(50) not null,
 descripcion varchar(2000) not null,
 dataInicio date not null,
 dataFin date,
-coidador char(10) not null,
-contable char(10),
+coidador char(9) not null,
+contable char(9),
 tratamento varchar(500),
 PRIMARY KEY (area, nome, dataInicio),
 FOREIGN KEY (area) references areas(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -102,15 +122,15 @@ FOREIGN KEY (coidador) references coidadores(dni) ON DELETE RESTRICT ON UPDATE C
 FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE AvisosXaulas (
+CREATE TABLE avisosXaulas (
 area numeric not null,
 xaula numeric not null,
 nome varchar(50) not null,
 descripcion varchar(2000) not null,
 dataInicio date not null,
 dataFin date,
-coidador char(10) not null,
-contable char(10),
+coidador char(9) not null,
+contable char(9),
 tratamento varchar(500),
 PRIMARY KEY (area, xaula, nome, dataInicio),
 FOREIGN KEY (xaula, area) references xaulas(id, idArea) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -118,19 +138,25 @@ FOREIGN KEY (coidador) references coidadores(dni) ON DELETE RESTRICT ON UPDATE C
 FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-INSERT INTO usuarios (dni, nome, pass, telefono) VALUES ('12345678A', 'Miguel', 'pass', '612121212');
-INSERT INTO usuarios (dni, nome, pass, telefono, email) VALUES ('12345678B', 'Isma', 'pass', '634343434', 'email@example.com');
-
-INSERT INTO coidadores (dni) VALUES ('12345678B');
+INSERT INTO contables (dni, nome, pass, telefono) VALUES ('12345678A', 'Miguel', 'pass', '612121212');
+INSERT INTO coidadores (dni, nome, pass, telefono, email) VALUES ('12345678B', 'Isma', 'pass', '634343434', 'email@example.com');
 
 INSERT INTO Areas (id, climatizacion) VALUES ('00001','Tropical');
+INSERT INTO Areas (id, climatizacion) VALUES ('00002','Polar');
 
 INSERT INTO XAULAS (id, idArea) VALUES ('00001','00001');
 INSERT INTO XAULAS (id, idArea) VALUES ('00002','00001');
 INSERT INTO XAULAS (id, idArea) VALUES ('00003','00001');
 INSERT INTO XAULAS (id, idArea) VALUES ('00004','00001');
+INSERT INTO XAULAS (id, idArea) VALUES ('00001','00002');
+INSERT INTO XAULAS (id, idArea) VALUES ('00002','00002');
 
 INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00001', 'Simba', 'Leon', 5, 100, 'Macho', '00001','00001');
 INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00002', 'Baloo', 'Oso', 7, 80, 'Macho', '00002','00001');
 INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00003', 'Timon', 'Suricato', 5, 10, 'Macho', '00003','00001');
 INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00004', 'Pumba', 'Jabalí', 5, 55, 'Macho', '00004','00001');
+
+INSERT INTO avisosareas (area, nome, descripcion, dataInicio, dataFin, coidador, contable, tratamento) VALUES ('00001','Arbore rota', 'Arbore partida polo vento na entrada da área', '2017-05-12', null, '12345678B', null, null);
+INSERT INTO avisosareas (area, nome, descripcion, dataInicio, dataFin, coidador, contable, tratamento) VALUES ('00001','Papeleira rota', 'Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah', '2017-03-01', null, '12345678B', null, null);
+INSERT INTO avisosareas (area, nome, descripcion, dataInicio, dataFin, coidador, contable, tratamento) VALUES ('00001','Fai falta pintura', 'Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah', '2017-02-28', null, '12345678B', null, null);
+INSERT INTO avisosanimais (animal, nome, descripcion, dataInicio, dataFin, coidador, contable, tratamento) VALUES ('00001', 'Pata traseira dereita rota','Rompeuse a pata pelexando contra un elefante mutante','2017-05-30', null, '12345678B', null, null);

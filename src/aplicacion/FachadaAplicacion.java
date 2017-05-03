@@ -88,9 +88,15 @@ public class FachadaAplicacion extends Application {
     }
 
     public void resolverAviso(Aviso aviso) {
-        if (aviso.getTipo().equals("area")) {
-            fbd.resolverAvisoArea(aviso);
-        }
+        fbd.resolverAviso(aviso);
+    }
+
+    public void reabrirAviso(Aviso aviso) {
+        fbd.reabrirAviso(aviso);
+    }
+
+    public void borrarAviso(Aviso aviso) {
+        fbd.borrarAviso(aviso);
     }
 
 }

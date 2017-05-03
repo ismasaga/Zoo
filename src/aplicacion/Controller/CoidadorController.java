@@ -99,12 +99,9 @@ public class CoidadorController implements Initializable {
             }
         });
 
-        todosButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                buscarTextField.setText("");
-                buscarButton.fire();
-            }
+        todosButton.setOnAction(event -> {
+            buscarTextField.setText("");
+            buscarButton.fire();
         });
 
         buscarButton.fire();

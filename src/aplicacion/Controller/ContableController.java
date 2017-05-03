@@ -177,6 +177,15 @@ public class ContableController implements Initializable {
                 if (tablaAvisos.getSelectionModel().getSelectedItem() != null) {
                     Aviso aviso = (Aviso) tablaAvisos.getSelectionModel().getSelectedItem();
                     textAreaDescripcion.setText(aviso.getDescripcion());
+                    textAreaTratamento.setText(aviso.getTratamento());
+
+                    if (aviso.getDataFin().equals("Non")) {
+                        buttonReabrir.setDisable(true);
+                        buttonResolver.setDisable(false);
+                    } else {
+                        buttonReabrir.setDisable(false);
+                        buttonResolver.setDisable(true);
+                    }
                 }
             }
         });
@@ -184,7 +193,38 @@ public class ContableController implements Initializable {
         buttonResolver.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                fa.resolverAviso((Aviso) tablaAvisos.getSelectionModel().getSelectedItem());
+                if (tablaAvisos.getSelectionModel().getSelectedItem() != null) {
+                    Aviso aviso = (Aviso) tablaAvisos.getSelectionModel().getSelectedItem();
+                    aviso.setTratamento(textAreaTratamento.getText());
+                    fa.resolverAviso(aviso);
+                    updateAvisos(fa);
+                }
+            }
+        });
+
+        buttonReabrir.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (tablaAvisos.getSelectionModel().getSelectedItem() != null) {
+                    Aviso aviso = (Aviso) tablaAvisos.getSelectionModel().getSelectedItem();
+                    fa.reabrirAviso(aviso);
+                    updateAvisos(fa);
+                    textAreaDescripcion.setText("");
+                    textAreaTratamento.setText("");
+                }
+            }
+        });
+
+        buttonEliminarAviso.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (tablaAvisos.getSelectionModel().getSelectedItem() != null) {
+                    Aviso aviso = (Aviso) tablaAvisos.getSelectionModel().getSelectedItem();
+                    fa.borrarAviso(aviso);
+                    updateAvisos(fa);
+                    textAreaDescripcion.setText("");
+                    textAreaTratamento.setText("");
+                }
             }
         });
 

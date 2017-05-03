@@ -7,7 +7,7 @@
          minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE"
          xmlns="http://javafx.com/javafx/8.0.111" fx:controller="aplicacion.Controller.ContableController">
     <tabs>
-        <Tab text="Avisos">
+        <Tab text="Incidencias">
             <content>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                     <children>

@@ -2,13 +2,13 @@ package baseDatos;
 
 import aplicacion.TipoUsuario;
 import aplicacion.Usuario;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class DAOUsuarios extends DAOAbstracto {
 
@@ -71,7 +71,7 @@ public class DAOUsuarios extends DAOAbstracto {
             rsUsuario = stmUsuario.executeQuery();
 
             if (!rsUsuario.isBeforeFirst()) { // Non está en coidadores
-                stmUsuario = con.prepareStatement("select * from contables"
+                stmUsuario = con.prepareStatement("select * from contables "
                         + "where dni = ? and pass = ?;");
 
                 stmUsuario.setString(1, dni);
