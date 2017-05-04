@@ -403,7 +403,8 @@ public class ContableController implements Initializable {
                 }
             }
         });
-
+        buscarButton.fire();
+        buttonBuscarUsuario.fire();
         updateAvisos(fa);
     }
 
