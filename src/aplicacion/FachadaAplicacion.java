@@ -34,7 +34,6 @@ public class FachadaAplicacion extends Application {
         fgui.mostrarVentanaLogin();
     }
 
-
     public Usuario getUsuarioActual() {
         return usuarioActual;
     }
@@ -77,6 +76,14 @@ public class FachadaAplicacion extends Application {
 
     public ObservableList updateXaulas(Integer area) {
         return fbd.updateXaulas(area);
+    }
+
+    public ObservableList updateUsuarios(String usuario) {
+        return fbd.updateUsuarios(usuario);
+    }
+
+    public void gardarUsuario(Usuario usuario) {
+        fbd.gardarUsuario(usuario);
     }
 
     public boolean logeado(String dni, String pass) {

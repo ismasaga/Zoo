@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DAOUsuarios extends DAOAbstracto {
 
@@ -129,25 +131,25 @@ public class DAOUsuarios extends DAOAbstracto {
                 stmContables.setString(1, usuario);
                 stmContables.setString(2, usuario);
                 stmContables.setString(3, usuario);
-
-                rsCoidadores = stmCoidadores.executeQuery();
-                rsContables = stmContables.executeQuery();
             }
+
+            rsCoidadores = stmCoidadores.executeQuery();
+            rsContables = stmContables.executeQuery();
 
             while (rsCoidadores.next()) {
                 usuarios.add(new Usuario(rsCoidadores.getString("dni"),
-                        rsCoidadores.getString("pass"),
-                        TipoUsuario.Coidador,
                         rsCoidadores.getString("nome"),
+                        TipoUsuario.Coidador,
+                        rsCoidadores.getString("pass"),
                         rsCoidadores.getString("telefono"),
                         rsCoidadores.getString("email")));
             }
 
             while (rsContables.next()) {
                 usuarios.add(new Usuario(rsContables.getString("dni"),
-                        rsContables.getString("pass"),
-                        TipoUsuario.Contable,
                         rsContables.getString("nome"),
+                        TipoUsuario.Contable,
+                        rsContables.getString("pass"),
                         rsContables.getString("telefono"),
                         rsContables.getString("email")));
             }
@@ -235,6 +237,43 @@ public class DAOUsuarios extends DAOAbstracto {
                 fa.muestraExcepcion("Imposible cerrar cursores");
             }
         }
+    }
+
+    public void gardarUsuario(Usuario usuario) {
+        Connection con;
+        PreparedStatement stmUsuarios = null;
+        ResultSet rsUsuarios = null; 
+        con = this.getConexion();
+
+        try {
+            if (usuario.getTipo() == TipoUsuario.Coidador) {
+                stmUsuarios = con.prepareStatement("select * from coidadores where dni = ?;");
+            } else {
+                stmUsuarios = con.prepareStatement("select * from contables where dni = ?;");
+            }
+
+            stmUsuarios.setString(1, usuario.getDni());
+            rsUsuarios = stmUsuarios.executeQuery(); 
+            
+            if(!rsUsuarios.next()){ // Non está, facemos insert
+                novoUsuario(usuario); 
+            } else { // Si está, facemos update
+                updateUsuario(usuario); 
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+
+        } finally {
+            try {
+                stmUsuarios.close();
+
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+
     }
 
     public void borrarUsuario(Usuario usuario) {

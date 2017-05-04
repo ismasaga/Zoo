@@ -1,36 +1,64 @@
 package aplicacion;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Usuario {
-    private String dni;
-    private String nombre;
+
+    private StringProperty dni;
+    private StringProperty nombre;
     private TipoUsuario tipo;
-    private String pass;
-    private String telefono;
-    private String email;
+    private StringProperty pass;
+    private StringProperty telefono;
+    private StringProperty email;
 
     public Usuario(String dni, String nombre, TipoUsuario tipo, String pass, String telefono, String email) {
-        this.dni = dni;
-        this.nombre = nombre;
+        this.dni = new SimpleStringProperty(dni);
+        this.nombre = new SimpleStringProperty(nombre);
         this.tipo = tipo;
-        this.pass = pass;
-        this.telefono = telefono;
-        this.email = email;
+        this.pass = new SimpleStringProperty(pass);
+        this.telefono = new SimpleStringProperty(telefono);
+        this.email = new SimpleStringProperty(email);
     }
 
-    public String getDni() {
+    public StringProperty dniProperty() {
         return dni;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getNombre() {
+    public StringProperty nombreProperty() {
         return nombre;
     }
 
+    public TipoUsuario tipoProperty() {
+        return tipo;
+    }
+
+    public StringProperty passProperty() {
+        return pass;
+    }
+
+    public StringProperty telefonoProperty() {
+        return telefono;
+    }
+
+    public StringProperty emailProperty() {
+        return email;
+    }    
+
+    public String getDni() {
+        return dni.get();
+    }
+
+    public void setDni(String dni) {
+        this.dni.set(dni);
+    }
+
+    public String getNombre() {
+        return nombre.get();
+    }
+
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre.set(nombre);
     }
 
     public TipoUsuario getTipo() {
@@ -42,26 +70,26 @@ public class Usuario {
     }
 
     public String getPass() {
-        return pass;
+        return pass.get();
     }
 
     public void setPass(String pass) {
-        this.pass = pass;
+        this.pass.set(pass);
     }
 
     public String getTelefono() {
-        return telefono;
+        return telefono.get();
     }
 
     public void setTelefono(String telefono) {
-        this.telefono = telefono;
+        this.telefono.set(telefono);
     }
 
     public String getEmail() {
-        return email;
+        return email.get();
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email.set(email);
     }
 }

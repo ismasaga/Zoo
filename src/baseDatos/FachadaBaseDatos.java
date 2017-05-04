@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class FachadaBaseDatos {
+
     public aplicacion.FachadaAplicacion fa;
     private java.sql.Connection conexion;
     private DAOUsuarios daoUsuarios;
@@ -30,22 +31,20 @@ public class FachadaBaseDatos {
 
             Properties usuario = new Properties();
 
-
             String gestor = configuracion.getProperty("gestor");
 
             usuario.setProperty("user", configuracion.getProperty("usuario"));
             usuario.setProperty("password", configuracion.getProperty("clave"));
-            this.conexion = java.sql.DriverManager.getConnection("jdbc:" + gestor + "://" +
-                            configuracion.getProperty("servidor") + ":" +
-                            configuracion.getProperty("puerto") + "/" +
-                            configuracion.getProperty("baseDatos"),
+            this.conexion = java.sql.DriverManager.getConnection("jdbc:" + gestor + "://"
+                    + configuracion.getProperty("servidor") + ":"
+                    + configuracion.getProperty("puerto") + "/"
+                    + configuracion.getProperty("baseDatos"),
                     usuario);
 
             daoUsuarios = new DAOUsuarios(conexion, fa);
             daoAnimales = new DAOAnimales(conexion, fa);
             daoAreasXaulas = new DAOAreasXaulas(conexion, fa);
             daoAvisos = new DAOAvisos(conexion, fa);
-
 
         } catch (FileNotFoundException f) {
             System.out.println(f.getMessage());
@@ -85,6 +84,14 @@ public class FachadaBaseDatos {
 
     public ObservableList updateXaulas(Integer area) {
         return daoAreasXaulas.updateXaulas(area);
+    }
+
+    public ObservableList updateUsuarios(String usuario) {
+        return daoUsuarios.buscarUsuario(usuario);
+    }
+    
+    public void gardarUsuario(Usuario usuario){
+        daoUsuarios.gardarUsuario(usuario); 
     }
 
     public ObservableList buscarAvisos() {
