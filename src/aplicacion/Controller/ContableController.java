@@ -14,13 +14,13 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.scene.layout.AnchorPane;
 
 public class ContableController implements Initializable {
 
@@ -229,9 +229,9 @@ public class ContableController implements Initializable {
             }
         });
 
-        buttonResolver.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonResolver.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 if (tablaAvisos.getSelectionModel().getSelectedItem() != null) {
                     Aviso aviso = (Aviso) tablaAvisos.getSelectionModel().getSelectedItem();
                     aviso.setTratamento(textAreaTratamento.getText());
@@ -241,9 +241,9 @@ public class ContableController implements Initializable {
             }
         });
 
-        buttonReabrir.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonReabrir.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 if (tablaAvisos.getSelectionModel().getSelectedItem() != null) {
                     Aviso aviso = (Aviso) tablaAvisos.getSelectionModel().getSelectedItem();
                     fa.reabrirAviso(aviso);
@@ -254,9 +254,9 @@ public class ContableController implements Initializable {
             }
         });
 
-        buttonEliminarAviso.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonEliminarAviso.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 if (tablaAvisos.getSelectionModel().getSelectedItem() != null) {
                     Aviso aviso = (Aviso) tablaAvisos.getSelectionModel().getSelectedItem();
                     fa.borrarAviso(aviso);
@@ -276,9 +276,9 @@ public class ContableController implements Initializable {
             }
         });
 
-        buttonGuardar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonGuardar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 if (comprobarCampos(fa)) {
                     if (textFieldID.getText().matches("^\\d+$")) {
                         Animal animal = new Animal(Integer.valueOf(textFieldID.getText()), textFieldNombre.getText(), textFieldEspecie.getText(), Integer.valueOf(textFieldEdad.getText()), Integer.valueOf(textFieldPeso.getText()), choiceBoxSexo.getSelectionModel().getSelectedItem().toString(), Integer.valueOf(choiceBoxArea.getSelectionModel().getSelectedItem().toString()), Integer.valueOf(choiceBoxXaula.getSelectionModel().getSelectedItem().toString()), new ArrayList<Comida>());
@@ -291,9 +291,9 @@ public class ContableController implements Initializable {
             }
         });
 
-        buttonEliminar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonEliminar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 if (tablaAnimais.getSelectionModel().getSelectedItem() != null) {
                     fa.borrarAnimal(((Animal) tablaAnimais.getItems().get(tablaAnimais.getSelectionModel().getSelectedIndex())).getId());
                     buscarButton.fire();
@@ -310,9 +310,9 @@ public class ContableController implements Initializable {
             }
         });
 
-        buttonBuscarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonBuscarUsuario.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 usuarios.removeAll();
                 String usuario = textFieldBuscarUsuario.getText();
                 usuarios = updateUsuarios(fa, usuario);
@@ -320,9 +320,9 @@ public class ContableController implements Initializable {
             }
         });
 
-        buttonNovoUsuario.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonNovoUsuario.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 textFieldNomeUsuario.setText("");
                 textFieldDniUsuario.setText("");
                 textFieldPassUsuario.setText("");
@@ -334,12 +334,13 @@ public class ContableController implements Initializable {
                 buttonEliminarUsuario.setDisable(true);
 
                 taboaUsuarios.getSelectionModel().clearSelection();
+                buttonBuscarUsuario.fire();
             }
         });
 
-        buttonGardarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonGardarUsuario.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 // Comprobamos que todos os campos obrigatorios estean cubertos
                 if (textFieldDniUsuario.getText() != null && !textFieldDniUsuario.getText().equals("")
                         && textFieldNomeUsuario.getText() != null && !textFieldNomeUsuario.getText().equals("")
@@ -361,9 +362,9 @@ public class ContableController implements Initializable {
             }
         });
 
-        buttonEliminarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonEliminarUsuario.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ActionEvent event) {
                 // Comprobamos que o DNI e o tipo de usuario non sexan null
                 if (textFieldDniUsuario.getText() != null && !textFieldDniUsuario.getText().equals("")
                         && (choiceBoxTipoUsuario.getSelectionModel().getSelectedIndex() == 0
@@ -403,8 +404,6 @@ public class ContableController implements Initializable {
             }
         });
 
-        buscarButton.fire();
-        buttonBuscarUsuario.fire();
         updateAvisos(fa);
     }
 
