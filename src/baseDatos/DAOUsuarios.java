@@ -9,8 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DAOUsuarios extends DAOAbstracto {
 
@@ -121,16 +119,16 @@ public class DAOUsuarios extends DAOAbstracto {
                 stmCoidadores = con.prepareStatement("select * from coidadores");
                 stmContables = con.prepareStatement("select * from contables");
             } else {
-                stmCoidadores = con.prepareStatement("select * from coidadores where dni like %?% or nome like %?% or email like %?%;");
-                stmContables = con.prepareStatement("select * from contables where dni like %?% or nome like %?% or email like %?%;");
+                stmCoidadores = con.prepareStatement("select * from coidadores where dni like ? or nome like ? or email like ?;");
+                stmContables = con.prepareStatement("select * from contables where dni like ? or nome like ? or email like ?;");
 
-                stmCoidadores.setString(1, usuario);
-                stmCoidadores.setString(2, usuario);
-                stmCoidadores.setString(3, usuario);
+                stmCoidadores.setString(1, "%" + usuario + "%");
+                stmCoidadores.setString(2, "%" + usuario + "%");
+                stmCoidadores.setString(3, "%" + usuario + "%");
 
-                stmContables.setString(1, usuario);
-                stmContables.setString(2, usuario);
-                stmContables.setString(3, usuario);
+                stmContables.setString(1, "%" + usuario + "%");
+                stmContables.setString(2, "%" + usuario + "%");
+                stmContables.setString(3, "%" + usuario + "%");
             }
 
             rsCoidadores = stmCoidadores.executeQuery();
