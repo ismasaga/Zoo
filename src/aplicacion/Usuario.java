@@ -21,6 +21,11 @@ public class Usuario {
         this.email = new SimpleStringProperty(email);
     }
 
+    public Usuario(String dni, TipoUsuario tipo) {
+        this.dni = new SimpleStringProperty(dni);
+        this.tipo = tipo;
+    }
+
     public StringProperty dniProperty() {
         return dni;
     }
@@ -43,7 +48,7 @@ public class Usuario {
 
     public StringProperty emailProperty() {
         return email;
-    }    
+    }
 
     public String getDni() {
         return dni.get();

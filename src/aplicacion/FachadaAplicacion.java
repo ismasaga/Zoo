@@ -85,6 +85,10 @@ public class FachadaAplicacion extends Application {
     public void gardarUsuario(Usuario usuario) {
         fbd.gardarUsuario(usuario);
     }
+    
+    public void eliminarUsuario(Usuario usuario) {
+        fbd.eliminarUsuario(usuario); 
+    }
 
     public boolean logeado(String dni, String pass) {
         return xu.logeado(dni, pass);

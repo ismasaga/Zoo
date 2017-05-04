@@ -23,11 +23,11 @@ import java.util.ResourceBundle;
 import javafx.scene.layout.AnchorPane;
 
 public class ContableController implements Initializable {
-    
+
     ObservableList<Animal> animales = FXCollections.observableArrayList();
     ObservableList<Aviso> avisos = FXCollections.observableArrayList();
     ObservableList<Usuario> usuarios = FXCollections.observableArrayList();
-    
+
     @FXML
     private Button sesionButton;
     @FXML
@@ -100,27 +100,27 @@ public class ContableController implements Initializable {
     private Button buttonEliminarUsuario;
     @FXML
     private TableView taboaUsuarios;
-    
+
     private TableColumn<Animal, Integer> animalFirst = new TableColumn<Animal, Integer>("ID");
     private TableColumn<Animal, String> animalSecond = new TableColumn<Animal, String>("Nombre");
     private TableColumn<Animal, String> animalThird = new TableColumn<Animal, String>("Especie");
     private TableColumn<Usuario, String> columnaNomeUsuario = new TableColumn<Usuario, String>("Nome");
     private TableColumn<Usuario, String> columnaDniUsuario = new TableColumn<Usuario, String>("DNI");
-    
+
     @FXML
     private TableView tablaAvisos;
-    
+
     private TableColumn<Aviso, String> avisoFirst = new TableColumn<Aviso, String>("Suxeito");
     private TableColumn<Aviso, String> avisoSecond = new TableColumn<Aviso, String>("Asunto");
     private TableColumn<Aviso, String> avisoThird = new TableColumn<Aviso, String>("Data");
     private TableColumn<Aviso, String> avisoFourth = new TableColumn<Aviso, String>("Resolto");
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         choiceBoxSexo.setItems(FXCollections.observableArrayList("Macho", "Femia"));
         choiceBoxTipoUsuario.setItems(FXCollections.observableArrayList("Coidador", "Contable"));
     }
-    
+
     public void initUser(final FachadaAplicacion fa, Usuario usuario) throws IOException {
         //sessionLabel.setText(sessionID);
         tablaAnimais = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
@@ -131,7 +131,7 @@ public class ContableController implements Initializable {
         tablaAnimais.getColumns().add(animalFirst);
         tablaAnimais.getColumns().add(animalSecond);
         tablaAnimais.getColumns().add(animalThird);
-        
+
         avisoFirst.setCellValueFactory(cellData -> cellData.getValue().suxeitoProperty());
         avisoSecond.setCellValueFactory(cellData -> cellData.getValue().asuntoProperty());
         avisoThird.setCellValueFactory(cellData -> cellData.getValue().dataInicioProperty());
@@ -140,26 +140,26 @@ public class ContableController implements Initializable {
         tablaAvisos.getColumns().add(avisoSecond);
         tablaAvisos.getColumns().add(avisoThird);
         tablaAvisos.getColumns().add(avisoFourth);
-        
+
         columnaNomeUsuario.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         columnaDniUsuario.setCellValueFactory(cellData -> cellData.getValue().dniProperty());
         taboaUsuarios.getColumns().add(columnaNomeUsuario);
         taboaUsuarios.getColumns().add(columnaDniUsuario);
-        
+
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 fa.logout();
             }
         });
-        
+
         sairButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 fa.sair();
             }
         });
-        
+
         buscarButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -169,7 +169,7 @@ public class ContableController implements Initializable {
                 tablaAnimais.setItems(animales);
             }
         });
-        
+
         buscarTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -178,7 +178,7 @@ public class ContableController implements Initializable {
                 }
             }
         });
-        
+
         todosButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -186,7 +186,7 @@ public class ContableController implements Initializable {
                 buscarButton.fire();
             }
         });
-        
+
         tablaAnimais.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -209,7 +209,7 @@ public class ContableController implements Initializable {
                 }
             }
         });
-        
+
         tablaAvisos.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -217,7 +217,7 @@ public class ContableController implements Initializable {
                     Aviso aviso = (Aviso) tablaAvisos.getSelectionModel().getSelectedItem();
                     textAreaDescripcion.setText(aviso.getDescripcion());
                     textAreaTratamento.setText(aviso.getTratamento());
-                    
+
                     if (aviso.getDataFin().equals("Non")) {
                         buttonReabrir.setDisable(true);
                         buttonResolver.setDisable(false);
@@ -228,7 +228,7 @@ public class ContableController implements Initializable {
                 }
             }
         });
-        
+
         buttonResolver.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -240,7 +240,7 @@ public class ContableController implements Initializable {
                 }
             }
         });
-        
+
         buttonReabrir.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -253,7 +253,7 @@ public class ContableController implements Initializable {
                 }
             }
         });
-        
+
         buttonEliminarAviso.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -266,7 +266,7 @@ public class ContableController implements Initializable {
                 }
             }
         });
-        
+
         choiceBoxArea.valueProperty().addListener(new ChangeListener() {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 if (newValue != null) {
@@ -275,7 +275,7 @@ public class ContableController implements Initializable {
                 }
             }
         });
-        
+
         buttonGuardar.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -290,7 +290,7 @@ public class ContableController implements Initializable {
                 }
             }
         });
-        
+
         buttonEliminar.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -309,7 +309,7 @@ public class ContableController implements Initializable {
                 }
             }
         });
-        
+
         buttonBuscarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -319,7 +319,7 @@ public class ContableController implements Initializable {
                 taboaUsuarios.setItems(usuarios);
             }
         });
-        
+
         buttonNovoUsuario.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -330,11 +330,13 @@ public class ContableController implements Initializable {
                 textFieldTlfUsuario.setText("");
                 choiceBoxTipoUsuario.setDisable(false);
                 choiceBoxTipoUsuario.getSelectionModel().clearSelection();
-                
+
+                buttonEliminarUsuario.setDisable(true);
+
                 taboaUsuarios.getSelectionModel().clearSelection();
             }
         });
-        
+
         buttonGardarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -344,61 +346,68 @@ public class ContableController implements Initializable {
                         && textFieldPassUsuario.getText() != null && !textFieldPassUsuario.getText().equals("")
                         && (choiceBoxTipoUsuario.getSelectionModel().getSelectedIndex() == 0
                         || choiceBoxTipoUsuario.getSelectionModel().getSelectedIndex() == 1)) {
-                    
+
                     Usuario usr = new Usuario(textFieldDniUsuario.getText(), textFieldNomeUsuario.getText(),
                             choiceBoxTipoUsuario.getSelectionModel().getSelectedIndex() == 0 ? TipoUsuario.Coidador : TipoUsuario.Contable,
                             textFieldPassUsuario.getText(), textFieldTlfUsuario.getText(), textFieldEmailUsuario.getText());
-                    
+
                     gardarUsuario(fa, usr);
                     buttonBuscarUsuario.fire();
                     buttonNovoUsuario.fire();
-                    
+
                 } else {
                     fa.muestraExcepcion("Non se pode gardar o usuario; non se insertaron todos os campos obrigatorios.");
                 }
             }
         });
-        
+
         buttonEliminarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                // Comprobamos que o DNI non sexa null
-                if (textFieldDniUsuario.getText() != null && !textFieldDniUsuario.getText().equals("")){
+                // Comprobamos que o DNI e o tipo de usuario non sexan null
+                if (textFieldDniUsuario.getText() != null && !textFieldDniUsuario.getText().equals("")
+                        && (choiceBoxTipoUsuario.getSelectionModel().getSelectedIndex() == 0
+                        || choiceBoxTipoUsuario.getSelectionModel().getSelectedIndex() == 1)) {
                     
+                    Usuario usr = new Usuario(textFieldDniUsuario.getText(), choiceBoxTipoUsuario.getSelectionModel().getSelectedItem().toString().equals("Coidador")? TipoUsuario.Coidador : TipoUsuario.Contable); 
+                    eliminarUsuario(fa, usr); 
+                    
+                    buttonBuscarUsuario.fire(); 
+                    buttonNovoUsuario.fire();
                 }
             }
         });
-        
+
         taboaUsuarios.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (taboaUsuarios.getSelectionModel().getSelectedItem() != null) {
                     Usuario usr = (Usuario) taboaUsuarios.getSelectionModel().getSelectedItem();
-                    
+
                     textFieldNomeUsuario.setText(usr.getNombre());
                     textFieldDniUsuario.setText(usr.getDni());
                     textFieldEmailUsuario.setText(usr.getEmail());
                     textFieldPassUsuario.setText(usr.getPass());
                     textFieldTlfUsuario.setText(usr.getTelefono());
                     choiceBoxTipoUsuario.setDisable(true);
-                    
+
                     buttonEliminarUsuario.setDisable(false);
-                    
+
                     if (usr.getTipo().toString().equals("Coidador")) {
                         choiceBoxTipoUsuario.getSelectionModel().select(0);
                     } else {
                         choiceBoxTipoUsuario.getSelectionModel().select(1);
-                        
+
                     }
                 }
             }
         });
-        
+
         buscarButton.fire();
         buttonBuscarUsuario.fire();
         updateAvisos(fa);
     }
-    
+
     private boolean comprobarCampos(FachadaAplicacion fa) {
         String texto = "";
         if (textFieldID.getText().equals("")) {
@@ -428,26 +437,30 @@ public class ContableController implements Initializable {
         }
         return texto.isEmpty();
     }
-    
+
     private ObservableList updateAreas(FachadaAplicacion fa) {
         return fa.updateAreas();
     }
-    
+
     private ObservableList updateXaulas(FachadaAplicacion fa, Integer area) {
         return fa.updateXaulas(area);
     }
-    
+
     private void updateAvisos(FachadaAplicacion fa) {
         avisos.removeAll();
         avisos = fa.buscarAvisos();
         tablaAvisos.setItems(avisos);
     }
-    
+
     private ObservableList updateUsuarios(FachadaAplicacion fa, String usuario) {
         return fa.updateUsuarios(usuario);
     }
-    
+
     private void gardarUsuario(FachadaAplicacion fa, Usuario usuario) {
         fa.gardarUsuario(usuario);
+    }
+    
+    private void eliminarUsuario(FachadaAplicacion fa, Usuario usuario) {
+        fa.eliminarUsuario(usuario); 
     }
 }

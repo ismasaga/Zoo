@@ -93,6 +93,10 @@ public class FachadaBaseDatos {
     public void gardarUsuario(Usuario usuario){
         daoUsuarios.gardarUsuario(usuario); 
     }
+    
+    public void eliminarUsuario(Usuario usuario){
+        daoUsuarios.borrarUsuario(usuario);
+    }
 
     public ObservableList buscarAvisos() {
         return daoAvisos.buscarAvisos();
