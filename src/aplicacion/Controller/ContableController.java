@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -27,6 +26,7 @@ public class ContableController implements Initializable {
     ObservableList<Animal> animales = FXCollections.observableArrayList();
     ObservableList<Aviso> avisos = FXCollections.observableArrayList();
     ObservableList<Usuario> usuarios = FXCollections.observableArrayList();
+    ObservableList<Area> areas = FXCollections.observableArrayList();
 
     @FXML
     private Button sesionButton;
@@ -75,8 +75,6 @@ public class ContableController implements Initializable {
     @FXML
     private TextField textFieldBuscarUsuario;
     @FXML
-    private AnchorPane panelTaboaUsuarios;
-    @FXML
     private Button buttonBuscarUsuario;
     @FXML
     private Button buttonVerTodosUsuarios;
@@ -91,6 +89,32 @@ public class ContableController implements Initializable {
     @FXML
     private TextField textFieldTlfUsuario;
     @FXML
+    private TextField textFieldArea;
+    @FXML
+    private TextField textFieldXaula;
+    @FXML
+    private TextField textFieldClimatizacion;
+    @FXML
+    private Label labelAnimaisDentro;
+    @FXML
+    private Label labelEspeciesDentro;
+    @FXML
+    private ChoiceBox choiceBoxAreaDestino;
+    @FXML
+    private ChoiceBox choiceBoxXaulaDestino;
+    @FXML
+    private ChoiceBox choiceBoxAnimal;
+    @FXML
+    private Button buttonNovaArea;
+    @FXML
+    private Button buttonNovaXaula;
+    @FXML
+    private Button buttonBorrarArea;
+    @FXML
+    private Button buttonBorrarXaula;
+    @FXML
+    private Button buttonTransferir;
+    @FXML
     private ChoiceBox choiceBoxTipoUsuario;
     @FXML
     private Button buttonNovoUsuario;
@@ -100,6 +124,15 @@ public class ContableController implements Initializable {
     private Button buttonEliminarUsuario;
     @FXML
     private TableView taboaUsuarios;
+    @FXML
+    private TableView tablaAreas;
+    @FXML
+    private TableView tablaXaulas;
+
+    private TableColumn<Xaula, Integer> xaulaFirst = new TableColumn<Xaula, Integer>("ID");
+
+    private TableColumn<Area, Integer> areaFirst = new TableColumn<Area, Integer>("ID");
+    private TableColumn<Area, String> areaSecond = new TableColumn<Area, String>("Climatizacion");
 
     private TableColumn<Animal, Integer> animalFirst = new TableColumn<Animal, Integer>("ID");
     private TableColumn<Animal, String> animalSecond = new TableColumn<Animal, String>("Nombre");
@@ -145,6 +178,15 @@ public class ContableController implements Initializable {
         columnaDniUsuario.setCellValueFactory(cellData -> cellData.getValue().dniProperty());
         taboaUsuarios.getColumns().add(columnaNomeUsuario);
         taboaUsuarios.getColumns().add(columnaDniUsuario);
+
+        areaFirst.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        areaSecond.setCellValueFactory(cellData -> cellData.getValue().climatizacionProperty());
+        tablaAreas.getColumns().add(areaFirst);
+        tablaAreas.getColumns().add(areaSecond);
+
+        xaulaFirst.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        tablaXaulas.getColumns().add(xaulaFirst);
+
 
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -196,7 +238,12 @@ public class ContableController implements Initializable {
                     textFieldID.setText(String.valueOf(animal.getId()));
                     textFieldEspecie.setText(animal.getEspecie());
                     textFieldEdad.setText(String.valueOf(animal.getEdad()));
-                    choiceBoxArea.setItems(updateAreas(fa));
+                    ObservableList e = updateAreas(fa);
+                    ObservableList z = FXCollections.observableArrayList();
+                    for (int i = 0; i < e.size(); i++) {
+                        z.add(String.valueOf(((Area) e.get(i)).getId()));
+                    }
+                    choiceBoxArea.setItems(z);
                     choiceBoxArea.getSelectionModel().select(choiceBoxArea.getItems().indexOf(String.valueOf(animal.getArea())));
                     textFieldPeso.setText(String.valueOf(animal.getPeso()));
                     choiceBoxXaula.setItems(updateXaulas(fa, animal.getArea()));
@@ -304,6 +351,7 @@ public class ContableController implements Initializable {
                     choiceBoxArea.getSelectionModel().clearSelection();
                     textFieldPeso.setText("");
                     choiceBoxXaula.getSelectionModel().clearSelection();
+                    choiceBoxXaula.setItems(FXCollections.observableArrayList());
                 } else {
                     fa.muestraExcepcion("Selecciona un animal en la tabla para borrarlo");
                 }
@@ -403,9 +451,25 @@ public class ContableController implements Initializable {
                 }
             }
         });
+
+        buttonVerTodosUsuarios.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                usuarios.removeAll();
+                usuarios = updateUsuarios(fa, "");
+                taboaUsuarios.setItems(usuarios);
+            }
+        });
+        ObservableList e = updateAreas(fa);
+        ObservableList z = FXCollections.observableArrayList();
+        for (int i = 0; i < e.size(); i++) {
+            z.add(((Area) e.get(i)).getId());
+        }
+        choiceBoxArea.setItems(z);
         buscarButton.fire();
         buttonBuscarUsuario.fire();
         updateAvisos(fa);
+
     }
 
     private boolean comprobarCampos(FachadaAplicacion fa) {
@@ -416,7 +480,7 @@ public class ContableController implements Initializable {
         if (textFieldNombre.getText().equals("")) {
             texto = texto + "NOMBRE, ";
         }
-        if (choiceBoxArea.getSelectionModel().getSelectedItem().toString().equals("")) {
+        if (choiceBoxArea.getSelectionModel().getSelectedItem() == null || choiceBoxArea.getSelectionModel().getSelectedItem().toString().equals("")) {
             texto = texto + "AREA, ";
         }
         if (textFieldEdad.getText().equals("")) {
@@ -428,8 +492,13 @@ public class ContableController implements Initializable {
         if (textFieldEspecie.getText().equals("")) {
             texto = texto + "ESPECIE, ";
         }
-        if (choiceBoxXaula.getSelectionModel().getSelectedItem().toString().equals("")) {
+        if (choiceBoxSexo.getSelectionModel().getSelectedItem() == null || choiceBoxSexo.getSelectionModel().getSelectedItem().toString().equals("")) {
+            texto = texto + "SEXO, ";
+
+        }
+        if (choiceBoxXaula.getSelectionModel().getSelectedItem() == null || choiceBoxXaula.getSelectionModel().getSelectedItem().toString().equals("")) {
             texto = texto + "XAULA, ";
+
         }
         if (!texto.isEmpty()) {
             texto = "Os campos: " + texto + " están vacíos";
@@ -439,6 +508,7 @@ public class ContableController implements Initializable {
     }
 
     private ObservableList updateAreas(FachadaAplicacion fa) {
+
         return fa.updateAreas();
     }
 
