@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS avisosAreas;
+﻿DROP TABLE IF EXISTS avisosAreas;
 DROP TABLE IF EXISTS avisosXaulas;
 DROP TABLE IF EXISTS avisosanimais;
 DROP TABLE IF EXISTS comer;
@@ -21,7 +21,7 @@ PRIMARY KEY (dni)
 );
 
 CREATE TABLE contables (
-dni char(9) not null ,
+dni char(9) not null,
 pass varchar(50) not null,
 nome varchar(100) not null,
 telefono varchar(30) not null,
@@ -71,8 +71,10 @@ peso integer not null,
 sexo varchar(10) not null,
 idXaula numeric not null,
 idArea numeric not null,
+idCoidador char(9),
 PRIMARY KEY (id),
-FOREIGN KEY (idXaula, idArea) REFERENCES xaulas(id, idArea) ON DELETE RESTRICT ON UPDATE CASCADE
+FOREIGN KEY (idXaula, idArea) REFERENCES xaulas(id, idArea) ON DELETE RESTRICT ON UPDATE CASCADE,
+FOREIGN KEY (idCoidador) REFERENCES coidadores(dni) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE comidas (
@@ -151,10 +153,10 @@ INSERT INTO XAULAS (id, idArea) VALUES ('00004','00001');
 INSERT INTO XAULAS (id, idArea) VALUES ('00001','00002');
 INSERT INTO XAULAS (id, idArea) VALUES ('00002','00002');
 
-INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00001', 'Simba', 'Leon', 5, 100, 'Macho', '00001','00001');
-INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00002', 'Baloo', 'Oso', 7, 80, 'Macho', '00002','00001');
-INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00003', 'Timon', 'Suricato', 5, 10, 'Macho', '00003','00001');
-INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea) VALUES ('00004', 'Pumba', 'Jabalí', 5, 55, 'Macho', '00004','00001');
+INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea, idCoidador) VALUES ('00001', 'Simba', 'Leon', 5, 100, 'Macho', '00001','00001', '12345678B');
+INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea, idCoidador) VALUES ('00002', 'Baloo', 'Oso', 7, 80, 'Macho', '00002','00001', '12345678B');
+INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea, idCoidador) VALUES ('00003', 'Timon', 'Suricato', 5, 10, 'Macho', '00003','00001', '12345678B');
+INSERT INTO animais (id, nome, especie, edad, peso, sexo, idXaula, idArea, idCoidador) VALUES ('00004', 'Pumba', 'Jabalí', 5, 55, 'Macho', '00004','00001', '12345678B');
 
 INSERT INTO avisosareas (area, nome, descripcion, dataInicio, dataFin, coidador, contable, tratamento) VALUES ('00001','Arbore rota', 'Arbore partida polo vento na entrada da área', '2017-05-12', null, '12345678B', null, null);
 INSERT INTO avisosareas (area, nome, descripcion, dataInicio, dataFin, coidador, contable, tratamento) VALUES ('00001','Papeleira rota', 'Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah', '2017-03-01', null, '12345678B', null, null);

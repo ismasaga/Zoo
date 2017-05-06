@@ -54,6 +54,36 @@ public class DAOAnimales extends DAOAbstracto {
         return animales;
     }
 
+    // Devolve os animais do coidador actual
+    public ObservableList buscarAnimaisCoidador() {
+        ObservableList animales = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmAnimales = null;
+        ResultSet rsAnimales;
+        con = this.getConexion();
+        try {
+            stmAnimales = con.prepareStatement("select * from animais where idCoidador = ?;");
+            stmAnimales.setString(1, fa.getUsuarioActual().getDni());
+            rsAnimales = stmAnimales.executeQuery();
+            while (rsAnimales.next()) {
+                animales.add(new Animal(rsAnimales.getInt("id"), rsAnimales.getString("nome"), rsAnimales.getString("especie"),
+                        Integer.valueOf(rsAnimales.getString("edad")), Integer.valueOf(rsAnimales.getString("peso")),
+                        rsAnimales.getString("sexo"), rsAnimales.getInt("idarea"), rsAnimales.getInt("idxaula"),
+                        new ArrayList<Comida>(), rsAnimales.getString("idCoidador")));
+            }
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmAnimales.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return animales;
+    }
+
+
     public void novoAnimal(Animal animal) {
         Connection con;
         PreparedStatement stmAnimales = null;

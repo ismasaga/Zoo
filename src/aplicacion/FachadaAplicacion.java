@@ -61,6 +61,10 @@ public class FachadaAplicacion extends Application {
     public ObservableList buscarAnimal(String animal) {
         return fbd.buscarAnimal(animal);
     }
+    
+    public ObservableList buscarAnimaisCoidador() {
+        return fbd.buscarAnimaisCoidador();
+    }
 
     public void updateAnimal(Animal a) {
         fbd.updateAnimal(a);
@@ -96,6 +100,26 @@ public class FachadaAplicacion extends Application {
 
     public ObservableList buscarAvisos() {
         return fbd.buscarAvisos();
+    }
+    
+    public ObservableList buscarAvisosPropios() {
+        return fbd.buscarAvisosPropios();
+    }
+    
+    public ObservableList buscarAvisosAnimais() {
+        return fbd.buscarAvisosAnimais();
+    }
+    
+    public ObservableList buscarAvisosXaulas() {
+        return fbd.buscarAvisosXaulas();
+    }
+    
+    public ObservableList buscarAvisosAreas() {
+        return fbd.buscarAvisosAreas();
+    }
+    
+    public void novoAvisoAnimal(Aviso aviso) {
+        fbd.novoAvisoAnimal(aviso);
     }
 
     public void resolverAviso(Aviso aviso) {
