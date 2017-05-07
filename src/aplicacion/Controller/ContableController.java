@@ -129,6 +129,7 @@ public class ContableController implements Initializable {
     private TableView tablaXaulas;
     @FXML
     private ChoiceBox choiceBoxCoidador;
+    @FXML
     private TableView taboaComidas;
     @FXML
     private TableView taboaAnimaisComida;
@@ -331,8 +332,18 @@ public class ContableController implements Initializable {
                 buttonNovaXaula.setDisable(false);
                 buttonBorrarArea.setDisable(false);
                 buttonNovaArea.setDisable(false);
+                textFieldIDXaula.setText("");
                 textFieldIDArea.setText(String.valueOf(((Area) tablaAreas.getSelectionModel().getSelectedItem()).getId()));
                 textFieldClimatizacion.setText(((Area) tablaAreas.getSelectionModel().getSelectedItem()).getClimatizacion());
+            }
+        });
+
+        buttonNovaXaula.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                textFieldIDArea.setDisable(true);
+                textFieldClimatizacion.setDisable(true);
+                textFieldIDXaula.setDisable(false);
             }
         });
 
@@ -538,6 +549,8 @@ public class ContableController implements Initializable {
                 taboaUsuarios.setItems(usuarios);
             }
         });
+
+
         ObservableList e = updateAreas(fa);
         ObservableList z = FXCollections.observableArrayList();
         for (int i = 0; i < e.size(); i++) {
@@ -556,6 +569,7 @@ public class ContableController implements Initializable {
         }
         choiceBoxCoidador.setItems(r);
         updateAvisos(fa);
+        textFieldIDXaula.setDisable(true);
 
     }
 
