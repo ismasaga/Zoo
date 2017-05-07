@@ -1,6 +1,7 @@
 package baseDatos;
 
 import aplicacion.Area;
+import aplicacion.Xaula;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -59,7 +60,7 @@ public class DAOAreasXaulas extends DAOAbstracto {
             rsXaulas = stmXaulas.executeQuery();
 
             while (rsXaulas.next()) {
-                areas.add(rsXaulas.getString("id"));
+                areas.add(new Xaula(rsXaulas.getInt("id"), rsXaulas.getInt("idarea")));
             }
         } catch (SQLException e) {
             fa.muestraExcepcion(e.getMessage());
