@@ -127,6 +127,8 @@ public class ContableController implements Initializable {
     private TableView tablaAreas;
     @FXML
     private TableView tablaXaulas;
+    @FXML
+    private ChoiceBox choiceBoxCoidador;
 
     private TableColumn<Xaula, Integer> xaulaFirst = new TableColumn<Xaula, Integer>("ID");
 
@@ -252,6 +254,7 @@ public class ContableController implements Initializable {
                     }
                     choiceBoxXaula.setItems(x);
                     choiceBoxXaula.getSelectionModel().select(choiceBoxXaula.getItems().indexOf(animal.getXaula()));
+                    choiceBoxCoidador.getSelectionModel().select(choiceBoxCoidador.getItems().indexOf(animal.getIdCoidador()));
 
                     if (animal.getSexo().equals("Macho")) {
                         choiceBoxSexo.getSelectionModel().select(0);
@@ -363,7 +366,7 @@ public class ContableController implements Initializable {
             public void handle(ActionEvent event) {
                 if (comprobarCampos(fa)) {
                     if (textFieldID.getText().matches("^\\d+$")) {
-                        Animal animal = new Animal(Integer.valueOf(textFieldID.getText()), textFieldNombre.getText(), textFieldEspecie.getText(), Integer.valueOf(textFieldEdad.getText()), Integer.valueOf(textFieldPeso.getText()), choiceBoxSexo.getSelectionModel().getSelectedItem().toString(), Integer.valueOf(choiceBoxArea.getSelectionModel().getSelectedItem().toString()), Integer.valueOf(choiceBoxXaula.getSelectionModel().getSelectedItem().toString()));
+                        Animal animal = new Animal(Integer.valueOf(textFieldID.getText()), textFieldNombre.getText(), textFieldEspecie.getText(), Integer.valueOf(textFieldEdad.getText()), Integer.valueOf(textFieldPeso.getText()), choiceBoxSexo.getSelectionModel().getSelectedItem().toString(), Integer.valueOf(choiceBoxArea.getSelectionModel().getSelectedItem().toString()), Integer.valueOf(choiceBoxXaula.getSelectionModel().getSelectedItem().toString()), choiceBoxCoidador.getSelectionModel().getSelectedItem().toString());
                         fa.updateAnimal(animal);
                         buscarButton.fire();
                     } else {
@@ -386,6 +389,8 @@ public class ContableController implements Initializable {
                     choiceBoxArea.getSelectionModel().clearSelection();
                     textFieldPeso.setText("");
                     choiceBoxXaula.getSelectionModel().clearSelection();
+                    choiceBoxCoidador.getSelectionModel().clearSelection();
+                    choiceBoxSexo.getSelectionModel().clearSelection();
                     choiceBoxXaula.setItems(FXCollections.observableArrayList());
                 } else {
                     fa.muestraExcepcion("Selecciona un animal en la tabla para borrarlo");
@@ -504,6 +509,13 @@ public class ContableController implements Initializable {
         tablaAreas.setItems(updateAreas(fa));
         buscarButton.fire();
         buttonBuscarUsuario.fire();
+        e = fa.updateUsuarios("");
+        ObservableList r = FXCollections.observableArrayList();
+        for (int i = 0; i < e.size(); i++) {
+            if (((Usuario) e.get(i)).getTipo().equals(TipoUsuario.Coidador))
+                r.add(((Usuario) e.get(i)).getDni());
+        }
+        choiceBoxCoidador.setItems(r);
         updateAvisos(fa);
 
     }

@@ -2,8 +2,6 @@ package baseDatos;
 
 import aplicacion.Animal;
 import aplicacion.Area;
-import aplicacion.Comida;
-import aplicacion.Usuario;
 import aplicacion.Xaula;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class DAOAnimales extends DAOAbstracto {
 
@@ -43,7 +40,7 @@ public class DAOAnimales extends DAOAbstracto {
             }
             rsAnimales = stmAnimales.executeQuery();
             while (rsAnimales.next()) {
-                animales.add(new Animal(rsAnimales.getInt("id"), rsAnimales.getString("nome"), rsAnimales.getString("especie"), Integer.valueOf(rsAnimales.getString("edad")), Integer.valueOf(rsAnimales.getString("peso")), rsAnimales.getString("sexo"), rsAnimales.getInt("idarea"), rsAnimales.getInt("idxaula")));
+                animales.add(new Animal(rsAnimales.getInt("id"), rsAnimales.getString("nome"), rsAnimales.getString("especie"), Integer.valueOf(rsAnimales.getString("edad")), Integer.valueOf(rsAnimales.getString("peso")), rsAnimales.getString("sexo"), rsAnimales.getInt("idarea"), rsAnimales.getInt("idxaula"), rsAnimales.getString("idcoidador")));
             }
         } catch (SQLException e) {
             fa.muestraExcepcion(e.getMessage());
@@ -85,7 +82,8 @@ public class DAOAnimales extends DAOAbstracto {
         }
         return animales;
     }
-    // Devolve os animais do coidador actual
+
+    // Devolve as xaulas dos animais do coidador actual
     public ObservableList buscarXaulasAnimaisCoidador() {
         ObservableList xaulas = FXCollections.observableArrayList();
         Connection con;
@@ -110,8 +108,8 @@ public class DAOAnimales extends DAOAbstracto {
         }
         return xaulas;
     }
-    
-    // Devolve os animais do coidador actual
+
+    // Devolve as areas dos animais do coidador actual
     public ObservableList buscarAreasAnimaisCoidador() {
         ObservableList areas = FXCollections.observableArrayList();
         Connection con;
@@ -143,7 +141,7 @@ public class DAOAnimales extends DAOAbstracto {
         PreparedStatement stmAnimales = null;
         con = this.getConexion();
         try {
-            stmAnimales = con.prepareStatement("insert into animais values (?,?,?,?,?,?,?,?);");
+            stmAnimales = con.prepareStatement("insert into animais values (?,?,?,?,?,?,?,?,?);");
             stmAnimales.setInt(1, animal.getId());
             stmAnimales.setString(2, animal.getNombre());
             stmAnimales.setString(3, animal.getEspecie());
@@ -152,6 +150,7 @@ public class DAOAnimales extends DAOAbstracto {
             stmAnimales.setString(6, animal.getSexo());
             stmAnimales.setInt(7, animal.getXaula());
             stmAnimales.setInt(8, animal.getArea());
+            stmAnimales.setString(9, animal.getIdCoidador());
 
             stmAnimales.executeUpdate();
         } catch (SQLException e) {
@@ -171,8 +170,8 @@ public class DAOAnimales extends DAOAbstracto {
         PreparedStatement stmAnimales = null;
         con = this.getConexion();
         try {
-            stmAnimales = con.prepareStatement("update animais set nome = ?, especie = ?, edad = ?, peso = ?, sexo = ?, idxaula = ?, idarea = ? where id = ?;");
-            stmAnimales.setInt(8, animal.getId());
+            stmAnimales = con.prepareStatement("update animais set nome = ?, especie = ?, edad = ?, peso = ?, sexo = ?, idxaula = ?, idarea = ? idcoidador = ? where id = ?;");
+            stmAnimales.setInt(9, animal.getId());
             stmAnimales.setString(1, animal.getNombre());
             stmAnimales.setString(2, animal.getEspecie());
             stmAnimales.setInt(3, animal.getEdad());
@@ -180,6 +179,7 @@ public class DAOAnimales extends DAOAbstracto {
             stmAnimales.setString(5, animal.getSexo());
             stmAnimales.setInt(6, animal.getXaula());
             stmAnimales.setInt(7, animal.getArea());
+            stmAnimales.setString(8, animal.getSexo());
 
             stmAnimales.executeUpdate();
         } catch (SQLException e) {
