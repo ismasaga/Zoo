@@ -80,13 +80,13 @@ FOREIGN KEY (idCoidador) REFERENCES coidadores(dni) ON DELETE RESTRICT ON UPDATE
 CREATE TABLE comidas (
 id numeric not null,
 nome varchar(50) not null,
-cantidadeRestante numeric not null,
+stock numeric not null,
 unidades varchar(10) not null,
 PRIMARY KEY (id)
 );
 
 CREATE TABLE comer (
-cantidad integer not null,
+cantidadeRacion numeric not null,
 animal numeric not null,
 comida numeric not null,
 PRIMARY KEY (animal, comida),
