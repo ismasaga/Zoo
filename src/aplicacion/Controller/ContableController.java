@@ -26,7 +26,7 @@ public class ContableController implements Initializable {
     ObservableList<Aviso> avisos = FXCollections.observableArrayList();
     ObservableList<Usuario> usuarios = FXCollections.observableArrayList();
     ObservableList<Area> areas = FXCollections.observableArrayList();
-
+    //
     @FXML
     private Button sesionButton;
     @FXML

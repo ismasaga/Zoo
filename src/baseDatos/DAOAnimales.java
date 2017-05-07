@@ -18,6 +18,7 @@ public class DAOAnimales extends DAOAbstracto {
         super.setFachadaAplicacion(fa);
     }
 
+    //
     public ObservableList buscarAnimal(String animal) {
         ObservableList animales = FXCollections.observableArrayList();
         Connection con;
