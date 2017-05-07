@@ -129,6 +129,27 @@ public class ContableController implements Initializable {
     private TableView tablaXaulas;
     @FXML
     private ChoiceBox choiceBoxCoidador;
+    private TableView taboaComidas;
+    @FXML
+    private TableView taboaAnimaisComida;
+    @FXML
+    private TableView taboaOutrosAnimaisComida;
+    @FXML
+    private Label labelUds;
+    @FXML
+    private Button buttonNovaComida;
+    @FXML
+    private Button buttonGardarComida;
+    @FXML
+    private Button buttonEliminarComida;
+    @FXML
+    private TextField textFieldIdComida;
+    @FXML
+    private TextField textFieldNomeComida;
+    @FXML
+    private TextField textFieldStockComida;
+    @FXML
+    private TextField textFieldUnidadesComida;
 
     private TableColumn<Xaula, Integer> xaulaFirst = new TableColumn<Xaula, Integer>("ID");
 
@@ -140,6 +161,13 @@ public class ContableController implements Initializable {
     private TableColumn<Animal, String> animalThird = new TableColumn<Animal, String>("Especie");
     private TableColumn<Usuario, String> columnaNomeUsuario = new TableColumn<Usuario, String>("Nome");
     private TableColumn<Usuario, String> columnaDniUsuario = new TableColumn<Usuario, String>("DNI");
+
+    private TableColumn<Comida, String> columnaNomeComida = new TableColumn<Comida, String>("Nome");
+    private TableColumn<Comida, Integer> columnaStockComida = new TableColumn<Comida, Integer>("Stock");
+
+    private TableColumn<Animal, String> columnaAnimaisComida = new TableColumn<Animal, String>("Animais que comen");
+
+    private TableColumn<Animal, String> columnaOutrosAnimais = new TableColumn<Animal, String>("Outros animais");
 
     @FXML
     private TableView tablaAvisos;
@@ -179,7 +207,18 @@ public class ContableController implements Initializable {
         columnaDniUsuario.setCellValueFactory(cellData -> cellData.getValue().dniProperty());
         taboaUsuarios.getColumns().add(columnaNomeUsuario);
         taboaUsuarios.getColumns().add(columnaDniUsuario);
+        
+        columnaNomeComida.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        columnaStockComida.setCellValueFactory(cellData -> cellData.getValue().stockProperty().asObject());
+        taboaComidas.getColumns().add(columnaNomeComida); 
+        taboaComidas.getColumns().add(columnaStockComida); 
 
+        columnaAnimaisComida.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        taboaAnimaisComida.getColumns().add(columnaAnimaisComida); 
+        
+        columnaOutrosAnimais.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        taboaOutrosAnimaisComida.getColumns().add(columnaOutrosAnimais); 
+        
         areaFirst.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         areaSecond.setCellValueFactory(cellData -> cellData.getValue().climatizacionProperty());
         tablaAreas.getColumns().add(areaFirst);
@@ -187,7 +226,6 @@ public class ContableController implements Initializable {
 
         xaulaFirst.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         tablaXaulas.getColumns().add(xaulaFirst);
-
 
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -457,11 +495,11 @@ public class ContableController implements Initializable {
                 if (textFieldDniUsuario.getText() != null && !textFieldDniUsuario.getText().equals("")
                         && (choiceBoxTipoUsuario.getSelectionModel().getSelectedIndex() == 0
                         || choiceBoxTipoUsuario.getSelectionModel().getSelectedIndex() == 1)) {
-                    
-                    Usuario usr = new Usuario(textFieldDniUsuario.getText(), choiceBoxTipoUsuario.getSelectionModel().getSelectedItem().toString().equals("Coidador")? TipoUsuario.Coidador : TipoUsuario.Contable); 
-                    eliminarUsuario(fa, usr); 
-                    
-                    buttonBuscarUsuario.fire(); 
+
+                    Usuario usr = new Usuario(textFieldDniUsuario.getText(), choiceBoxTipoUsuario.getSelectionModel().getSelectedItem().toString().equals("Coidador") ? TipoUsuario.Coidador : TipoUsuario.Contable);
+                    eliminarUsuario(fa, usr);
+
+                    buttonBuscarUsuario.fire();
                     buttonNovoUsuario.fire();
                 }
             }
@@ -512,8 +550,9 @@ public class ContableController implements Initializable {
         e = fa.updateUsuarios("");
         ObservableList r = FXCollections.observableArrayList();
         for (int i = 0; i < e.size(); i++) {
-            if (((Usuario) e.get(i)).getTipo().equals(TipoUsuario.Coidador))
+            if (((Usuario) e.get(i)).getTipo().equals(TipoUsuario.Coidador)) {
                 r.add(((Usuario) e.get(i)).getDni());
+            }
         }
         choiceBoxCoidador.setItems(r);
         updateAvisos(fa);
@@ -577,8 +616,8 @@ public class ContableController implements Initializable {
     private void gardarUsuario(FachadaAplicacion fa, Usuario usuario) {
         fa.gardarUsuario(usuario);
     }
-    
+
     private void eliminarUsuario(FachadaAplicacion fa, Usuario usuario) {
-        fa.eliminarUsuario(usuario); 
+        fa.eliminarUsuario(usuario);
     }
 }
