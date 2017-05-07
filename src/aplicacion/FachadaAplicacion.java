@@ -65,6 +65,14 @@ public class FachadaAplicacion extends Application {
     public ObservableList buscarAnimaisCoidador() {
         return fbd.buscarAnimaisCoidador();
     }
+    
+    public ObservableList buscarXaulasAnimaisCoidador() {
+        return fbd.buscarXaulasAnimaisCoidador();
+    }
+    
+    public ObservableList buscarAreasAnimaisCoidador() {
+        return fbd.buscarAreasAnimaisCoidador();
+    }
 
     public void updateAnimal(Animal a) {
         fbd.updateAnimal(a);
@@ -118,8 +126,8 @@ public class FachadaAplicacion extends Application {
         return fbd.buscarAvisosAreas();
     }
     
-    public void novoAvisoAnimal(Aviso aviso) {
-        fbd.novoAvisoAnimal(aviso);
+    public void novoAviso(Aviso aviso) {
+        fbd.novoAviso(aviso);
     }
 
     public void resolverAviso(Aviso aviso) {
@@ -133,5 +141,8 @@ public class FachadaAplicacion extends Application {
     public void borrarAviso(Aviso aviso) {
         fbd.borrarAviso(aviso);
     }
-
+    
+    public void actualizarAviso(Aviso aviso) {
+        fbd.actualizarAviso(aviso);
+    }
 }
