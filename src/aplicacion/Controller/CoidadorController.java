@@ -1,9 +1,11 @@
 package aplicacion.Controller;
 
 import aplicacion.Animal;
+import aplicacion.Area;
 import aplicacion.Aviso;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Usuario;
+import aplicacion.Xaula;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -70,6 +72,8 @@ public class CoidadorController implements Initializable {
     @FXML
     private Button buttonNovo;
     @FXML
+    private Button buttonGardar;
+    @FXML
     private Button buttonEliminar;
     @FXML
     private Label labelTaboaElementos;
@@ -78,14 +82,16 @@ public class CoidadorController implements Initializable {
     // Usoo para saber cal esta pulsado, non esta ligado ca interfaz
     private RadioButton selectedRadioButton;
     // Lista de incidencias
-    ObservableList<Aviso> elementos = FXCollections.observableArrayList();
+    ObservableList elementos = FXCollections.observableArrayList();
     // Taboa pequena de incidencias
     @FXML
     private TableView taboaElementos;
     private TableColumn<Animal, Integer> elemUnAnimal = new TableColumn<>("Identificador");
     private TableColumn<Animal, String> elemDousAnimal = new TableColumn<>("Nome");
-    //private TableColumn<Aviso, String> elemUnXaula;
-    //private TableColumn<Aviso, String> elemDousXaula;
+    private TableColumn<Xaula, Integer> elemUnXaula = new TableColumn<>("Identificador Xaula");
+    private TableColumn<Xaula, Integer> elemDousXaula = new TableColumn<>("Identificador Área");
+    private TableColumn<Area, Integer> elemUnArea = new TableColumn<>("Identificador Área");
+    private TableColumn<Area, String> elemDousArea = new TableColumn<>("Climatización");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -103,6 +109,10 @@ public class CoidadorController implements Initializable {
         // Inicializamos a taboa de elementos(pestanha incidencias)
         elemUnAnimal.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         elemDousAnimal.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        elemUnXaula.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        elemDousXaula.setCellValueFactory(cellData -> cellData.getValue().getIdAreaProperty().asObject());
+        elemUnArea.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        elemDousArea.setCellValueFactory(cellData -> cellData.getValue().climatizacionProperty());
         // Pestanha pechar sesion
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -169,20 +179,6 @@ public class CoidadorController implements Initializable {
                 }
             }
         });
-        // Pestanha Incidencias
-        taboaElementos.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                // Se consigo obter a taboa
-                /*if (taboaElementos.getSelectionModel().getSelectedItem() != null) {
-                    // Obtenho o aviso pulsado
-                    Aviso aviso = (Aviso) taboaElementos.getSelectionModel().getSelectedItem();
-                    // Meto o texto de descripcion e asunto onde corresponde
-                    textDescripIncidencia.setText(aviso.getDescripcion());
-                    textAsuntoIncidencia.setText(aviso.getAsunto());
-                }*/
-            }
-        });
         // Pestanha incidencias
         buttonNovo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -192,19 +188,65 @@ public class CoidadorController implements Initializable {
                     case "Animais":
                         // Se consigo obter a taboa
                         if (taboaElementos.getSelectionModel().getSelectedItem() != null) {
-                            // Meto novo aviso mandandolle o animal
-                            //fa.novoAvisoAnimal(new Aviso()(Animal) tablaIncidencias.getSelectionModel().getSelectedItem());
+                            // Obtemos animal
+                            Animal animal = (Animal) taboaElementos.getSelectionModel().getSelectedItem();
+                            // Metemos novo aviso
+                            fa.novoAviso(new Aviso(animal.getId(), animal.getNombre(), textAsuntoIncidencia.getText(), 
+                                    textDescripIncidencia.getText(), fa.getUsuarioActual().getDni(), null, null, null, null, "animal"));
                         } else {
-                            fa.muestraExcepcion("Debes seleccionar un animal na táboa");
+                            fa.muestraExcepcion("Debes seleccionar un animal na táboa da esquerda");
                         }
                         break;
                     case "Xaulas":
+                        // Se consigo obter a taboa
+                        if (taboaElementos.getSelectionModel().getSelectedItem() != null) {
+                            // Obtemos xaula
+                            Xaula xaula = (Xaula) taboaElementos.getSelectionModel().getSelectedItem();
+                            // Metemos novo aviso
+                            fa.novoAviso(new Aviso(textAsuntoIncidencia.getText(), textDescripIncidencia.getText(), fa.getUsuarioActual().getDni(), 
+                                    null, xaula.getIdArea(), xaula.getId(), null, null, null, "xaula"));
+                        } else {
+                            fa.muestraExcepcion("Debes seleccionar unha xaula na táboa da esquerda");
+                        }
                         break;
                     case "Areas":
+                        // Se consigo obter a taboa
+                        if (taboaElementos.getSelectionModel().getSelectedItem() != null) {
+                            // Obtemos area
+                            Area area = (Area) taboaElementos.getSelectionModel().getSelectedItem();
+                            // Metemos novo aviso
+                            //Aviso(String asunto, String descripcion, String coidador, String contable, Integer area, String dataInicio, String dataFin, 
+                            //String tratamento, String tipo) {
+                            fa.novoAviso(new Aviso(textAsuntoIncidencia.getText(), textDescripIncidencia.getText(), fa.getUsuarioActual().getDni(), 
+                                    null, area.getId(), null, null, null, "area"));
+                        } else {
+                            fa.muestraExcepcion("Debes seleccionar unha área na táboa da esquerda");
+                        }
                         break;
                     case "Todos":
                         fa.muestraExcepcion("Debe seleccionar o tipo de incidencia antes de insertala pulsando un dos botóns superiores(Animais, Xaulas ou áreas).");
                         break;
+                }
+                updateTaboas(fa);
+            }
+        });
+        // Pestanha incidencias
+        buttonGardar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Se consigo obter a taboa
+                if (tablaIncidencias.getSelectionModel().getSelectedItem() != null) {
+                    // Obtenho o aviso pulsado
+                    Aviso aviso = (Aviso) tablaIncidencias.getSelectionModel().getSelectedItem();
+                    // Actualizo o aviso
+                    aviso.setAsunto(textAsuntoIncidencia.getText());
+                    aviso.setDescripcion(textDescripIncidencia.getText());
+                    // Edito o aviso en cuestión
+                    fa.actualizarAviso(aviso);
+                    // Refresco as taboas
+                    updateTaboas(fa);
+                } else {
+                    fa.muestraExcepcion("Debe seleccionar un elemento na táboa superior para poder editalo.");
                 }
             }
         });
@@ -218,6 +260,8 @@ public class CoidadorController implements Initializable {
                     Aviso aviso = (Aviso) tablaIncidencias.getSelectionModel().getSelectedItem();
                     // Borro o aviso en cuestión
                     fa.borrarAviso(aviso);
+                    // Refresco as taboas
+                    updateTaboas(fa);
                 } else {
                     fa.muestraExcepcion("Debe seleccionar un elemento na táboa superior para poder eliminalo.");
                 }
@@ -254,7 +298,7 @@ public class CoidadorController implements Initializable {
         switch (selectedRadioButton.getText()) {
             case "Animais":
                 // Cambio o label da taboa
-                labelTaboaElementos.setText("Animais :");
+                labelTaboaElementos.setText("Animais aos que coidas :");
                 // Obtenho as incidencias de animais que engadiu o coidador actual
                 incidencias = fa.buscarAvisosAnimais();
                 // Obtenmos os animais que coida o coidador actual
@@ -265,15 +309,25 @@ public class CoidadorController implements Initializable {
                 break;
             case "Xaulas":
                 // Cambio o label da taboa
-                labelTaboaElementos.setText("Xaulas :");
+                labelTaboaElementos.setText("Xaulas dos seus animais :");
                 // Obtenho as incidencias de xaulas que engadiu o coidador actual
                 incidencias = fa.buscarAvisosXaulas();
+                // Obtenmos as xaulas nas que estan os animais que coida o coidador actual
+                elementos = fa.buscarXaulasAnimaisCoidador();
+                // Metemos na taboa as columnas
+                taboaElementos.getColumns().add(elemUnXaula);
+                taboaElementos.getColumns().add(elemDousXaula);
                 break;
             case "Areas":
                 // Cambio o label da taboa
                 labelTaboaElementos.setText("Areas :");
                 // Obtenho as incidencias de areas que engadiu o coidador actual
                 incidencias = fa.buscarAvisosAreas();
+                // Obtenmos as areas nas que estan as xaulas dos animais que coida o coidador actual
+                elementos = fa.buscarAreasAnimaisCoidador();
+                // Metemos na taboa as columnas
+                taboaElementos.getColumns().add(elemUnArea);
+                taboaElementos.getColumns().add(elemDousArea);
                 break;
             case "Todos":
                 // Cambio o label da taboa

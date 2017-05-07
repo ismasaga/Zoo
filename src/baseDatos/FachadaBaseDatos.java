@@ -69,6 +69,14 @@ public class FachadaBaseDatos {
     public ObservableList buscarAnimaisCoidador() {
         return daoAnimales.buscarAnimaisCoidador();
     }
+    
+    public ObservableList buscarXaulasAnimaisCoidador() {
+        return daoAnimales.buscarXaulasAnimaisCoidador();
+    }
+    
+    public ObservableList buscarAreasAnimaisCoidador() {
+        return daoAnimales.buscarAreasAnimaisCoidador();
+    }
 
     public void updateAnimal(Animal a) {
         if (buscarAnimal(String.valueOf(a.getId())).size() == 1) {
@@ -122,8 +130,8 @@ public class FachadaBaseDatos {
         return daoAvisos.buscarAvisosAreas();
     }
     
-    public void novoAvisoAnimal(Aviso aviso) {
-        daoAvisos.novoAvisoAnimal(aviso);
+    public void novoAviso(Aviso aviso) {
+        daoAvisos.novoAviso(aviso);
     }
 
     public void resolverAviso(Aviso aviso) {
@@ -136,5 +144,9 @@ public class FachadaBaseDatos {
 
     public void borrarAviso(Aviso aviso) {
         daoAvisos.borrarAviso(aviso);
+    }
+            
+    public void actualizarAviso(Aviso aviso) {
+        daoAvisos.actualizarAviso(aviso);
     }
 }

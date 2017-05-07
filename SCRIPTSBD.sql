@@ -125,8 +125,8 @@ FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CA
 );
 
 CREATE TABLE avisosXaulas (
-area numeric not null,
 xaula numeric not null,
+area numeric not null,
 nome varchar(50) not null,
 descripcion varchar(2000) not null,
 dataInicio date not null,

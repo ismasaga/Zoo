@@ -1,7 +1,10 @@
 package baseDatos;
 
 import aplicacion.Animal;
+import aplicacion.Area;
 import aplicacion.Comida;
+import aplicacion.Usuario;
+import aplicacion.Xaula;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -81,6 +84,57 @@ public class DAOAnimales extends DAOAbstracto {
             }
         }
         return animales;
+    }
+    // Devolve os animais do coidador actual
+    public ObservableList buscarXaulasAnimaisCoidador() {
+        ObservableList xaulas = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmXaulas = null;
+        ResultSet rsXaulas;
+        con = this.getConexion();
+        try {
+            stmXaulas = con.prepareStatement("select * from xaulas where id in(select idXaula from animais where idCoidador = ?);");
+            stmXaulas.setString(1, fa.getUsuarioActual().getDni());
+            rsXaulas = stmXaulas.executeQuery();
+            while (rsXaulas.next()) {
+                xaulas.add(new Xaula(rsXaulas.getInt("id"), rsXaulas.getInt("idArea")));
+            }
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmXaulas.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return xaulas;
+    }
+    
+    // Devolve os animais do coidador actual
+    public ObservableList buscarAreasAnimaisCoidador() {
+        ObservableList areas = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmXaulas = null;
+        ResultSet rsXaulas;
+        con = this.getConexion();
+        try {
+            stmXaulas = con.prepareStatement("select * from areas where id in (select idArea from xaulas where id in (select idXaula from animais where idCoidador = ?));");
+            stmXaulas.setString(1, fa.getUsuarioActual().getDni());
+            rsXaulas = stmXaulas.executeQuery();
+            while (rsXaulas.next()) {
+                areas.add(new Area(rsXaulas.getInt("id"), rsXaulas.getString("climatizacion")));
+            }
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmXaulas.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return areas;
     }
 
 

@@ -17,25 +17,40 @@ public class DAOAvisos extends DAOAbstracto {
     }
     
     // Novo aviso
-    public void novoAvisoAnimal(Aviso aviso) {
+    public void novoAviso(Aviso aviso) {
         Connection con;
         PreparedStatement stmAvisos = null;
         con = this.getConexion();
-        try {
-            stmAvisos = con.prepareStatement("insert into avisosanimais values (?,?,?,?,?,?,?,?);");
-            /*avisosanimais (animal, nome, descripcion, dataInicio, dataFin, coidador, contable, tratamento)
-            stmAvisos.setInt(1, animal.getId());
-            stmAvisos.setString(2, animal.getNombre());
-            stmAvisos.setString(3, animal.getEspecie());
-            stmAvisos.setInt(4, animal.getEdad());
-            stmAvisos.setInt(5, animal.getPeso());
-            stmAvisos.setString(6, animal.getSexo());
-            stmAvisos.setInt(7, animal.getXaula());
-            stmAvisos.setInt(8, animal.getArea());*/
-
+        try {            
+            if (aviso.getTipo().equals("area")) {
+                stmAvisos = con.prepareStatement("insert into avisosareas (area, nome, descripcion, dataInicio, dataFin, coidador, contable, "
+                        + "tratamento) values (?,?,?,current_date,null,?,null,null;");
+                stmAvisos.setInt(1, aviso.getArea());
+                stmAvisos.setString(2, aviso.getAsunto());
+                stmAvisos.setString(3, aviso.getDescripcion());
+                stmAvisos.setString(4, fa.getUsuarioActual().getDni());
+            }
+            if (aviso.getTipo().equals("xaula")) {
+                stmAvisos = con.prepareStatement("insert into avisosxaulas (xaula, area, nome, descripcion, dataInicio, dataFin, coidador, contable, "
+                        + "tratamento) values (?,?,?,?,current_date,null,?,null,null);");
+                stmAvisos.setInt(1, aviso.getXaula());
+                stmAvisos.setInt(2, aviso.getArea());
+                stmAvisos.setString(3, aviso.getAsunto());
+                stmAvisos.setString(4, aviso.getDescripcion());
+                stmAvisos.setString(5, fa.getUsuarioActual().getDni());
+            }
+            if (aviso.getTipo().equals("animal")) {
+                stmAvisos = con.prepareStatement("insert into avisosanimais (animal, nome, descripcion, dataInicio, "
+                        + "dataFin, coidador, contable, tratamento) values (?,?,?,current_date,null,?,null,null);");
+                stmAvisos.setInt(1, aviso.getAnimal());
+                stmAvisos.setString(2, aviso.getAsunto());
+                stmAvisos.setString(3, aviso.getDescripcion());
+                stmAvisos.setString(4, aviso.getCoidador());
+                stmAvisos.executeUpdate();
+            }
             stmAvisos.executeUpdate();
         } catch (SQLException e) {
-            fa.muestraExcepcion(e.getMessage());
+            fa.muestraExcepcion(e.getMessage()+"\n"+e.getSQLState());
         } finally {
             try {
                 stmAvisos.close();
@@ -312,12 +327,51 @@ public class DAOAvisos extends DAOAbstracto {
             }
             if (aviso.getTipo().equals("animal")) {
                 stmAvisos = con.prepareStatement("delete from avisosanimais where animal = ? and nome = ? and datainicio = ?;");
-                System.out.println(aviso.getAnimal());
                 stmAvisos.setInt(1, Integer.valueOf(aviso.getAnimal()));
                 stmAvisos.setString(2, aviso.getAsunto());
                 stmAvisos.setDate(3, java.sql.Date.valueOf(aviso.getDataInicio()));
             }
             stmAvisos.executeUpdate();
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmAvisos.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+    }
+    
+    public void actualizarAviso(Aviso aviso) {
+        Connection con;
+        PreparedStatement stmAvisos = null;
+        con = this.getConexion();
+        try {
+            if (aviso.getTipo().equals("area")) {
+                stmAvisos = con.prepareStatement("update avisosareas set datafin = null , contable = null , tratamento = null where area = ? and nome = ? and datainicio = ?;");
+                stmAvisos.setInt(1, Integer.valueOf(aviso.getArea()));
+                stmAvisos.setString(2, aviso.getAsunto());
+                stmAvisos.setDate(3, java.sql.Date.valueOf(aviso.getDataInicio()));
+
+            }
+            if (aviso.getTipo().equals("xaula")) {
+                stmAvisos = con.prepareStatement("update avisosxaulas set datafin = null , contable = null , tratamento = null where idarea = ? and nome = ? and datainicio = ? and id = ?;");
+                stmAvisos.setInt(1, Integer.valueOf(aviso.getArea()));
+                stmAvisos.setString(2, aviso.getAsunto());
+                stmAvisos.setDate(3, java.sql.Date.valueOf(aviso.getDataInicio()));
+                stmAvisos.setInt(4, Integer.valueOf(aviso.getXaula()));
+
+            }
+            if (aviso.getTipo().equals("animal")) {
+                stmAvisos = con.prepareStatement("update avisosanimais set nome = ? , descripcion = ? , dataInicio = current_date where coidador = ? and datainicio = ?;");
+                stmAvisos.setString(1, aviso.getAsunto());
+                stmAvisos.setString(2, aviso.getDescripcion());
+                stmAvisos.setString(3, aviso.getCoidador());
+                stmAvisos.setDate(4, java.sql.Date.valueOf(aviso.getDataInicio()));
+            }
+            stmAvisos.executeUpdate();
+
         } catch (SQLException e) {
             fa.muestraExcepcion(e.getMessage());
         } finally {
