@@ -3,7 +3,6 @@ package aplicacion;
 import baseDatos.FachadaBaseDatos;
 
 class XestionUsuarios {
-    private FachadaBaseDatos fbd;
     private FachadaAplicacion fa;
 
 

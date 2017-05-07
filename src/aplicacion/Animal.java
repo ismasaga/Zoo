@@ -19,10 +19,9 @@ public class Animal {
     private StringProperty sexo;
     private IntegerProperty area;
     private IntegerProperty xaula;
-    private ArrayList<Comida> comidas;
     private StringProperty idCoidador;
 
-    public Animal(Integer id, String nombre, String especie, Integer edad, Integer peso, String sexo, Integer area, Integer xaula, ArrayList<Comida> comidas) {
+    public Animal(Integer id, String nombre, String especie, Integer edad, Integer peso, String sexo, Integer area, Integer xaula) {
         this.id = new SimpleIntegerProperty(id);
         this.nombre = new SimpleStringProperty(nombre);
         this.especie = new SimpleStringProperty(especie);
@@ -31,10 +30,9 @@ public class Animal {
         this.sexo = new SimpleStringProperty(sexo);
         this.area = new SimpleIntegerProperty(area);
         this.xaula = new SimpleIntegerProperty(xaula);
-        this.comidas = comidas;
     }
     
-    public Animal(Integer id, String nombre, String especie, Integer edad, Integer peso, String sexo, Integer area, Integer xaula, ArrayList<Comida> comidas, String idCoidador) {
+    public Animal(Integer id, String nombre, String especie, Integer edad, Integer peso, String sexo, Integer area, Integer xaula, String idCoidador) {
         this.id = new SimpleIntegerProperty(id);
         this.nombre = new SimpleStringProperty(nombre);
         this.especie = new SimpleStringProperty(especie);
@@ -43,7 +41,6 @@ public class Animal {
         this.sexo = new SimpleStringProperty(sexo);
         this.area = new SimpleIntegerProperty(area);
         this.xaula = new SimpleIntegerProperty(xaula);
-        this.comidas = comidas;
         this.idCoidador = new SimpleStringProperty(idCoidador);
     }
 
@@ -117,14 +114,6 @@ public class Animal {
 
     public IntegerProperty edadProperty() {
         return edad;
-    }
-
-    public ArrayList<Comida> getComidas() {
-        return comidas;
-    }
-
-    public void setComidas(ArrayList<Comida> comidas) {
-        this.comidas = comidas;
     }
 
     public int getArea() {

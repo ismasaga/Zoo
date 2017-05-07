@@ -40,7 +40,7 @@ public class DAOAnimales extends DAOAbstracto {
             }
             rsAnimales = stmAnimales.executeQuery();
             while (rsAnimales.next()) {
-                animales.add(new Animal(rsAnimales.getInt("id"), rsAnimales.getString("nome"), rsAnimales.getString("especie"), Integer.valueOf(rsAnimales.getString("edad")), Integer.valueOf(rsAnimales.getString("peso")), rsAnimales.getString("sexo"), rsAnimales.getInt("idarea"), rsAnimales.getInt("idxaula"), new ArrayList<Comida>()));
+                animales.add(new Animal(rsAnimales.getInt("id"), rsAnimales.getString("nome"), rsAnimales.getString("especie"), Integer.valueOf(rsAnimales.getString("edad")), Integer.valueOf(rsAnimales.getString("peso")), rsAnimales.getString("sexo"), rsAnimales.getInt("idarea"), rsAnimales.getInt("idxaula")));
             }
         } catch (SQLException e) {
             fa.muestraExcepcion(e.getMessage());
@@ -69,7 +69,7 @@ public class DAOAnimales extends DAOAbstracto {
                 animales.add(new Animal(rsAnimales.getInt("id"), rsAnimales.getString("nome"), rsAnimales.getString("especie"),
                         Integer.valueOf(rsAnimales.getString("edad")), Integer.valueOf(rsAnimales.getString("peso")),
                         rsAnimales.getString("sexo"), rsAnimales.getInt("idarea"), rsAnimales.getInt("idxaula"),
-                        new ArrayList<Comida>(), rsAnimales.getString("idCoidador")));
+                        rsAnimales.getString("idCoidador")));
             }
         } catch (SQLException e) {
             fa.muestraExcepcion(e.getMessage());
