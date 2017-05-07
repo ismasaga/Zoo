@@ -19,7 +19,12 @@ public class Animal {
     private IntegerProperty xaula;
     private StringProperty idCoidador;
 
-    /*public Animal(Integer id, String nombre, String especie, Integer edad, Integer peso, String sexo, Integer area, Integer xaula) {
+    public Animal(Integer id, String nombre) {
+        this.id = new SimpleIntegerProperty(id);
+        this.nombre = new SimpleStringProperty(nombre);
+    }
+
+    public Animal(Integer id, String nombre, String especie, Integer edad, Integer peso, String sexo, Integer area, Integer xaula) {
         this.id = new SimpleIntegerProperty(id);
         this.nombre = new SimpleStringProperty(nombre);
         this.especie = new SimpleStringProperty(especie);
@@ -28,7 +33,7 @@ public class Animal {
         this.sexo = new SimpleStringProperty(sexo);
         this.area = new SimpleIntegerProperty(area);
         this.xaula = new SimpleIntegerProperty(xaula);
-    }*/
+    }
     
     public Animal(Integer id, String nombre, String especie, Integer edad, Integer peso, String sexo, Integer area, Integer xaula, String idCoidador) {
         this.id = new SimpleIntegerProperty(id);

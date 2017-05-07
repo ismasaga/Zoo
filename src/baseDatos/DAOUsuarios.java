@@ -39,7 +39,7 @@ public class DAOUsuarios extends DAOAbstracto {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
 
         } finally {
             try {
@@ -93,7 +93,7 @@ public class DAOUsuarios extends DAOAbstracto {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
 
         } finally {
             try {
@@ -154,7 +154,7 @@ public class DAOUsuarios extends DAOAbstracto {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
 
         } finally {
             try {
@@ -191,7 +191,7 @@ public class DAOUsuarios extends DAOAbstracto {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
 
         } finally {
             try {
@@ -225,7 +225,7 @@ public class DAOUsuarios extends DAOAbstracto {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
 
         } finally {
             try {
@@ -240,7 +240,7 @@ public class DAOUsuarios extends DAOAbstracto {
     public void gardarUsuario(Usuario usuario) {
         Connection con;
         PreparedStatement stmUsuarios = null;
-        ResultSet rsUsuarios = null; 
+        ResultSet rsUsuarios = null;
         con = this.getConexion();
 
         try {
@@ -250,18 +250,29 @@ public class DAOUsuarios extends DAOAbstracto {
                 stmUsuarios = con.prepareStatement("select * from contables where dni = ?;");
             }
 
+            con.setAutoCommit(false);
+
             stmUsuarios.setString(1, usuario.getDni());
-            rsUsuarios = stmUsuarios.executeQuery(); 
-            
-            if(!rsUsuarios.next()){ // Non está, facemos insert
-                novoUsuario(usuario); 
+            rsUsuarios = stmUsuarios.executeQuery();
+
+            if (!rsUsuarios.next()) { // Non está, facemos insert
+                novoUsuario(usuario);
             } else { // Si está, facemos update
-                updateUsuario(usuario); 
+                updateUsuario(usuario);
+            }
+
+            con.commit();
+            con.setAutoCommit(true);
+
+        } catch (SQLException e) {
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                fa.muestraExcepcion(ex.getMessage());
             }
             
-        } catch (SQLException e) {
             System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
 
         } finally {
             try {
@@ -292,7 +303,7 @@ public class DAOUsuarios extends DAOAbstracto {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
 
         } finally {
             try {
