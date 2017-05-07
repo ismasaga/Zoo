@@ -21,6 +21,11 @@ public class Animal {
     private IntegerProperty xaula;
     private StringProperty idCoidador;
 
+    public Animal(Integer id, String nombre) {
+        this.id = new SimpleIntegerProperty(id);
+        this.nombre = new SimpleStringProperty(nombre);
+    }
+
     public Animal(Integer id, String nombre, String especie, Integer edad, Integer peso, String sexo, Integer area, Integer xaula) {
         this.id = new SimpleIntegerProperty(id);
         this.nombre = new SimpleStringProperty(nombre);

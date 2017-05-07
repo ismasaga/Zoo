@@ -34,33 +34,19 @@ public class DAOComidas extends DAOAbstracto {
         ObservableList comidas = FXCollections.observableArrayList();
 
         Connection con = this.getConexion();
-        PreparedStatement stmComer = null, stmAnimales = null, stmComidas = null;
-        ResultSet rsComer = null, rsComidas = null, rsAnimales = null;
-        Comida c;
-        Animal a;
+        PreparedStatement stmComidas = null;
+        ResultSet rsComidas = null;
 
         try {
-            stmComer = con.prepareStatement("select * from comer; ");
-            stmComidas = con.prepareStatement("select * from comidas where id = ?;");
-            stmAnimales = con.prepareStatement("select * from animales where id = ?;");
+            stmComidas = con.prepareStatement("select * from comidas;");
+            rsComidas = stmComidas.executeQuery();
 
-            rsComer = stmComer.executeQuery();
-
-            while (rsComer.next()) {
-                stmComidas.setInt(1, rsComer.getInt("comida"));
-                rsComidas = stmComidas.executeQuery();
-
-                stmAnimales.setInt(1, rsComer.getInt("animal"));
-                rsAnimales = stmAnimales.executeQuery();
-
-                c = new Comida(rsComidas.getInt("id"), rsComidas.getString("nome"), rsComidas.getString("unidades"), rsComidas.getInt("stock"));
-                a = new Animal(rsAnimales.getInt("id"), rsAnimales.getString("nome"), rsAnimales.getString("especie"), rsAnimales.getInt("edad"),
-                        rsAnimales.getInt("peso"), rsAnimales.getString("sexo"), rsAnimales.getInt("area"), rsAnimales.getInt("xaula"), rsAnimales.getString("idcoidador"));
-
-                comidas.add(new ComidaAnimal(a, c, rsComer.getInt("cantidad")));
+            while (rsComidas.next()) {
+                comidas.add(new Comida(rsComidas.getInt("id"), rsComidas.getString("nome"), rsComidas.getString("uds"), rsComidas.getInt("stock")));
             }
 
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             fa.muestraExcepcion(e.getMessage());
         } finally {
             try {
@@ -73,7 +59,66 @@ public class DAOComidas extends DAOAbstracto {
         return comidas;
     }
 
-    public void insertarComida(Comida comida) {
+    public ObservableList buscarAnimaisComida(Comida comida) {
+        ObservableList animais = FXCollections.observableArrayList();
+
+        Connection con = this.getConexion();
+        PreparedStatement stmAnimais = null;
+        ResultSet rsAnimais = null;
+
+        try {
+            stmAnimais = con.prepareStatement("select * from comer join animais on comer.animal = animais.id;");
+            rsAnimais = stmAnimais.executeQuery();
+
+            while (rsAnimais.next()) {
+                animais.add(new Animal(rsAnimais.getInt("id"), rsAnimais.getString("nome")));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmAnimais.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+
+        return animais;
+    }
+
+    public ObservableList buscarAnimaisNonComida(Comida comida) {
+        ObservableList animais = FXCollections.observableArrayList();
+
+        Connection con = this.getConexion();
+        PreparedStatement stmAnimais = null;
+        ResultSet rsAnimais = null;
+
+        try {
+            stmAnimais = con.prepareStatement("select * from animais where id not in (select animal from comer);");
+            rsAnimais = stmAnimais.executeQuery();
+
+            while (rsAnimais.next()) {
+                animais.add(new Animal(rsAnimais.getInt("id"), rsAnimais.getString("nome")));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
+            
+        } finally {
+            try {
+                stmAnimais.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+
+        return animais;
+    }
+
+    public void novaComida(Comida comida) {
         Connection con = this.getConexion();
         PreparedStatement stmComidas = null;
 
@@ -87,7 +132,9 @@ public class DAOComidas extends DAOAbstracto {
             stmComidas.executeUpdate();
 
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             fa.muestraExcepcion(e.getMessage());
+
         } finally {
             try {
                 stmComidas.close();
@@ -97,7 +144,7 @@ public class DAOComidas extends DAOAbstracto {
         }
     }
 
-    public void actualizarComida(Comida comida) {
+    public void updateComida(Comida comida) {
         Connection con = this.getConexion();
         PreparedStatement stmComidas = null;
 
@@ -111,7 +158,9 @@ public class DAOComidas extends DAOAbstracto {
             stmComidas.executeUpdate();
 
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             fa.muestraExcepcion(e.getMessage());
+
         } finally {
             try {
                 stmComidas.close();
@@ -120,8 +169,145 @@ public class DAOComidas extends DAOAbstracto {
             }
         }
     }
-    
-    public void gardarComida(Comida comdia) {
-        // Eu estaba aquí
+
+    public void gardarComida(Comida comida) {
+        Connection con = this.getConexion();
+        PreparedStatement stmComidas = null;
+        ResultSet rsComidas = null;
+
+        try {
+            con.setAutoCommit(false);
+
+            stmComidas.setInt(1, comida.getId());
+            rsComidas = stmComidas.executeQuery();
+
+            if (!rsComidas.next()) { // Non está, facemos insert
+                novaComida(comida);
+            } else { // Si está, facemos update
+                updateComida(comida);
+            }
+
+            con.commit();
+            con.setAutoCommit(true);
+
+        } catch (SQLException e) {
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                fa.muestraExcepcion(ex.getMessage());
+            }
+
+            System.out.println(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
+
+        } finally {
+            try {
+                stmComidas.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
     }
+
+    public void borrarComida(Comida comida) {
+        Connection con = this.getConexion();
+        PreparedStatement stmComidas = null;
+
+        try {
+            stmComidas = con.prepareStatement("delete from comidas where id = ?;");
+            stmComidas.setInt(1, comida.getId());
+
+            stmComidas.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
+
+        } finally {
+            try {
+                stmComidas.close();
+
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+    }
+
+    public void addAnimal(ComidaAnimal comer) {
+        Connection con = this.getConexion();
+        PreparedStatement stmComer = null;
+
+        try {
+            stmComer = con.prepareStatement("insert into comer values(?, ?, ?);");
+            stmComer.setInt(1, comer.getRacion());
+            stmComer.setInt(2, comer.getAnimal().getId());
+            stmComer.setInt(3, comer.getComida().getId());
+
+            stmComer.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
+
+        } finally {
+            try {
+                stmComer.close();
+
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+    }
+
+    public void removeAnimal(ComidaAnimal comidaAnimal) {
+        Connection con = this.getConexion();
+        PreparedStatement stmComer = null;
+
+        try {
+            stmComer = con.prepareStatement("delete from comer where comida = ? and animal = ?;");
+            stmComer.setInt(1, comidaAnimal.getComida().getId());
+            stmComer.setInt(2, comidaAnimal.getAnimal().getId());
+
+            stmComer.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
+
+        } finally {
+            try {
+                stmComer.close();
+
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+    }
+
+    public void cambiarCantidade(ComidaAnimal comidaAnimal) {
+        Connection con = this.getConexion();
+        PreparedStatement stmComer = null;
+
+        try {
+            stmComer = con.prepareStatement("update comer set cantidaderacion = ? where comida = ? and animal = ?;");
+            stmComer.setInt(2, comidaAnimal.getComida().getId());
+            stmComer.setInt(3, comidaAnimal.getAnimal().getId());
+            stmComer.setInt(1, comidaAnimal.getRacion());
+
+            stmComer.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
+
+        } finally {
+            try {
+                stmComer.close();
+
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+    }
+
 }
