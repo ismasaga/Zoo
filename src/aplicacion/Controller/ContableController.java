@@ -646,21 +646,21 @@ public class ContableController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if (textFieldIdComida.getText() != null && !textFieldIdComida.getText().equals("")
-                        || textFieldNomeComida.getText() != null && !textFieldNomeComida.getText().equals("")
-                        || textFieldStockComida.getText() != null && !textFieldStockComida.getText().equals("")
-                        || textFieldUnidadesComida.getText() != null && !textFieldUnidadesComida.getText().equals("")) {
+                        && textFieldNomeComida.getText() != null && !textFieldNomeComida.getText().equals("")
+                        && textFieldStockComida.getText() != null && !textFieldStockComida.getText().equals("")
+                        && textFieldUnidadesComida.getText() != null && !textFieldUnidadesComida.getText().equals("")) {
 
                     Comida c = new Comida(Integer.parseInt(textFieldIdComida.getText()), textFieldNomeComida.getText(),
                             textFieldUnidadesComida.getText(), Integer.parseInt(textFieldStockComida.getText()));
-                    
-                    gardarComida(fa, c); 
-                    buttonNovaComida.fire(); 
+
+                    gardarComida(fa, c);
+                    buttonNovaComida.fire();
                     taboaComidas.setItems(updateComidas(fa));
                 }
             }
 
         });
-        
+
         buttonEliminarComida.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -671,6 +671,40 @@ public class ContableController implements Initializable {
 
                     taboaComidas.setItems(updateComidas(fa));
                     buttonNovaComida.fire();
+                }
+            }
+        });
+
+        buttonEngadirAnimalComida.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (taboaOutrosAnimaisComida.getSelectionModel().getSelectedItem() != null
+                        && taboaComidas.getSelectionModel().getSelectedItem() != null
+                        && textFieldCantidadeComida.getText() != null
+                        && !textFieldCantidadeComida.getText().equals("")) {
+
+                    Animal a = (Animal) taboaOutrosAnimaisComida.getSelectionModel().getSelectedItem();
+                    Comida c = (Comida) taboaComidas.getSelectionModel().getSelectedItem();
+
+                    engadirAnimalComida(fa, c, a, Integer.parseInt(textFieldCantidadeComida.getText()));
+                    taboaAnimaisComida.setItems(updateAnimaisComida(fa, c));
+                    taboaOutrosAnimaisComida.setItems(updateOutrosAnimaisComida(fa, c));
+                }
+            }
+        });
+
+        buttonQuitarAnimalComida.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (taboaAnimaisComida.getSelectionModel().getSelectedItem() != null
+                        && taboaComidas.getSelectionModel().getSelectedItem() != null) {
+
+                    Animal a = (Animal) taboaAnimaisComida.getSelectionModel().getSelectedItem();
+                    Comida c = (Comida) taboaComidas.getSelectionModel().getSelectedItem();
+
+                    quitarAnimalComida(fa, c, a);
+                    taboaAnimaisComida.setItems(updateAnimaisComida(fa, c));
+                    taboaOutrosAnimaisComida.setItems(updateOutrosAnimaisComida(fa, c));
                 }
             }
         });
@@ -766,13 +800,21 @@ public class ContableController implements Initializable {
     private int recuperarCantidade(FachadaAplicacion fa, Comida c, Animal a) {
         return fa.recuperarCantidade(c, a);
     }
-    
-    private void gardarComida(FachadaAplicacion fa, Comida c){
-        fa.gardarComida(c); 
+
+    private void gardarComida(FachadaAplicacion fa, Comida c) {
+        fa.gardarComida(c);
+    }
+
+    private void eliminarComida(FachadaAplicacion fa, Comida c) {
+        fa.eliminarComida(c);
+    }
+
+    private void engadirAnimalComida(FachadaAplicacion fa, Comida c, Animal a, Integer cantidade) {
+        fa.engadirAnimalComida(c, a, cantidade);
     }
     
-    private void eliminarComida(FachadaAplicacion fa, Comida c) {
-        fa.eliminarComida(c); 
+    private void quitarAnimalComida(FachadaAplicacion fa, Comida c, Animal a) {
+        fa.quitarAnimalComida(c, a);
     }
 
     private ObservableList updateUsuarios(FachadaAplicacion fa, String usuario) {

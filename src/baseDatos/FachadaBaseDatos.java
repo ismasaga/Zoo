@@ -126,17 +126,25 @@ public class FachadaBaseDatos {
     }
 
     public int recuperarCantidade(Comida comida, Animal animal) {
-        return daoComidas.recuperarCantidade(comida, animal); 
+        return daoComidas.recuperarCantidade(comida, animal);
     }
-    
-    public void gardarComida(Comida c){
+
+    public void gardarComida(Comida c) {
         daoComidas.gardarComida(c);
     }
-    
-    public void eliminarComida(Comida c){
+
+    public void eliminarComida(Comida c) {
         daoComidas.borrarComida(c);
     }
+
+    public void engadirAnimalComida(Comida c, Animal a, Integer cantidade) {
+        daoComidas.addAnimal(c, a, cantidade);
+    }
     
+    public void quitarAnimalComida(Comida c, Animal a) {
+        daoComidas.removeAnimal(c, a);
+    }
+
     public ObservableList buscarAvisos() {
         return daoAvisos.buscarAvisos();
     }
