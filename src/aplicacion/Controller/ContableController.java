@@ -677,7 +677,7 @@ public class ContableController implements Initializable {
 
         buttonEngadirAnimalComida.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) { // Meter aviso para que si non se puxo nada en cantidade diga algo
                 if (taboaOutrosAnimaisComida.getSelectionModel().getSelectedItem() != null
                         && taboaComidas.getSelectionModel().getSelectedItem() != null
                         && textFieldCantidadeComida.getText() != null
@@ -709,30 +709,57 @@ public class ContableController implements Initializable {
             }
         });
 
+        buttonCambiarCantidadeComida.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) { // xq colle comida como null? 
+                if (taboaAnimaisComida.getSelectionModel().getSelectedItem() != null
+                        && taboaComidas.getSelectionModel().getSelectedItem() != null
+                        && textFieldCantidadeComida.getText() != null
+                        && !textFieldCantidadeComida.getText().equals("")) {
+
+                    Animal a = (Animal) taboaOutrosAnimaisComida.getSelectionModel().getSelectedItem();
+                    Comida c = (Comida) taboaComidas.getSelectionModel().getSelectedItem();
+
+                    cambiarCantidadeComida(fa, c, a, Integer.parseInt(textFieldCantidadeComida.getText()));
+                }
+            }
+        }
+        );
+
         ObservableList e = updateAreas(fa);
         ObservableList z = FXCollections.observableArrayList();
-        for (int i = 0; i < e.size(); i++) {
+        for (int i = 0;
+                i < e.size();
+                i++) {
             z.add(((Area) e.get(i)).getId());
         }
 
         choiceBoxArea.setItems(z);
+
         tablaAreas.setItems(updateAreas(fa));
 
         buscarButton.fire();
+
         buttonBuscarUsuario.fire();
+
         taboaComidas.setItems(updateComidas(fa));
 
         e = fa.updateUsuarios("");
         ObservableList r = FXCollections.observableArrayList();
-        for (int i = 0; i < e.size(); i++) {
+        for (int i = 0;
+                i < e.size();
+                i++) {
             if (((Usuario) e.get(i)).getTipo().equals(TipoUsuario.Coidador)) {
                 r.add(((Usuario) e.get(i)).getDni());
             }
         }
 
         choiceBoxCoidador.setItems(r);
+
         updateAvisos(fa);
-        textFieldIDXaula.setDisable(true);
+
+        textFieldIDXaula.setDisable(
+                true);
 
     }
 
@@ -812,9 +839,13 @@ public class ContableController implements Initializable {
     private void engadirAnimalComida(FachadaAplicacion fa, Comida c, Animal a, Integer cantidade) {
         fa.engadirAnimalComida(c, a, cantidade);
     }
-    
+
     private void quitarAnimalComida(FachadaAplicacion fa, Comida c, Animal a) {
         fa.quitarAnimalComida(c, a);
+    }
+
+    private void cambiarCantidadeComida(FachadaAplicacion fa, Comida c, Animal a, Integer cantidade) {
+        fa.cambiarCantidadeComida(c, a, cantidade);
     }
 
     private ObservableList updateUsuarios(FachadaAplicacion fa, String usuario) {

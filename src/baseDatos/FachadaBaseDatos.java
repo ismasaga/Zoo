@@ -140,9 +140,13 @@ public class FachadaBaseDatos {
     public void engadirAnimalComida(Comida c, Animal a, Integer cantidade) {
         daoComidas.addAnimal(c, a, cantidade);
     }
-    
+
     public void quitarAnimalComida(Comida c, Animal a) {
         daoComidas.removeAnimal(c, a);
+    }
+
+    public void cambiarCantidadeComida(Comida c, Animal a, Integer cantidade) {
+        daoComidas.cambiarCantidade(c, a, cantidade);
     }
 
     public ObservableList buscarAvisos() {
