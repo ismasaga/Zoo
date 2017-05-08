@@ -103,7 +103,7 @@ dataFin date,
 coidador char(9) not null,
 contable char(9),
 tratamento varchar(500),
-PRIMARY KEY (nome, dataInicio),
+PRIMARY KEY (nome, dataInicio, animal),
 FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (coidador) references coidadores(dni) ON DELETE RESTRICT ON UPDATE CASCADE,
 FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CASCADE
