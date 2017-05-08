@@ -24,7 +24,7 @@ public class DAOAvisos extends DAOAbstracto {
         try {            
             if (aviso.getTipo().equals("area")) {
                 stmAvisos = con.prepareStatement("insert into avisosareas (area, nome, descripcion, dataInicio, dataFin, coidador, contable, "
-                        + "tratamento) values (?,?,?,current_date,null,?,null,null;");
+                        + "tratamento) values (?,?,?,current_date,null,?,null,null);");
                 stmAvisos.setInt(1, aviso.getArea());
                 stmAvisos.setString(2, aviso.getAsunto());
                 stmAvisos.setString(3, aviso.getDescripcion());
@@ -46,7 +46,6 @@ public class DAOAvisos extends DAOAbstracto {
                 stmAvisos.setString(2, aviso.getAsunto());
                 stmAvisos.setString(3, aviso.getDescripcion());
                 stmAvisos.setString(4, aviso.getCoidador());
-                stmAvisos.executeUpdate();
             }
             stmAvisos.executeUpdate();
         } catch (SQLException e) {
@@ -349,26 +348,29 @@ public class DAOAvisos extends DAOAbstracto {
         con = this.getConexion();
         try {
             if (aviso.getTipo().equals("area")) {
-                stmAvisos = con.prepareStatement("update avisosareas set datafin = null , contable = null , tratamento = null where area = ? and nome = ? and datainicio = ?;");
-                stmAvisos.setInt(1, Integer.valueOf(aviso.getArea()));
-                stmAvisos.setString(2, aviso.getAsunto());
-                stmAvisos.setDate(3, java.sql.Date.valueOf(aviso.getDataInicio()));
-
-            }
-            if (aviso.getTipo().equals("xaula")) {
-                stmAvisos = con.prepareStatement("update avisosxaulas set datafin = null , contable = null , tratamento = null where idarea = ? and nome = ? and datainicio = ? and id = ?;");
-                stmAvisos.setInt(1, Integer.valueOf(aviso.getArea()));
-                stmAvisos.setString(2, aviso.getAsunto());
-                stmAvisos.setDate(3, java.sql.Date.valueOf(aviso.getDataInicio()));
-                stmAvisos.setInt(4, Integer.valueOf(aviso.getXaula()));
-
-            }
-            if (aviso.getTipo().equals("animal")) {
-                stmAvisos = con.prepareStatement("update avisosanimais set nome = ? , descripcion = ? , dataInicio = current_date where coidador = ? and datainicio = ?;");
+                stmAvisos = con.prepareStatement("update avisosareas set nome = ? , descripcion = ? where coidador = ? and datainicio = ? and area = ?;");
                 stmAvisos.setString(1, aviso.getAsunto());
                 stmAvisos.setString(2, aviso.getDescripcion());
                 stmAvisos.setString(3, aviso.getCoidador());
                 stmAvisos.setDate(4, java.sql.Date.valueOf(aviso.getDataInicio()));
+                stmAvisos.setInt(5, aviso.getArea());
+            }
+            if (aviso.getTipo().equals("xaula")) {
+                stmAvisos = con.prepareStatement("update avisosxaulas set nome = ? , descripcion = ? where coidador = ? and datainicio = ? and xaula = ? and area = ?;");
+                stmAvisos.setString(1, aviso.getAsunto());
+                stmAvisos.setString(2, aviso.getDescripcion());
+                stmAvisos.setString(3, aviso.getCoidador());
+                stmAvisos.setDate(4, java.sql.Date.valueOf(aviso.getDataInicio()));
+                stmAvisos.setInt(5, aviso.getXaula());
+                stmAvisos.setInt(6, aviso.getArea());
+            }
+            if (aviso.getTipo().equals("animal")) {
+                stmAvisos = con.prepareStatement("update avisosanimais set nome = ? , descripcion = ? where coidador = ? and datainicio = ? and animal = ?;");
+                stmAvisos.setString(1, aviso.getAsunto());
+                stmAvisos.setString(2, aviso.getDescripcion());
+                stmAvisos.setString(3, aviso.getCoidador());
+                stmAvisos.setDate(4, java.sql.Date.valueOf(aviso.getDataInicio()));
+                stmAvisos.setInt(5, aviso.getAnimal());
             }
             stmAvisos.executeUpdate();
 
