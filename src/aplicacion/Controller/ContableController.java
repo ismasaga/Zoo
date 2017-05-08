@@ -689,6 +689,10 @@ public class ContableController implements Initializable {
                     engadirAnimalComida(fa, c, a, Integer.parseInt(textFieldCantidadeComida.getText()));
                     taboaAnimaisComida.setItems(updateAnimaisComida(fa, c));
                     taboaOutrosAnimaisComida.setItems(updateOutrosAnimaisComida(fa, c));
+                    
+                } else if (textFieldCantidadeComida.getText() == null
+                        || textFieldCantidadeComida.getText().equals("")){
+                    fa.muestraExcepcion("¡Debe indicarse a cantidade de comida!");
                 }
             }
         });
@@ -717,7 +721,7 @@ public class ContableController implements Initializable {
                         && textFieldCantidadeComida.getText() != null
                         && !textFieldCantidadeComida.getText().equals("")) {
 
-                    Animal a = (Animal) taboaOutrosAnimaisComida.getSelectionModel().getSelectedItem();
+                    Animal a = (Animal) taboaAnimaisComida.getSelectionModel().getSelectedItem();
                     Comida c = (Comida) taboaComidas.getSelectionModel().getSelectedItem();
 
                     cambiarCantidadeComida(fa, c, a, Integer.parseInt(textFieldCantidadeComida.getText()));
