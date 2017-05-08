@@ -66,7 +66,8 @@ public class DAOComidas extends DAOAbstracto {
         ResultSet rsAnimais = null;
 
         try {
-            stmAnimais = con.prepareStatement("select * from comer join animais on comer.animal = animais.id;");
+            stmAnimais = con.prepareStatement("select * from comer join animais on comer.animal = animais.id where comer.comida = ?;");
+            stmAnimais.setInt(1, comida.getId());
             rsAnimais = stmAnimais.executeQuery();
 
             while (rsAnimais.next()) {
@@ -95,7 +96,8 @@ public class DAOComidas extends DAOAbstracto {
         ResultSet rsAnimais = null;
 
         try {
-            stmAnimais = con.prepareStatement("select * from animais where id not in (select animal from comer);");
+            stmAnimais = con.prepareStatement("select * from animais where id not in (select animal from comer where comida = ?);");
+            stmAnimais.setInt(1, comida.getId());
             rsAnimais = stmAnimais.executeQuery();
 
             while (rsAnimais.next()) {
@@ -148,7 +150,7 @@ public class DAOComidas extends DAOAbstracto {
         PreparedStatement stmComidas = null;
 
         try {
-            stmComidas = con.prepareStatement("update comidas set nome = ?, stock = ?, uds = ? where id = ?");
+            stmComidas = con.prepareStatement("update comidas set nome = ?, stock = ?, unidades = ? where id = ?");
             stmComidas.setInt(4, comida.getId());
             stmComidas.setString(1, comida.getNombre());
             stmComidas.setInt(2, comida.getStock());
@@ -176,7 +178,8 @@ public class DAOComidas extends DAOAbstracto {
 
         try {
             con.setAutoCommit(false);
-
+            
+            stmComidas = con.prepareStatement("select * from comidas where id = ?;"); 
             stmComidas.setInt(1, comida.getId());
             rsComidas = stmComidas.executeQuery();
 

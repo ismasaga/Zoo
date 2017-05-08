@@ -566,7 +566,7 @@ public class ContableController implements Initializable {
 
                     textFieldIdComida.setText(String.valueOf(c.getId()));
                     textFieldNomeComida.setText(c.getNombre());
-                    textFieldStockComida.setText(String.valueOf(c.getId()));
+                    textFieldStockComida.setText(String.valueOf(c.getStock()));
                     textFieldUnidadesComida.setText(c.getUds());
 
                     buttonNovaComida.setDisable(false);
@@ -575,12 +575,12 @@ public class ContableController implements Initializable {
 
                     taboaAnimaisComida.setItems(updateAnimaisComida(fa, c));
                     taboaOutrosAnimaisComida.setItems(updateOutrosAnimaisComida(fa, c));
-                    
+
                     buttonEngadirAnimalComida.setDisable(true);
                     buttonCambiarCantidadeComida.setDisable(true);
                     buttonQuitarAnimalComida.setDisable(true);
-                    
-                    textFieldCantidadeComida.setText(""); 
+
+                    textFieldCantidadeComida.setText("");
 
                     labelUds.setText(c.getUds());
                 }
@@ -592,10 +592,10 @@ public class ContableController implements Initializable {
             public void handle(MouseEvent event) {
                 if (taboaAnimaisComida.getSelectionModel().getSelectedItem() != null) {
                     Comida c = (Comida) taboaComidas.getSelectionModel().getSelectedItem();
-                    Animal a = (Animal) taboaAnimaisComida.getSelectionModel().getSelectedItem(); 
+                    Animal a = (Animal) taboaAnimaisComida.getSelectionModel().getSelectedItem();
 
-                    textFieldCantidadeComida.setText(String.valueOf(recuperarCantidade(fa, c, a))); 
-                    
+                    textFieldCantidadeComida.setText(String.valueOf(recuperarCantidade(fa, c, a)));
+
                     buttonEngadirAnimalComida.setDisable(true);
                     buttonCambiarCantidadeComida.setDisable(false);
                     buttonQuitarAnimalComida.setDisable(false);
@@ -608,12 +608,69 @@ public class ContableController implements Initializable {
             public void handle(MouseEvent event) {
                 if (taboaOutrosAnimaisComida.getSelectionModel().getSelectedItem() != null) {
                     Comida c = (Comida) taboaComidas.getSelectionModel().getSelectedItem();
-                    
+
                     textFieldCantidadeComida.setText("");
 
                     buttonEngadirAnimalComida.setDisable(false);
-                    buttonCambiarCantidadeComida.setDisable(true); 
+                    buttonCambiarCantidadeComida.setDisable(true);
                     buttonQuitarAnimalComida.setDisable(true);
+                }
+            }
+        });
+
+        buttonNovaComida.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                textFieldIdComida.setText("");
+                textFieldNomeComida.setText("");
+                textFieldStockComida.setText("");
+                textFieldUnidadesComida.setText("");
+                textFieldTlfUsuario.setText("");
+
+                buttonGardarComida.setDisable(false);
+                buttonEliminarComida.setDisable(true);
+
+                textFieldCantidadeComida.setText("");
+                labelUds.setText("");
+
+                taboaComidas.getSelectionModel().clearSelection();
+                taboaAnimaisComida.getSelectionModel().clearSelection();
+                taboaOutrosAnimaisComida.getSelectionModel().clearSelection();
+
+                taboaAnimaisComida.setItems(null);
+                taboaOutrosAnimaisComida.setItems(null);
+            }
+        });
+
+        buttonGardarComida.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (textFieldIdComida.getText() != null && !textFieldIdComida.getText().equals("")
+                        || textFieldNomeComida.getText() != null && !textFieldNomeComida.getText().equals("")
+                        || textFieldStockComida.getText() != null && !textFieldStockComida.getText().equals("")
+                        || textFieldUnidadesComida.getText() != null && !textFieldUnidadesComida.getText().equals("")) {
+
+                    Comida c = new Comida(Integer.parseInt(textFieldIdComida.getText()), textFieldNomeComida.getText(),
+                            textFieldUnidadesComida.getText(), Integer.parseInt(textFieldStockComida.getText()));
+                    
+                    gardarComida(fa, c); 
+                    buttonNovaComida.fire(); 
+                    taboaComidas.setItems(updateComidas(fa));
+                }
+            }
+
+        });
+        
+        buttonEliminarComida.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (textFieldIdComida.getText() != null && !textFieldIdComida.getText().equals("")) {
+
+                    Comida c = new Comida(Integer.parseInt(textFieldIdComida.getText()));
+                    eliminarComida(fa, c);
+
+                    taboaComidas.setItems(updateComidas(fa));
+                    buttonNovaComida.fire();
                 }
             }
         });
@@ -705,9 +762,17 @@ public class ContableController implements Initializable {
     private ObservableList updateOutrosAnimaisComida(FachadaAplicacion fa, Comida comida) {
         return fa.updateOutrosAnimaisComida(comida);
     }
+
+    private int recuperarCantidade(FachadaAplicacion fa, Comida c, Animal a) {
+        return fa.recuperarCantidade(c, a);
+    }
     
-    private int recuperarCantidade(FachadaAplicacion fa, Comida c, Animal a){
-        return fa.recuperarCantidade(c, a); 
+    private void gardarComida(FachadaAplicacion fa, Comida c){
+        fa.gardarComida(c); 
+    }
+    
+    private void eliminarComida(FachadaAplicacion fa, Comida c) {
+        fa.eliminarComida(c); 
     }
 
     private ObservableList updateUsuarios(FachadaAplicacion fa, String usuario) {

@@ -15,8 +15,12 @@ public class Comida {
     private StringProperty nombre;
     private StringProperty uds;
     private IntegerProperty stock;
+    
+    public Comida(Integer id) {
+       this.id = new SimpleIntegerProperty(id); 
+    }
 
-    public Comida(int id, String nombre, String uds, Integer stock) {
+    public Comida(Integer id, String nombre, String uds, Integer stock) {
         this.id = new SimpleIntegerProperty(id);
         this.nombre = new SimpleStringProperty(nombre);
         this.uds = new SimpleStringProperty(uds);

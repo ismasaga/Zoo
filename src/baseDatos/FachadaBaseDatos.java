@@ -129,6 +129,14 @@ public class FachadaBaseDatos {
         return daoComidas.recuperarCantidade(comida, animal); 
     }
     
+    public void gardarComida(Comida c){
+        daoComidas.gardarComida(c);
+    }
+    
+    public void eliminarComida(Comida c){
+        daoComidas.borrarComida(c);
+    }
+    
     public ObservableList buscarAvisos() {
         return daoAvisos.buscarAvisos();
     }

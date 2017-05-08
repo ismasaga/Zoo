@@ -121,7 +121,15 @@ public class FachadaAplicacion extends Application {
     public int recuperarCantidade(Comida comida, Animal animal) {
         return fbd.recuperarCantidade(comida, animal); 
     }
+    
+    public void gardarComida(Comida c){
+        fbd.gardarComida(c);
+    }
 
+    public void eliminarComida(Comida c){
+        fbd.eliminarComida(c);
+    }
+    
     public ObservableList buscarAvisos() {
         return fbd.buscarAvisos();
     }
