@@ -79,9 +79,8 @@
                                         <Label layoutX="227.0" layoutY="14.0" text="Identificador:" />
                                         <Label layoutX="23.0" layoutY="227.0" text="Peso:" />
                                         <Label layoutX="226.0" layoutY="227.0" text="Sexo:" />
-                                        <Label layoutX="24.0" layoutY="295.0" text="Coidador:"/>
-                                        <ChoiceBox fx:id="choiceBoxCoidador" layoutX="22.0" layoutY="311.0"
-                                                   prefHeight="26.0" prefWidth="171.0"/>
+                                        <Label layoutX="24.0" layoutY="295.0" text="Coidador:" />
+                                        <ChoiceBox fx:id="choiceBoxCoidador" layoutX="22.0" layoutY="311.0" prefHeight="26.0" prefWidth="171.0" />
                                     </children>
                                     <padding>
                                         <Insets left="15.0" />
@@ -210,7 +209,7 @@
                         <Label text="Cantidade: " />
                         <TextField fx:id="textFieldCantidadeComida" prefHeight="31.0" prefWidth="48.0" />
                         <Label fx:id="labelUds" />
-                        <Button fx:id="buttonCambiarCantidadeComida" mnemonicParsing="false" text="Cambiar" />
+                        <Button fx:id="buttonCambiarCantidadeComida" disable="true" mnemonicParsing="false" text="Cambiar" />
                         <Button fx:id="buttonEngadirAnimalComida" disable="true" mnemonicParsing="false" text="Engadir" />
                         <Button fx:id="buttonQuitarAnimalComida" disable="true" mnemonicParsing="false" text="Quitar">
                            <HBox.margin>

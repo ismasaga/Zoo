@@ -151,6 +151,14 @@ public class ContableController implements Initializable {
     private TextField textFieldStockComida;
     @FXML
     private TextField textFieldUnidadesComida;
+    @FXML
+    private Button buttonCambiarCantidadeComida;
+    @FXML
+    private Button buttonEngadirAnimalComida;
+    @FXML
+    private Button buttonQuitarAnimalComida;
+    @FXML
+    private TextField textFieldCantidadeComida;
 
     private TableColumn<Xaula, Integer> xaulaFirst = new TableColumn<Xaula, Integer>("ID");
 
@@ -208,18 +216,18 @@ public class ContableController implements Initializable {
         columnaDniUsuario.setCellValueFactory(cellData -> cellData.getValue().dniProperty());
         taboaUsuarios.getColumns().add(columnaNomeUsuario);
         taboaUsuarios.getColumns().add(columnaDniUsuario);
-        
+
         columnaNomeComida.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         columnaStockComida.setCellValueFactory(cellData -> cellData.getValue().stockProperty().asObject());
-        taboaComidas.getColumns().add(columnaNomeComida); 
-        taboaComidas.getColumns().add(columnaStockComida); 
+        taboaComidas.getColumns().add(columnaNomeComida);
+        taboaComidas.getColumns().add(columnaStockComida);
 
         columnaAnimaisComida.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
-        taboaAnimaisComida.getColumns().add(columnaAnimaisComida); 
-        
+        taboaAnimaisComida.getColumns().add(columnaAnimaisComida);
+
         columnaOutrosAnimais.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
-        taboaOutrosAnimaisComida.getColumns().add(columnaOutrosAnimais); 
-        
+        taboaOutrosAnimaisComida.getColumns().add(columnaOutrosAnimais);
+
         areaFirst.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         areaSecond.setCellValueFactory(cellData -> cellData.getValue().climatizacionProperty());
         tablaAreas.getColumns().add(areaFirst);
@@ -550,16 +558,79 @@ public class ContableController implements Initializable {
             }
         });
 
+        taboaComidas.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (taboaComidas.getSelectionModel().getSelectedItem() != null) {
+                    Comida c = (Comida) taboaComidas.getSelectionModel().getSelectedItem();
+
+                    textFieldIdComida.setText(String.valueOf(c.getId()));
+                    textFieldNomeComida.setText(c.getNombre());
+                    textFieldStockComida.setText(String.valueOf(c.getId()));
+                    textFieldUnidadesComida.setText(c.getUds());
+
+                    buttonNovaComida.setDisable(false);
+                    buttonGardarComida.setDisable(false);
+                    buttonEliminarComida.setDisable(false);
+
+                    taboaAnimaisComida.setItems(updateAnimaisComida(fa, c));
+                    taboaOutrosAnimaisComida.setItems(updateOutrosAnimaisComida(fa, c));
+                    
+                    buttonEngadirAnimalComida.setDisable(true);
+                    buttonCambiarCantidadeComida.setDisable(true);
+                    buttonQuitarAnimalComida.setDisable(true);
+                    
+                    textFieldCantidadeComida.setText(""); 
+
+                    labelUds.setText(c.getUds());
+                }
+            }
+        });
+
+        taboaAnimaisComida.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (taboaAnimaisComida.getSelectionModel().getSelectedItem() != null) {
+                    Comida c = (Comida) taboaComidas.getSelectionModel().getSelectedItem();
+                    Animal a = (Animal) taboaAnimaisComida.getSelectionModel().getSelectedItem(); 
+
+                    textFieldCantidadeComida.setText(String.valueOf(recuperarCantidade(fa, c, a))); 
+                    
+                    buttonEngadirAnimalComida.setDisable(true);
+                    buttonCambiarCantidadeComida.setDisable(false);
+                    buttonQuitarAnimalComida.setDisable(false);
+                }
+            }
+        });
+
+        taboaOutrosAnimaisComida.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (taboaOutrosAnimaisComida.getSelectionModel().getSelectedItem() != null) {
+                    Comida c = (Comida) taboaComidas.getSelectionModel().getSelectedItem();
+                    
+                    textFieldCantidadeComida.setText("");
+
+                    buttonEngadirAnimalComida.setDisable(false);
+                    buttonCambiarCantidadeComida.setDisable(true); 
+                    buttonQuitarAnimalComida.setDisable(true);
+                }
+            }
+        });
 
         ObservableList e = updateAreas(fa);
         ObservableList z = FXCollections.observableArrayList();
         for (int i = 0; i < e.size(); i++) {
             z.add(((Area) e.get(i)).getId());
         }
+
         choiceBoxArea.setItems(z);
         tablaAreas.setItems(updateAreas(fa));
+
         buscarButton.fire();
         buttonBuscarUsuario.fire();
+        taboaComidas.setItems(updateComidas(fa));
+
         e = fa.updateUsuarios("");
         ObservableList r = FXCollections.observableArrayList();
         for (int i = 0; i < e.size(); i++) {
@@ -567,6 +638,7 @@ public class ContableController implements Initializable {
                 r.add(((Usuario) e.get(i)).getDni());
             }
         }
+
         choiceBoxCoidador.setItems(r);
         updateAvisos(fa);
         textFieldIDXaula.setDisable(true);
@@ -609,7 +681,6 @@ public class ContableController implements Initializable {
     }
 
     private ObservableList updateAreas(FachadaAplicacion fa) {
-
         return fa.updateAreas();
     }
 
@@ -621,6 +692,22 @@ public class ContableController implements Initializable {
         avisos.removeAll();
         avisos = fa.buscarAvisos();
         tablaAvisos.setItems(avisos);
+    }
+
+    private ObservableList updateComidas(FachadaAplicacion fa) {
+        return fa.updateComidas();
+    }
+
+    private ObservableList updateAnimaisComida(FachadaAplicacion fa, Comida comida) {
+        return fa.updateAnimaisComida(comida);
+    }
+
+    private ObservableList updateOutrosAnimaisComida(FachadaAplicacion fa, Comida comida) {
+        return fa.updateOutrosAnimaisComida(comida);
+    }
+    
+    private int recuperarCantidade(FachadaAplicacion fa, Comida c, Animal a){
+        return fa.recuperarCantidade(c, a); 
     }
 
     private ObservableList updateUsuarios(FachadaAplicacion fa, String usuario) {

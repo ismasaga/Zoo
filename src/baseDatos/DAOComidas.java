@@ -5,7 +5,6 @@
  */
 package baseDatos;
 
-import aplicacion.ComidaAnimal;
 import aplicacion.Animal;
 import aplicacion.Comida;
 import javafx.collections.FXCollections;
@@ -42,7 +41,7 @@ public class DAOComidas extends DAOAbstracto {
             rsComidas = stmComidas.executeQuery();
 
             while (rsComidas.next()) {
-                comidas.add(new Comida(rsComidas.getInt("id"), rsComidas.getString("nome"), rsComidas.getString("uds"), rsComidas.getInt("stock")));
+                comidas.add(new Comida(rsComidas.getInt("id"), rsComidas.getString("nome"), rsComidas.getString("unidades"), rsComidas.getInt("stock")));
             }
 
         } catch (SQLException e) {
@@ -106,7 +105,7 @@ public class DAOComidas extends DAOAbstracto {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             fa.muestraExcepcion(e.getMessage());
-            
+
         } finally {
             try {
                 stmAnimais.close();
@@ -233,15 +232,15 @@ public class DAOComidas extends DAOAbstracto {
         }
     }
 
-    public void addAnimal(ComidaAnimal comer) {
+    public void addAnimal(Comida c, Animal a, Integer cantidade) {
         Connection con = this.getConexion();
         PreparedStatement stmComer = null;
 
         try {
             stmComer = con.prepareStatement("insert into comer values(?, ?, ?);");
-            stmComer.setInt(1, comer.getRacion());
-            stmComer.setInt(2, comer.getAnimal().getId());
-            stmComer.setInt(3, comer.getComida().getId());
+            stmComer.setInt(1, cantidade);
+            stmComer.setInt(2, a.getId());
+            stmComer.setInt(3, c.getId());
 
             stmComer.executeUpdate();
 
@@ -259,14 +258,14 @@ public class DAOComidas extends DAOAbstracto {
         }
     }
 
-    public void removeAnimal(ComidaAnimal comidaAnimal) {
+    public void removeAnimal(Comida c, Animal a) {
         Connection con = this.getConexion();
         PreparedStatement stmComer = null;
 
         try {
             stmComer = con.prepareStatement("delete from comer where comida = ? and animal = ?;");
-            stmComer.setInt(1, comidaAnimal.getComida().getId());
-            stmComer.setInt(2, comidaAnimal.getAnimal().getId());
+            stmComer.setInt(1, c.getId());
+            stmComer.setInt(2, a.getId());
 
             stmComer.executeUpdate();
 
@@ -284,15 +283,15 @@ public class DAOComidas extends DAOAbstracto {
         }
     }
 
-    public void cambiarCantidade(ComidaAnimal comidaAnimal) {
+    public void cambiarCantidade(Comida c, Animal a, Integer cantidade) {
         Connection con = this.getConexion();
         PreparedStatement stmComer = null;
 
         try {
             stmComer = con.prepareStatement("update comer set cantidaderacion = ? where comida = ? and animal = ?;");
-            stmComer.setInt(2, comidaAnimal.getComida().getId());
-            stmComer.setInt(3, comidaAnimal.getAnimal().getId());
-            stmComer.setInt(1, comidaAnimal.getRacion());
+            stmComer.setInt(2, c.getId());
+            stmComer.setInt(3, a.getId());
+            stmComer.setInt(1, cantidade);
 
             stmComer.executeUpdate();
 
@@ -308,6 +307,39 @@ public class DAOComidas extends DAOAbstracto {
                 fa.muestraExcepcion("Imposible cerrar cursores");
             }
         }
+    }
+
+    public int recuperarCantidade(Comida c, Animal a) {
+        Connection con = this.getConexion();
+        PreparedStatement stmComer = null;
+        ResultSet rsComer = null;
+        int cantidade = 0;
+
+        try {
+            stmComer = con.prepareStatement("select cantidaderacion from comer where comida = ? and animal = ?;");
+            stmComer.setInt(1, c.getId());
+            stmComer.setInt(2, a.getId());
+
+            rsComer = stmComer.executeQuery();
+
+            if (rsComer.next()) {
+                cantidade = rsComer.getInt("cantidaderacion");
+            } 
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
+
+        } finally {
+            try {
+                stmComer.close();
+
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        
+        return cantidade; 
     }
 
 }

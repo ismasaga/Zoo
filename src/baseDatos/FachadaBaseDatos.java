@@ -2,6 +2,7 @@ package baseDatos;
 
 import aplicacion.Animal;
 import aplicacion.Aviso;
+import aplicacion.Comida;
 import aplicacion.Usuario;
 import javafx.collections.ObservableList;
 
@@ -18,6 +19,7 @@ public class FachadaBaseDatos {
     private DAOAnimales daoAnimales;
     private DAOAreasXaulas daoAreasXaulas;
     private DAOAvisos daoAvisos;
+    private DAOComidas daoComidas;
 
     public FachadaBaseDatos(aplicacion.FachadaAplicacion fa) {
         Properties configuracion = new Properties();
@@ -45,6 +47,7 @@ public class FachadaBaseDatos {
             daoAnimales = new DAOAnimales(conexion, fa);
             daoAreasXaulas = new DAOAreasXaulas(conexion, fa);
             daoAvisos = new DAOAvisos(conexion, fa);
+            daoComidas = new DAOComidas(conexion, fa);
 
         } catch (FileNotFoundException f) {
             System.out.println(f.getMessage());
@@ -65,15 +68,15 @@ public class FachadaBaseDatos {
     public ObservableList buscarAnimal(String animal) {
         return daoAnimales.buscarAnimal(animal);
     }
-    
+
     public ObservableList buscarAnimaisCoidador() {
         return daoAnimales.buscarAnimaisCoidador();
     }
-    
+
     public ObservableList buscarXaulasAnimaisCoidador() {
         return daoAnimales.buscarXaulasAnimaisCoidador();
     }
-    
+
     public ObservableList buscarAreasAnimaisCoidador() {
         return daoAnimales.buscarAreasAnimaisCoidador();
     }
@@ -101,35 +104,51 @@ public class FachadaBaseDatos {
     public ObservableList updateUsuarios(String usuario) {
         return daoUsuarios.buscarUsuario(usuario);
     }
-    
-    public void gardarUsuario(Usuario usuario){
-        daoUsuarios.gardarUsuario(usuario); 
+
+    public void gardarUsuario(Usuario usuario) {
+        daoUsuarios.gardarUsuario(usuario);
     }
-    
-    public void eliminarUsuario(Usuario usuario){
+
+    public void eliminarUsuario(Usuario usuario) {
         daoUsuarios.borrarUsuario(usuario);
     }
 
+    public ObservableList updateComidas() {
+        return daoComidas.buscarComidas();
+    }
+
+    public ObservableList updateAnimaisComida(Comida comida) {
+        return daoComidas.buscarAnimaisComida(comida);
+    }
+
+    public ObservableList updateOutrosAnimaisComida(Comida comida) {
+        return daoComidas.buscarAnimaisNonComida(comida);
+    }
+
+    public int recuperarCantidade(Comida comida, Animal animal) {
+        return daoComidas.recuperarCantidade(comida, animal); 
+    }
+    
     public ObservableList buscarAvisos() {
         return daoAvisos.buscarAvisos();
     }
-    
+
     public ObservableList buscarAvisosPropios() {
         return daoAvisos.buscarAvisosPropios();
     }
-    
+
     public ObservableList buscarAvisosAnimais() {
         return daoAvisos.buscarAvisosAnimais();
     }
-    
+
     public ObservableList buscarAvisosXaulas() {
         return daoAvisos.buscarAvisosXaulas();
     }
-    
+
     public ObservableList buscarAvisosAreas() {
         return daoAvisos.buscarAvisosAreas();
     }
-    
+
     public void novoAviso(Aviso aviso) {
         daoAvisos.novoAviso(aviso);
     }
@@ -145,7 +164,7 @@ public class FachadaBaseDatos {
     public void borrarAviso(Aviso aviso) {
         daoAvisos.borrarAviso(aviso);
     }
-            
+
     public void actualizarAviso(Aviso aviso) {
         daoAvisos.actualizarAviso(aviso);
     }
