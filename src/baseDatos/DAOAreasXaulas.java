@@ -36,7 +36,6 @@ public class DAOAreasXaulas extends DAOAbstracto {
             }
         } catch (SQLException e) {
             fa.muestraExcepcion(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
                 stmAreas.close();
@@ -64,7 +63,6 @@ public class DAOAreasXaulas extends DAOAbstracto {
             }
         } catch (SQLException e) {
             fa.muestraExcepcion(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
                 stmXaulas.close();
@@ -76,4 +74,94 @@ public class DAOAreasXaulas extends DAOAbstracto {
     }
 
 
+    public void borrarArea(Integer id) {
+        ObservableList areas = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmAreas = null;
+        con = this.getConexion();
+        try {
+
+            stmAreas = con.prepareStatement("remove from areas where id = ?;");
+            stmAreas.setInt(1, id);
+            stmAreas.executeUpdate();
+
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmAreas.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+    }
+
+    public void borrarXaula(Integer id, Integer idArea) {
+        ObservableList areas = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmXaulas = null;
+        con = this.getConexion();
+        try {
+
+            stmXaulas = con.prepareStatement("remove from xaulas where id = ?, idarea = ?;");
+            stmXaulas.setInt(1, id);
+            stmXaulas.setInt(2, idArea);
+            stmXaulas.executeUpdate();
+
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmXaulas.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+    }
+
+    public void novaXaula(Integer id, int idArea) {
+        ObservableList areas = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmXaulas = null;
+        con = this.getConexion();
+        try {
+
+            stmXaulas = con.prepareStatement("insert into xaulas values (?,?);");
+            stmXaulas.setInt(1, id);
+            stmXaulas.setInt(2, idArea);
+            stmXaulas.executeUpdate();
+
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmXaulas.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+    }
+
+    public void novaArea(Integer id, String climatizacion) {
+        ObservableList areas = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmXaulas = null;
+        con = this.getConexion();
+        try {
+
+            stmXaulas = con.prepareStatement("insert into areas values (?,?);");
+            stmXaulas.setInt(1, id);
+            stmXaulas.setString(2, climatizacion);
+            stmXaulas.executeUpdate();
+
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmXaulas.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+    }
 }

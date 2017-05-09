@@ -215,4 +215,82 @@ public class DAOAnimales extends DAOAbstracto {
             }
         }
     }
+
+    public Integer contarAnimais(Integer idXaula, Integer idArea) {
+        Connection con;
+        Integer integer = 0;
+        PreparedStatement stmAnimales = null;
+        ResultSet rsAnimales = null;
+        con = this.getConexion();
+        try {
+            stmAnimales = con.prepareStatement("select count(*) from animais where idxaula = ? and idarea = ?;");
+            stmAnimales.setInt(1, idXaula);
+            stmAnimales.setInt(2, idArea);
+
+            rsAnimales = stmAnimales.executeQuery();
+            rsAnimales.next();
+            integer = rsAnimales.getInt("count");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmAnimales.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return integer;
+    }
+
+    public Integer contarEspecies(int idXaula, int idArea) {
+        Connection con;
+        Integer integer = 0;
+        PreparedStatement stmAnimales = null;
+        ResultSet rsAnimales = null;
+        con = this.getConexion();
+        try {
+            stmAnimales = con.prepareStatement("select count(distinct especie) from animais where idxaula = ? and idarea = ?;");
+            stmAnimales.setInt(1, idXaula);
+            stmAnimales.setInt(2, idArea);
+
+            rsAnimales = stmAnimales.executeQuery();
+            rsAnimales.next();
+            integer = rsAnimales.getInt("count");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmAnimales.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return integer;
+    }
+
+    public void transferirAnimais(Integer areaActual, Integer areaDestino, Integer xaulaActual, Integer xaulaDestino) {
+        Connection con;
+        PreparedStatement stmAnimales = null;
+        con = this.getConexion();
+        try {
+            stmAnimales = con.prepareStatement("update animais set idarea = ? , idxaula = ? where idarea = ? and idxaula = ?;");
+            stmAnimales.setInt(1, areaDestino);
+            stmAnimales.setInt(2, xaulaDestino);
+            stmAnimales.setInt(3, areaActual);
+            stmAnimales.setInt(4, xaulaActual);
+
+            stmAnimales.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmAnimales.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+    }
 }

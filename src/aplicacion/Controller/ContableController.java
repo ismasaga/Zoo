@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,8 @@ public class ContableController implements Initializable {
     ObservableList<Aviso> avisos = FXCollections.observableArrayList();
     ObservableList<Usuario> usuarios = FXCollections.observableArrayList();
     ObservableList<Area> areas = FXCollections.observableArrayList();
-    //
+    Boolean novaXaula = true;
+    Boolean cancelar = false;
     @FXML
     private Button sesionButton;
     @FXML
@@ -104,7 +106,7 @@ public class ContableController implements Initializable {
     @FXML
     private ChoiceBox choiceBoxAnimal;
     @FXML
-    private Button buttonNovaArea;
+    private Button buttonGardarArea;
     @FXML
     private Button buttonNovaXaula;
     @FXML
@@ -147,6 +149,8 @@ public class ContableController implements Initializable {
     private TextField textFieldIdComida;
     @FXML
     private TextField textFieldNomeComida;
+    @FXML
+    private Tab pestanhaAnimais;
     @FXML
     private TextField textFieldStockComida;
     @FXML
@@ -277,6 +281,13 @@ public class ContableController implements Initializable {
             }
         });
 
+        pestanhaAnimais.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                buscarButton.fire();
+            }
+        });
+
         tablaAnimais.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -339,8 +350,15 @@ public class ContableController implements Initializable {
                 buttonBorrarXaula.setDisable(true);
                 buttonNovaXaula.setDisable(false);
                 buttonBorrarArea.setDisable(false);
-                buttonNovaArea.setDisable(false);
+                buttonGardarArea.setDisable(false);
+                choiceBoxAreaDestino.setDisable(true);
+                choiceBoxXaulaDestino.setDisable(true);
+                buttonTransferir.setDisable(true);
                 textFieldIDXaula.setText("");
+                labelAnimaisDentro.setText("-");
+                labelEspeciesDentro.setText("-");
+                textFieldIDArea.setDisable(false);
+                textFieldClimatizacion.setDisable(false);
                 textFieldIDArea.setText(String.valueOf(((Area) tablaAreas.getSelectionModel().getSelectedItem()).getId()));
                 textFieldClimatizacion.setText(((Area) tablaAreas.getSelectionModel().getSelectedItem()).getClimatizacion());
             }
@@ -349,9 +367,92 @@ public class ContableController implements Initializable {
         buttonNovaXaula.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                textFieldIDArea.setDisable(true);
-                textFieldClimatizacion.setDisable(true);
-                textFieldIDXaula.setDisable(false);
+                if (novaXaula) {
+                    textFieldIDArea.setDisable(true);
+                    textFieldClimatizacion.setDisable(true);
+                    textFieldIDXaula.setDisable(false);
+                    buttonNovaXaula.setText("Guardar");
+                    buttonBorrarXaula.setText("Cancelar");
+                    buttonBorrarXaula.setDisable(false);
+                    buttonGardarArea.setDisable(true);
+                    buttonBorrarArea.setDisable(true);
+                    tablaAreas.setDisable(true);
+                    tablaXaulas.setDisable(true);
+                    choiceBoxAreaDestino.setDisable(true);
+                    choiceBoxXaulaDestino.setDisable(true);
+                    buttonTransferir.setDisable(true);
+                    labelAnimaisDentro.setText("-");
+                    labelEspeciesDentro.setText("-");
+                    novaXaula = false;
+                    cancelar = true;
+                } else {
+                    novaXaula = true;
+                    cancelar = false;
+                    textFieldIDArea.setDisable(false);
+                    textFieldClimatizacion.setDisable(false);
+                    textFieldIDXaula.setDisable(true);
+                    buttonNovaXaula.setText("Nova Xaula");
+                    buttonBorrarXaula.setText("Borrar Xaula");
+                    buttonBorrarXaula.setDisable(true);
+                    buttonGardarArea.setDisable(false);
+                    buttonBorrarArea.setDisable(false);
+                    labelAnimaisDentro.setText("-");
+                    labelEspeciesDentro.setText("-");
+                    tablaAreas.setDisable(false);
+                    tablaXaulas.setDisable(false);
+                    fa.novaXaula(Integer.valueOf(textFieldIDXaula.getText()), ((Area) tablaAreas.getSelectionModel().getSelectedItem()).getId());
+                    Integer integer = ((Area) tablaAreas.getSelectionModel().getSelectedItem()).getId();
+                    tablaXaulas.setItems(updateXaulas(fa, integer));
+                    textFieldIDXaula.setText("");
+                }
+            }
+        });
+
+        buttonBorrarXaula.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (cancelar) {
+                    novaXaula = true;
+                    cancelar = false;
+                    textFieldIDXaula.setDisable(true);
+                    buttonNovaXaula.setText("Nova Xaula");
+                    buttonBorrarXaula.setText("Borrar Xaula");
+                } else {
+                    fa.borrarXaula(((Xaula) tablaXaulas.getSelectionModel().getSelectedItem()).getId(), ((Xaula) tablaXaulas.getSelectionModel().getSelectedItem()).getIdArea());
+                    Integer integer = ((Area) tablaAreas.getSelectionModel().getSelectedItem()).getId();
+                    tablaXaulas.setItems(updateXaulas(fa, integer));
+                }
+                textFieldIDArea.setDisable(false);
+                textFieldClimatizacion.setDisable(false);
+                buttonBorrarXaula.setDisable(true);
+                buttonGardarArea.setDisable(false);
+                buttonBorrarArea.setDisable(false);
+                buttonNovaXaula.setDisable(false);
+                tablaAreas.setDisable(false);
+                tablaXaulas.setDisable(false);
+                textFieldIDXaula.setText("");
+                labelAnimaisDentro.setText("-");
+                labelEspeciesDentro.setText("-");
+            }
+        });
+
+        buttonGardarArea.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                fa.novaArea(Integer.valueOf(textFieldIDArea.getText()), textFieldClimatizacion.getText());
+                tablaAreas.setItems(updateAreas(fa));
+                buttonNovaXaula.setDisable(true);
+                buttonBorrarArea.setDisable(true);
+            }
+        });
+
+        buttonBorrarArea.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                fa.borrarArea(Integer.valueOf(textFieldIDArea.getText()));
+                tablaAreas.setItems(updateAreas(fa));
+                buttonNovaXaula.setDisable(true);
+                buttonBorrarArea.setDisable(true);
             }
         });
 
@@ -361,8 +462,21 @@ public class ContableController implements Initializable {
                 buttonBorrarArea.setDisable(true);
                 buttonNovaXaula.setDisable(true);
                 buttonBorrarXaula.setDisable(false);
-                buttonNovaArea.setDisable(true);
+                buttonGardarArea.setDisable(true);
+                textFieldIDArea.setDisable(true);
+                textFieldClimatizacion.setDisable(true);
+                buttonTransferir.setDisable(false);
+                choiceBoxAreaDestino.setDisable(false);
+                choiceBoxXaulaDestino.setDisable(false);
+                labelAnimaisDentro.setText(String.valueOf(fa.contarAnimais(((Xaula) tablaXaulas.getSelectionModel().getSelectedItem()).getId(), ((Area) tablaAreas.getSelectionModel().getSelectedItem()).getId())));
+                labelEspeciesDentro.setText(String.valueOf(fa.contarEspecies(((Xaula) tablaXaulas.getSelectionModel().getSelectedItem()).getId(), ((Area) tablaAreas.getSelectionModel().getSelectedItem()).getId())));
                 textFieldIDXaula.setText(String.valueOf(((Xaula) tablaXaulas.getSelectionModel().getSelectedItem()).getId()));
+                ObservableList a = fa.updateAreas();
+                ObservableList v = FXCollections.observableArrayList();
+                for (int i = 0; i < a.size(); i++) {
+                    v.add(((Area) a.get(i)).getId());
+                }
+                choiceBoxAreaDestino.setItems(v);
             }
         });
 
@@ -415,6 +529,35 @@ public class ContableController implements Initializable {
                     choiceBoxXaula.setItems(z);
                     choiceBoxXaula.getSelectionModel().clearSelection();
                 }
+            }
+        });
+
+        choiceBoxAreaDestino.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                if (newValue != null) {
+                    ObservableList e = updateXaulas(fa, Integer.valueOf(newValue.toString()));
+                    ObservableList z = FXCollections.observableArrayList();
+                    for (int i = 0; i < e.size(); i++) {
+                        System.out.println(((Xaula) e.get(i)).getId() + ((Xaula) e.get(i)).getIdArea());
+                        System.out.println(((Xaula) tablaXaulas.getSelectionModel().getSelectedItem()).getId() + ((Xaula) tablaXaulas.getSelectionModel().getSelectedItem()).getIdArea());
+                        System.out.println();
+                        if (((Xaula) e.get(i)).getId() != ((Xaula) tablaXaulas.getSelectionModel().getSelectedItem()).getId() || ((Xaula) e.get(i)).getIdArea() != ((Xaula) tablaXaulas.getSelectionModel().getSelectedItem()).getIdArea())
+                            z.add(String.valueOf(((Xaula) e.get(i)).getId()));
+                    }
+                    choiceBoxXaulaDestino.setItems(z);
+                    choiceBoxXaulaDestino.getSelectionModel().clearSelection();
+                }
+
+                buttonTransferir.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        if (!choiceBoxAreaDestino.getSelectionModel().isEmpty() && !choiceBoxXaulaDestino.getSelectionModel().isEmpty()) {
+                            fa.transferirAnimais(((Area) tablaAreas.getSelectionModel().getSelectedItem()).getId(), Integer.valueOf(choiceBoxAreaDestino.getSelectionModel().getSelectedItem().toString()), ((Xaula) tablaXaulas.getSelectionModel().getSelectedItem()).getId(), Integer.valueOf(choiceBoxXaulaDestino.getSelectionModel().getSelectedItem().toString()));
+                            tablaXaulas.getSelectionModel().clearSelection();
+                        } else fa.muestraExcepcion("Marca os campos de area de destino e xaula de destino");
+                    }
+                });
             }
         });
 
@@ -689,7 +832,7 @@ public class ContableController implements Initializable {
                     engadirAnimalComida(fa, c, a, Integer.parseInt(textFieldCantidadeComida.getText()));
                     taboaAnimaisComida.setItems(updateAnimaisComida(fa, c));
                     taboaOutrosAnimaisComida.setItems(updateOutrosAnimaisComida(fa, c));
-                    
+
                 } else if (textFieldCantidadeComida.getText() == null
                         || textFieldCantidadeComida.getText().equals("")){
                     fa.muestraExcepcion("¡Debe indicarse a cantidade de comida!");
@@ -715,7 +858,7 @@ public class ContableController implements Initializable {
 
         buttonCambiarCantidadeComida.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) { // xq colle comida como null? 
+            public void handle(ActionEvent event) { // xq colle comida como null?
                 if (taboaAnimaisComida.getSelectionModel().getSelectedItem() != null
                         && taboaComidas.getSelectionModel().getSelectedItem() != null
                         && textFieldCantidadeComida.getText() != null
@@ -732,38 +875,29 @@ public class ContableController implements Initializable {
 
         ObservableList e = updateAreas(fa);
         ObservableList z = FXCollections.observableArrayList();
-        for (int i = 0;
-                i < e.size();
-                i++) {
+        for (int i = 0; i < e.size(); i++) {
             z.add(((Area) e.get(i)).getId());
         }
-
         choiceBoxArea.setItems(z);
-
         tablaAreas.setItems(updateAreas(fa));
-
         buscarButton.fire();
-
         buttonBuscarUsuario.fire();
-
-        taboaComidas.setItems(updateComidas(fa));
-
         e = fa.updateUsuarios("");
         ObservableList r = FXCollections.observableArrayList();
-        for (int i = 0;
-                i < e.size();
-                i++) {
+        for (int i = 0; i < e.size(); i++) {
             if (((Usuario) e.get(i)).getTipo().equals(TipoUsuario.Coidador)) {
                 r.add(((Usuario) e.get(i)).getDni());
             }
         }
-
         choiceBoxCoidador.setItems(r);
-
         updateAvisos(fa);
-
-        textFieldIDXaula.setDisable(
-                true);
+        textFieldIDXaula.setDisable(true);
+        buttonNovaXaula.setDisable(true);
+        buttonBorrarArea.setDisable(true);
+        buttonBorrarXaula.setDisable(true);
+        choiceBoxAreaDestino.setDisable(true);
+        choiceBoxXaulaDestino.setDisable(true);
+        buttonTransferir.setDisable(true);
 
     }
 
@@ -803,6 +937,7 @@ public class ContableController implements Initializable {
     }
 
     private ObservableList updateAreas(FachadaAplicacion fa) {
+
         return fa.updateAreas();
     }
 

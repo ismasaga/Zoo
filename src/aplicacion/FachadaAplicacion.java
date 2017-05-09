@@ -181,4 +181,32 @@ public class FachadaAplicacion extends Application {
     public void actualizarAviso(Aviso aviso) {
         fbd.actualizarAviso(aviso);
     }
+
+    public void novaArea(Integer id, String climatizacion) {
+        fbd.novaArea(id, climatizacion);
+    }
+
+    public void borrarXaula(Integer id, Integer idArea) {
+        fbd.borrarXaula(id, idArea);
+    }
+
+    public void borrarArea(Integer integer) {
+        fbd.borrarArea(integer);
+    }
+
+    public void novaXaula(Integer id, int idArea) {
+        fbd.novaXaula(id, idArea);
+    }
+
+    public Integer contarAnimais(int idXaula, int idArea) {
+        return fbd.contarAnimais(idXaula, idArea);
+    }
+
+    public Integer contarEspecies(int idXaula, int idArea) {
+        return fbd.contarEspecies(idXaula, idArea);
+    }
+
+    public void transferirAnimais(Integer areaActual, Integer areaDestino, Integer xaulaActual, Integer xaulaDestino) {
+        fbd.transferirAnimais(areaActual, areaDestino, xaulaActual, xaulaDestino);
+    }
 }

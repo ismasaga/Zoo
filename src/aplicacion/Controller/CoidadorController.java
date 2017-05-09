@@ -1,11 +1,8 @@
 package aplicacion.Controller;
 
-import aplicacion.Animal;
-import aplicacion.Area;
-import aplicacion.Aviso;
-import aplicacion.FachadaAplicacion;
-import aplicacion.Usuario;
-import aplicacion.Xaula;
+import aplicacion.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,30 +10,25 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.MouseEvent;
 
 public class CoidadorController implements Initializable {
 
     // Lista de animais
     ObservableList<Animal> animales = FXCollections.observableArrayList();
+    // Lista de incidencias
+    ObservableList<Aviso> incidencias = FXCollections.observableArrayList();
+    // Lista de incidencias
+    ObservableList elementos = FXCollections.observableArrayList();
     @FXML
     private Button sesionButton;
     @FXML
@@ -57,8 +49,6 @@ public class CoidadorController implements Initializable {
     private TableColumn<Animal, String> second = new TableColumn<Animal, String>("Nombre");
     private TableColumn<Animal, String> third = new TableColumn<Animal, String>("Especie");
     private TableColumn<Animal, Integer> fourth = new TableColumn<Animal, Integer>("Edad");
-    // Lista de incidencias
-    ObservableList<Aviso> incidencias = FXCollections.observableArrayList();
     // Taboa superior(grande) da pestanha Incidencias
     @FXML
     private TableView tablaIncidencias;
@@ -81,8 +71,6 @@ public class CoidadorController implements Initializable {
     private ToggleGroup grupoRadioButtons;
     // Usoo para saber cal esta pulsado, non esta ligado ca interfaz
     private RadioButton selectedRadioButton;
-    // Lista de incidencias
-    ObservableList elementos = FXCollections.observableArrayList();
     // Taboa pequena de incidencias
     @FXML
     private TableView taboaElementos;
@@ -275,6 +263,8 @@ public class CoidadorController implements Initializable {
                 selectedRadioButton = (RadioButton) grupoRadioButtons.getSelectedToggle();
                 // Actualizamos a taboa superior cos datos pertinentes
                 updateTaboas(fa);
+                textAsuntoIncidencia.setText("");
+                textDescripIncidencia.setText("");
             }
         });
         // Executa o manexador de dito boton(Pestanha animais)

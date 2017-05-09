@@ -188,4 +188,32 @@ public class FachadaBaseDatos {
     public void actualizarAviso(Aviso aviso) {
         daoAvisos.actualizarAviso(aviso);
     }
+
+    public void borrarArea(Integer id) {
+        daoAreasXaulas.borrarArea(id);
+    }
+
+    public void borrarXaula(Integer id, Integer idArea) {
+        daoAreasXaulas.borrarXaula(id, idArea);
+    }
+
+    public void novaXaula(Integer id, int idArea) {
+        daoAreasXaulas.novaXaula(id, idArea);
+    }
+
+    public void novaArea(Integer id, String climatizacion) {
+        daoAreasXaulas.novaArea(id, climatizacion);
+    }
+
+    public Integer contarAnimais(int idXaula, int idArea) {
+        return daoAnimales.contarAnimais(idXaula, idArea);
+    }
+
+    public Integer contarEspecies(int idXaula, int idArea) {
+        return daoAnimales.contarEspecies(idXaula, idArea);
+    }
+
+    public void transferirAnimais(Integer areaActual, Integer areaDestino, Integer xaulaActual, Integer xaulaDestino) {
+        daoAnimales.transferirAnimais(areaActual, areaDestino, xaulaActual, xaulaDestino);
+    }
 }
