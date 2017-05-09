@@ -81,7 +81,7 @@ public class DAOAreasXaulas extends DAOAbstracto {
         con = this.getConexion();
         try {
 
-            stmAreas = con.prepareStatement("remove from areas where id = ?;");
+            stmAreas = con.prepareStatement("delete from areas where id = ?;");
             stmAreas.setInt(1, id);
             stmAreas.executeUpdate();
 
