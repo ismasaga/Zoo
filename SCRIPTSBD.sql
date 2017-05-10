@@ -57,7 +57,7 @@ PRIMARY KEY (id)
 
 CREATE TABLE xaulas (
 id integer not null,
-idArea numeric not null,
+idArea integer not null,
 PRIMARY KEY (id, idArea),
 FOREIGN KEY (idArea) REFERENCES areas(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
