@@ -1,0 +1,41 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1224" measuredH="687" mockupW="829" mockupH="648">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="395" y="39" w="829" h="648" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <close>true</close>
+        <dragger>true</dragger>
+        <maximizeRestore>true</maximizeRestore>
+        <minimize>true</minimize>
+        <text>Contable</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::TabBar" x="395" y="65" w="829" h="601" measuredW="556" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>none</borderStyle>
+        <selectedIndex>5</selectedIndex>
+        <size>16</size>
+        <text>Incidencias%2C%20Animais%2C%20%C1reas%20e%20xaulas%2C%20Comida%2C%20Persoal%2C%20Pechar%20sesi%F3n</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::Button" x="580" y="368" w="222" h="49" measuredW="174" measuredH="32" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>24</size>
+        <state>up</state>
+        <text>Pechar%20sesi%F3n</text>
+      </controlProperties>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Label" x="510" y="310" w="-1" h="-1" measuredW="599" measuredH="36" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>28</size>
+        <text>Desexa%20pechar%20sesi%F3n%20ou%20pechar%20a%20aplicaci%F3n%3F%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::Button" x="817" y="368" w="222" h="49" measuredW="212" measuredH="32" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>24</size>
+        <state>up</state>
+        <text>Pechar%20aplicaci%F3n</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

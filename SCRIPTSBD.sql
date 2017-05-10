@@ -86,7 +86,7 @@ PRIMARY KEY (id)
 );
 
 CREATE TABLE comer (
-cantidadeRacion numeric not null,
+cantidaoeRacion numeric not null,
 animal numeric not null,
 comida numeric not null,
 PRIMARY KEY (animal, comida),
