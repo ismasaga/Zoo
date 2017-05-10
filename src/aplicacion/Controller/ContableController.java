@@ -898,6 +898,7 @@ public class ContableController implements Initializable {
         choiceBoxAreaDestino.setDisable(true);
         choiceBoxXaulaDestino.setDisable(true);
         buttonTransferir.setDisable(true);
+        taboaComidas.setItems(updateComidas(fa));
 
     }
 

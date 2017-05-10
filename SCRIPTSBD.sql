@@ -174,8 +174,8 @@ INSERT INTO comidas (id,nome,stock,unidades) VALUES ('00005','Avena','30','Kilos
 
 INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('1','1','1');
 INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('1.5','1','2');
-INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('2','2','1');
-INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('3','2','2');
+INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('2','5','1');
+INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('3','5','2');
 INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('2','2','4');
 INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('0.5','3','5');
 INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('3','4','3');
