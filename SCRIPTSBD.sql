@@ -50,27 +50,27 @@ ALTER TABLE contables
   CHECK(checkCoidadores(dni) = 0);
 
 CREATE TABLE areas (
-id numeric not null,
+id integer not null,
 climatizacion varchar(50),
 PRIMARY KEY (id)
 );
 
 CREATE TABLE xaulas (
-id numeric not null,
+id integer not null,
 idArea numeric not null,
 PRIMARY KEY (id, idArea),
 FOREIGN KEY (idArea) REFERENCES areas(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE animais (
-id numeric not null,
+id integer not null,
 nome varchar(50) not null,
 especie varchar(50) not null,
 edad integer not null,
 peso integer not null,
 sexo varchar(10) not null,
-idXaula numeric not null,
-idArea numeric not null,
+idXaula integer not null,
+idArea integer not null,
 idCoidador char(9),
 PRIMARY KEY (id),
 FOREIGN KEY (idXaula, idArea) REFERENCES xaulas(id, idArea) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -78,7 +78,7 @@ FOREIGN KEY (idCoidador) REFERENCES coidadores(dni) ON DELETE RESTRICT ON UPDATE
 );
 
 CREATE TABLE comidas (
-id numeric not null,
+id integer not null,
 nome varchar(50) not null,
 stock numeric not null,
 unidades varchar(10) not null,
@@ -87,15 +87,15 @@ PRIMARY KEY (id)
 
 CREATE TABLE comer (
 cantidadeRacion numeric not null,
-animal numeric not null,
-comida numeric not null,
+animal integer not null,
+comida integer not null,
 PRIMARY KEY (animal, comida),
 FOREIGN KEY (animal) references animais(id) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (comida) references comidas(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE avisosAnimais (
-animal numeric not null,
+animal integer not null,
 nome varchar(50) not null,
 descripcion varchar(300) not null,
 dataInicio date not null,
@@ -110,7 +110,7 @@ FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CA
 );
 
 CREATE TABLE avisosAreas (
-area numeric not null,
+area integer not null,
 nome varchar(50) not null,
 descripcion varchar(2000) not null,
 dataInicio date not null,
@@ -125,8 +125,8 @@ FOREIGN KEY (contable) references contables(dni) ON DELETE RESTRICT ON UPDATE CA
 );
 
 CREATE TABLE avisosXaulas (
-xaula numeric not null,
-area numeric not null,
+xaula integer not null,
+area integer not null,
 nome varchar(50) not null,
 descripcion varchar(2000) not null,
 dataInicio date not null,
