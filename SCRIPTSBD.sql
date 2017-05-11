@@ -177,7 +177,7 @@ INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('1.5','1','2');
 INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('2','5','1');
 INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('3','5','2');
 INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('2','2','4');
-INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('0.5','3','5');
+INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('1','3','5');
 INSERT INTO comer (cantidadeRacion, animal, comida) VALUES ('3','4','3');
 
 INSERT INTO avisosareas (area, nome, descripcion, dataInicio, dataFin, coidador, contable, tratamento) VALUES ('00001','Arbore rota', 'Arbore partida polo vento na entrada da área', '2017-05-12', null, '12345678B', null, null);
