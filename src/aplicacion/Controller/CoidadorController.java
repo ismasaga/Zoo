@@ -15,14 +15,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CoidadorController implements Initializable {
-
     // Lista de animais
     ObservableList<Animal> animales = FXCollections.observableArrayList();
     // Lista de incidencias
@@ -40,15 +37,13 @@ public class CoidadorController implements Initializable {
     @FXML
     private Button todosButton;
     @FXML
-    private VBox tarefasVBox;
-    @FXML
     private Pane panelAnimaisTabla;
     @FXML
     private TableView tabla;
-    private TableColumn<Animal, Integer> first = new TableColumn<Animal, Integer>("ID");
-    private TableColumn<Animal, String> second = new TableColumn<Animal, String>("Nombre");
-    private TableColumn<Animal, String> third = new TableColumn<Animal, String>("Especie");
-    private TableColumn<Animal, Integer> fourth = new TableColumn<Animal, Integer>("Edad");
+    private TableColumn<Animal, Integer> first = new TableColumn<>("ID");
+    private TableColumn<Animal, String> second = new TableColumn<>("Nombre");
+    private TableColumn<Animal, String> third = new TableColumn<>("Especie");
+    private TableColumn<Animal, Integer> fourth = new TableColumn<>("Edad");
     // Taboa superior(grande) da pestanha Incidencias
     @FXML
     private TableView tablaIncidencias;
@@ -162,8 +157,6 @@ public class CoidadorController implements Initializable {
                     // Meto o texto de descripcion e asunto onde corresponde
                     textDescripIncidencia.setText(aviso.getDescripcion());
                     textAsuntoIncidencia.setText(aviso.getAsunto());
-                } else {
-                    fa.muestraExcepcion("Hay problemas coa táboa superior.");
                 }
             }
         });
@@ -179,7 +172,7 @@ public class CoidadorController implements Initializable {
                             // Obtemos animal
                             Animal animal = (Animal) taboaElementos.getSelectionModel().getSelectedItem();
                             // Metemos novo aviso
-                            fa.novoAviso(new Aviso(animal.getId(), animal.getNombre(), textAsuntoIncidencia.getText(), 
+                            fa.novoAviso(new Aviso(animal.getId(), animal.getNombre(), textAsuntoIncidencia.getText(),
                                     textDescripIncidencia.getText(), fa.getUsuarioActual().getDni(), null, null, null, null, "animal"));
                         } else {
                             fa.muestraExcepcion("Debes seleccionar un animal na táboa da esquerda");
@@ -191,7 +184,7 @@ public class CoidadorController implements Initializable {
                             // Obtemos xaula
                             Xaula xaula = (Xaula) taboaElementos.getSelectionModel().getSelectedItem();
                             // Metemos novo aviso
-                            fa.novoAviso(new Aviso(textAsuntoIncidencia.getText(), textDescripIncidencia.getText(), fa.getUsuarioActual().getDni(), 
+                            fa.novoAviso(new Aviso(textAsuntoIncidencia.getText(), textDescripIncidencia.getText(), fa.getUsuarioActual().getDni(),
                                     null, xaula.getIdArea(), xaula.getId(), null, null, null, "xaula"));
                         } else {
                             fa.muestraExcepcion("Debes seleccionar unha xaula na táboa da esquerda");
@@ -205,7 +198,7 @@ public class CoidadorController implements Initializable {
                             // Metemos novo aviso
                             //Aviso(String asunto, String descripcion, String coidador, String contable, Integer area, String dataInicio, String dataFin, 
                             //String tratamento, String tipo) {
-                            fa.novoAviso(new Aviso(textAsuntoIncidencia.getText(), textDescripIncidencia.getText(), fa.getUsuarioActual().getDni(), 
+                            fa.novoAviso(new Aviso(textAsuntoIncidencia.getText(), textDescripIncidencia.getText(), fa.getUsuarioActual().getDni(),
                                     null, area.getId(), null, null, null, "area"));
                         } else {
                             fa.muestraExcepcion("Debes seleccionar unha área na táboa da esquerda");
@@ -288,7 +281,7 @@ public class CoidadorController implements Initializable {
         switch (selectedRadioButton.getText()) {
             case "Animais":
                 // Cambio o label da taboa
-                labelTaboaElementos.setText("Animais aos que coidas :");
+                labelTaboaElementos.setText("Animais ao seu cargo :");
                 // Obtenho as incidencias de animais que engadiu o coidador actual
                 incidencias = fa.buscarAvisosAnimais();
                 // Obtenmos os animais que coida o coidador actual
@@ -299,7 +292,7 @@ public class CoidadorController implements Initializable {
                 break;
             case "Xaulas":
                 // Cambio o label da taboa
-                labelTaboaElementos.setText("Xaulas dos seus animais :");
+                labelTaboaElementos.setText("Xaulas dos animais ao seu cargo :");
                 // Obtenho as incidencias de xaulas que engadiu o coidador actual
                 incidencias = fa.buscarAvisosXaulas();
                 // Obtenmos as xaulas nas que estan os animais que coida o coidador actual
@@ -310,7 +303,7 @@ public class CoidadorController implements Initializable {
                 break;
             case "Areas":
                 // Cambio o label da taboa
-                labelTaboaElementos.setText("Areas :");
+                labelTaboaElementos.setText("Areas dos animais ao seu cargo :");
                 // Obtenho as incidencias de areas que engadiu o coidador actual
                 incidencias = fa.buscarAvisosAreas();
                 // Obtenmos as areas nas que estan as xaulas dos animais que coida o coidador actual

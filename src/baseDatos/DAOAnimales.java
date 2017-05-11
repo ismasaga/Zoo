@@ -92,11 +92,11 @@ public class DAOAnimales extends DAOAbstracto {
         ResultSet rsXaulas;
         con = this.getConexion();
         try {
-            stmXaulas = con.prepareStatement("select * from xaulas where id in(select idXaula from animais where idCoidador = ?);");
+            stmXaulas = con.prepareStatement("select idXaula, idArea from animais where idCoidador = ? group by idXaula, idArea;");
             stmXaulas.setString(1, fa.getUsuarioActual().getDni());
             rsXaulas = stmXaulas.executeQuery();
             while (rsXaulas.next()) {
-                xaulas.add(new Xaula(rsXaulas.getInt("id"), rsXaulas.getInt("idArea")));
+                xaulas.add(new Xaula(rsXaulas.getInt("idXaula"), rsXaulas.getInt("idArea")));
             }
         } catch (SQLException e) {
             fa.muestraExcepcion(e.getMessage());
@@ -114,21 +114,21 @@ public class DAOAnimales extends DAOAbstracto {
     public ObservableList buscarAreasAnimaisCoidador() {
         ObservableList areas = FXCollections.observableArrayList();
         Connection con;
-        PreparedStatement stmXaulas = null;
-        ResultSet rsXaulas;
+        PreparedStatement stmAreas = null;
+        ResultSet rsAreas;
         con = this.getConexion();
         try {
-            stmXaulas = con.prepareStatement("select * from areas where id in (select idArea from xaulas where id in (select idXaula from animais where idCoidador = ?));");
-            stmXaulas.setString(1, fa.getUsuarioActual().getDni());
-            rsXaulas = stmXaulas.executeQuery();
-            while (rsXaulas.next()) {
-                areas.add(new Area(rsXaulas.getInt("id"), rsXaulas.getString("climatizacion")));
+            stmAreas = con.prepareStatement("select distinct idArea, a.climatizacion from animais inner join areas as a on idArea = a.id and idCoidador = ?;");
+            stmAreas.setString(1, fa.getUsuarioActual().getDni());
+            rsAreas = stmAreas.executeQuery();
+            while (rsAreas.next()) {
+                areas.add(new Area(rsAreas.getInt("idArea"), rsAreas.getString("climatizacion")));
             }
         } catch (SQLException e) {
             fa.muestraExcepcion(e.getMessage());
         } finally {
             try {
-                stmXaulas.close();
+                stmAreas.close();
             } catch (SQLException e) {
                 fa.muestraExcepcion("Imposible cerrar cursores");
             }
@@ -292,5 +292,31 @@ public class DAOAnimales extends DAOAbstracto {
                 fa.muestraExcepcion("Imposible cerrar cursores");
             }
         }
+    }
+    
+    // Devolve a informacion relativa os animais
+    public ObservableList infoAnimais(boolean propios) {
+        ObservableList info = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmInfo = null;
+        ResultSet rsInfo;
+        con = this.getConexion();
+        try {
+            stmInfo = con.prepareStatement("select * from areas where id in (select idArea from xaulas where id in (select idXaula from animais where idCoidador = ?));");
+            stmInfo.setString(1, fa.getUsuarioActual().getDni());
+            rsInfo = stmInfo.executeQuery();
+            while (rsInfo.next()) {
+                info.add(new Area(rsInfo.getInt("id"), rsInfo.getString("climatizacion")));
+            }
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmInfo.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return info;
     }
 }
