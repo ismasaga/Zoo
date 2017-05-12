@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS contables;
 DROP FUNCTION IF EXISTS checkcoidadores(char(10));
 DROP FUNCTION IF EXISTS checkcontables(char(10));
 
-CREATE TABLE coidadores(
+CREATE TABLE coidadores (
 dni char(9) not null,
 pass varchar(50) not null,
 nome varchar(100) not null,
@@ -20,7 +20,7 @@ email varchar(50),
 PRIMARY KEY (dni)
 );
 
-CREATE TABLE contables(
+CREATE TABLE contables (
 dni char(9) not null,
 pass varchar(50) not null,
 nome varchar(100) not null,
