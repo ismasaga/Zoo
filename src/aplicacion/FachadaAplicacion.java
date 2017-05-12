@@ -221,4 +221,5 @@ public class FachadaAplicacion extends Application {
     public Integer cargaTraballo(String usuario) {
         return fbd.cargaTraballo(usuario);
     }
+    //
 }

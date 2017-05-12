@@ -263,6 +263,15 @@ public class ContableController implements Initializable {
                 String animal = buscarTextField.getText();
                 animales = fa.buscarAnimal(animal);
                 tablaAnimais.setItems(animales);
+                ObservableList e = fa.updateUsuarios("");
+                ObservableList r = FXCollections.observableArrayList();
+                for (int i = 0; i < e.size(); i++) {
+                    if (((Usuario) e.get(i)).getTipo().equals(TipoUsuario.Coidador)) {
+                        r.add(((Usuario) e.get(i)).getDni());
+                    }
+                }
+                choiceBoxCoidador.setItems(r);
+
             }
         });
 
@@ -562,7 +571,7 @@ public class ContableController implements Initializable {
                 });
             }
         });
-
+//
         buttonGuardar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
