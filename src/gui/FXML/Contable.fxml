@@ -67,6 +67,10 @@
                                         <Label layoutX="226.0" layoutY="227.0" text="Sexo:" />
                                         <Label layoutX="24.0" layoutY="295.0" text="Coidador:" />
                                         <ChoiceBox fx:id="choiceBoxCoidador" layoutX="22.0" layoutY="311.0" prefHeight="26.0" prefWidth="171.0" />
+                                        <Label layoutX="227.0" layoutY="295.0" prefHeight="16.0" prefWidth="157.0"
+                                               text="Xa se encarga de:"/>
+                                        <Label layoutX="228.0" layoutY="316.0" text="- Animais"/>
+                                        <Label layoutX="24.0" layoutY="364.0" text="Carga de traballo:"/>
                                     </children>
                                     <padding>
                                         <Insets left="15.0" />

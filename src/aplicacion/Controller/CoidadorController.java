@@ -15,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -118,6 +119,19 @@ public class CoidadorController implements Initializable {
         tablaDatos.getColumns().add(cantidade);
         tablaDatos.getColumns().add(unidade);
         tablaDatos.getColumns().add(stock);
+
+        tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
+        panelAnimaisTabla.getChildren().add(tabla);
+        first.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        third.setCellValueFactory(cellData -> cellData.getValue().especieProperty());
+        fourth.setCellValueFactory(cellData -> cellData.getValue().areaProperty().asObject());
+        five.setCellValueFactory(cellData -> cellData.getValue().xaulaProperty().asObject());
+        tabla.getColumns().add(first);
+        tabla.getColumns().add(second);
+        tabla.getColumns().add(third);
+        tabla.getColumns().add(fourth);
+        tabla.getColumns().add(five);
         // Pestanha pechar sesion
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -136,9 +150,6 @@ public class CoidadorController implements Initializable {
         buscarButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
-                    panelAnimaisTabla.getChildren().add(tabla);
                     String animal = buscarTextField.getText();
                     if (radioMeus.isSelected()) {
                         animales = fa.buscarAnimaisCoidador();
@@ -146,19 +157,6 @@ public class CoidadorController implements Initializable {
                         animales = fa.buscarAnimal(animal);
                     }
                     tabla.setItems(animales);
-                    first.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-                    second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
-                    third.setCellValueFactory(cellData -> cellData.getValue().especieProperty());
-                    fourth.setCellValueFactory(cellData -> cellData.getValue().areaProperty().asObject());
-                    five.setCellValueFactory(cellData -> cellData.getValue().xaulaProperty().asObject());
-                    tabla.getColumns().add(first);
-                    tabla.getColumns().add(second);
-                    tabla.getColumns().add(third);
-                    tabla.getColumns().add(fourth);
-                    tabla.getColumns().add(five);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
         });
         // Executa o manexador de dito boton(Pestanha animais)

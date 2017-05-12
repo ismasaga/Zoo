@@ -4,6 +4,7 @@ import aplicacion.Animal;
 import aplicacion.Aviso;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -231,7 +232,7 @@ public class DAOAvisos extends DAOAbstracto {
                 stmAvisos = con.prepareStatement("update avisosareas set datafin = current_date , contable = ? , tratamento = ? where area = ? and nome = ? and datainicio = ?;");
                 stmAvisos.setString(1, fa.getUsuarioActual().getDni());
                 stmAvisos.setString(2, aviso.getTratamento());
-                stmAvisos.setInt(3, Integer.valueOf(aviso.getArea()));
+                stmAvisos.setInt(3, aviso.getArea());
                 stmAvisos.setString(4, aviso.getAsunto());
                 stmAvisos.setDate(5, java.sql.Date.valueOf(aviso.getDataInicio()));
             }
@@ -239,8 +240,8 @@ public class DAOAvisos extends DAOAbstracto {
                 stmAvisos = con.prepareStatement("update avisosxaulas set datafin = current_date , contable = ? , tratamento = ? where idarea = ? and id = ? and nome = ? and datainicio = ?;");
                 stmAvisos.setString(1, fa.getUsuarioActual().getDni());
                 stmAvisos.setString(2, aviso.getTratamento());
-                stmAvisos.setInt(3, Integer.valueOf(aviso.getArea()));
-                stmAvisos.setInt(4, Integer.valueOf(aviso.getXaula()));
+                stmAvisos.setInt(3, aviso.getArea());
+                stmAvisos.setInt(4, aviso.getXaula());
                 stmAvisos.setString(5, aviso.getAsunto());
                 stmAvisos.setDate(6, java.sql.Date.valueOf(aviso.getDataInicio()));
             }
@@ -248,7 +249,7 @@ public class DAOAvisos extends DAOAbstracto {
                 stmAvisos = con.prepareStatement("update avisosanimais set datafin = current_date , contable = ? , tratamento = ? where animal = ? and nome = ? and datainicio = ?;");
                 stmAvisos.setString(1, fa.getUsuarioActual().getDni());
                 stmAvisos.setString(2, aviso.getTratamento());
-                stmAvisos.setInt(3, Integer.valueOf(aviso.getAnimal()));
+                stmAvisos.setInt(3, aviso.getAnimal());
                 stmAvisos.setString(4, aviso.getAsunto());
                 stmAvisos.setDate(5, java.sql.Date.valueOf(aviso.getDataInicio()));
             }
