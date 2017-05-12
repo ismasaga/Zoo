@@ -89,7 +89,26 @@ public class CoidadorController implements Initializable {
     private TableColumn<Xaula, Integer> elemDousXaula = new TableColumn<>("Identificador Área");
     private TableColumn<Area, Integer> elemUnArea = new TableColumn<>("Identificador Área");
     private TableColumn<Area, String> elemDousArea = new TableColumn<>("Climatización");
-
+    /**************** PESTANHA INFORMACION ************************************/
+    // Taboa de animais
+    @FXML
+    private TableView taboaAnimais;
+    private TableColumn<AvisosContador, String> anim = new TableColumn<>("Animal");
+    private TableColumn<AvisosContador, Integer> avisosAbertosAnim = new TableColumn<>("Avisos abertos");
+    private TableColumn<AvisosContador, Integer> avisosPechadosAnim = new TableColumn<>("Avisos pechados");
+    @FXML
+    private TableView taboaXaulas;
+    private TableColumn<AvisosContador, String> xaulaDes = new TableColumn<>("Xaulas");
+    private TableColumn<AvisosContador, Integer> avisosAbertosXau = new TableColumn<>("Avisos abertos");
+    private TableColumn<AvisosContador, Integer> avisosPechadosXau = new TableColumn<>("Avisos pechados");
+    @FXML
+    private TableView taboaAreas;
+    private TableColumn<AvisosContador, String> areaDes = new TableColumn<>("Áreas");
+    private TableColumn<AvisosContador, Integer> avisosAbertosAre = new TableColumn<>("Avisos abertos");
+    private TableColumn<AvisosContador, Integer> avisosPechadosAre = new TableColumn<>("Avisos pechados");
+    
+   
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -119,7 +138,7 @@ public class CoidadorController implements Initializable {
         tablaDatos.getColumns().add(cantidade);
         tablaDatos.getColumns().add(unidade);
         tablaDatos.getColumns().add(stock);
-
+        // Cargamos todo o preciso para a taboa esquerda da pestanha animais
         tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
         panelAnimaisTabla.getChildren().add(tabla);
         first.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
@@ -132,6 +151,25 @@ public class CoidadorController implements Initializable {
         tabla.getColumns().add(third);
         tabla.getColumns().add(fourth);
         tabla.getColumns().add(five);
+        // Inicializamos as taboas da pestanha informacion
+        anim.setCellValueFactory(cellData -> cellData.getValue().getNomeAnimal());
+        avisosAbertosAnim.setCellValueFactory(cellData -> cellData.getValue().getAbertos().asObject());
+        avisosPechadosAnim.setCellValueFactory(cellData -> cellData.getValue().getPechados().asObject());
+        taboaAnimais.getColumns().add(anim);
+        taboaAnimais.getColumns().add(avisosAbertosAnim);
+        taboaAnimais.getColumns().add(avisosPechadosAnim);
+        xaulaDes.setCellValueFactory(cellData -> cellData.getValue().getXaulaDescrita());
+        avisosAbertosXau.setCellValueFactory(cellData -> cellData.getValue().getAbertos().asObject());
+        avisosPechadosXau.setCellValueFactory(cellData -> cellData.getValue().getPechados().asObject());
+        taboaXaulas.getColumns().add(xaulaDes);
+        taboaXaulas.getColumns().add(avisosAbertosXau);
+        taboaXaulas.getColumns().add(avisosPechadosXau);
+        areaDes.setCellValueFactory(cellData -> cellData.getValue().getAreaDescrita());
+        avisosAbertosAre.setCellValueFactory(cellData -> cellData.getValue().getAbertos().asObject());
+        avisosPechadosAre.setCellValueFactory(cellData -> cellData.getValue().getPechados().asObject());
+        taboaAreas.getColumns().add(areaDes);
+        taboaAreas.getColumns().add(avisosAbertosAre);
+        taboaAreas.getColumns().add(avisosPechadosAre);
         // Pestanha pechar sesion
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -330,7 +368,7 @@ public class CoidadorController implements Initializable {
         // Na primeira execucion recheo a taboa coas incidencias pertinentes
         updateTaboas(fa);
         // Como a taboa de elementos vai estar valeira..(pestanha incidencias)
-        labelTaboaElementos.setText("Valeiro :");
+        labelTaboaElementos.setText("Valeiro :");        
     }
 
     // Funcion para actualizar as taboas da pestanha incidencias
@@ -385,5 +423,23 @@ public class CoidadorController implements Initializable {
         // Meto o novo contido nas taboas
         tablaIncidencias.setItems(incidencias);
         taboaElementos.setItems(elementos);
+        // Borro os datos obsoletos
+        elementos.removeAll();
+        // Cargo datos
+        elementos = fa.contarAvisosAnimais();
+        // Meto os datos na taboa
+        taboaAnimais.setItems(elementos);
+        // Borro os datos obsoletos
+        elementos.removeAll();
+        // Cargo datos
+        elementos = fa.contarAvisosXaulas();
+        // Meto os datos na taboa
+        taboaXaulas.setItems(elementos);
+        // Borro os datos obsoletos
+        elementos.removeAll();
+        // Cargo datos
+        elementos = fa.contarAvisosAreas();
+        // Meto os datos na taboa
+        taboaAreas.setItems(elementos);
     }
 }

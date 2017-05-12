@@ -164,6 +164,18 @@ public class FachadaBaseDatos {
     public ObservableList buscarAvisosAnimais() {
         return daoAvisos.buscarAvisosAnimais();
     }
+    
+    public ObservableList contarAvisosAnimais() {
+        return daoAvisos.contarAvisosAnimais();
+    }
+    
+    public ObservableList contarAvisosAreas() {
+        return daoAvisos.contarAvisosAreas();
+    }
+    
+    public ObservableList contarAvisosXaulas() {
+        return daoAvisos.contarAvisosXaulas();
+    }
 
     public ObservableList buscarAvisosXaulas() {
         return daoAvisos.buscarAvisosXaulas();

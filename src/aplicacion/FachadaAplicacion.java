@@ -161,6 +161,18 @@ public class FachadaAplicacion extends Application {
     public ObservableList buscarAvisosAnimais() {
         return fbd.buscarAvisosAnimais();
     }
+    
+    public ObservableList contarAvisosAnimais() {
+        return fbd.contarAvisosAnimais();
+    }
+    
+    public ObservableList contarAvisosAreas() {
+        return fbd.contarAvisosAreas();
+    }
+    
+    public ObservableList contarAvisosXaulas() {
+        return fbd.contarAvisosXaulas();
+    }
 
     public ObservableList buscarAvisosXaulas() {
         return fbd.buscarAvisosXaulas();

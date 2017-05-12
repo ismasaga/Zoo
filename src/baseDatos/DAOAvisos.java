@@ -2,6 +2,7 @@ package baseDatos;
 
 import aplicacion.Animal;
 import aplicacion.Aviso;
+import aplicacion.AvisosContador;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -9,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class DAOAvisos extends DAOAbstracto {
 
@@ -133,7 +136,6 @@ public class DAOAvisos extends DAOAbstracto {
         }
         return avisos;
     }
-    
     // Avisos de animais que coida o coidador actual
     public ObservableList buscarAvisosAnimais() {
         ObservableList avisos = FXCollections.observableArrayList();
@@ -164,7 +166,100 @@ public class DAOAvisos extends DAOAbstracto {
         }
         return avisos;
     }
-    
+    // Devolve cada animal xunto co numero de avisos aberto e pechado
+    public ObservableList contarAvisosAnimais() {
+        ObservableList avisos = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmAvisos = null, stmAvisos2 = null;
+        ResultSet rsAvisos, rsAvisos2;
+        con = this.getConexion();
+        try {
+            stmAvisos = con.prepareStatement("select av.animal, count(av.animal) as abertas, an.nome from avisosAnimais as av inner join animais as an on (av.animal = an.id) and (av.dataFin is null) group by av.animal, an.nome;");
+            rsAvisos = stmAvisos.executeQuery();
+            while (rsAvisos.next()) {
+                AvisosContador av = new AvisosContador(rsAvisos.getInt("animal")+":"+rsAvisos.getString("nome"), "", "", rsAvisos.getInt("abertas"), 0);
+                stmAvisos2 = con.prepareStatement("select count(animal) as pechados from avisosAnimais where animal = ? and (not dataFin is null);");
+                stmAvisos2.setInt(1, rsAvisos.getInt("animal"));
+                rsAvisos2 = stmAvisos2.executeQuery();
+                while (rsAvisos2.next()) {
+                    av.setPechados(new SimpleIntegerProperty(rsAvisos2.getInt("pechados")));
+                    avisos.add(av);
+                }
+            }
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmAvisos.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return avisos;
+    }
+    // Devolve cada area xunto co seu numero de avisos aberto e pechado
+    public ObservableList contarAvisosAreas() {
+        ObservableList avisos = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmAvisos = null, stmAvisos2 = null;
+        ResultSet rsAvisos, rsAvisos2;
+        con = this.getConexion();
+        try {
+            stmAvisos = con.prepareStatement("select av.area, count(av.area) as abertas, ar.climatizacion from avisosAreas as av inner join areas as ar on (av.area = ar.id) and (av.dataFin is null) group by av.area, ar.climatizacion;");
+            rsAvisos = stmAvisos.executeQuery();
+            while (rsAvisos.next()) {
+                AvisosContador av = new AvisosContador("", "", rsAvisos.getString("climatizacion")+":"+rsAvisos.getString("area"), rsAvisos.getInt("abertas"), 0);
+                stmAvisos2 = con.prepareStatement("select count(area) as pechados from avisosAreas where area = ? and (not dataFin is null);");
+                stmAvisos2.setInt(1, rsAvisos.getInt("area"));
+                rsAvisos2 = stmAvisos2.executeQuery();
+                while (rsAvisos2.next()) {
+                    av.setPechados(new SimpleIntegerProperty(rsAvisos2.getInt("pechados")));
+                    avisos.add(av);
+                }
+            }
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmAvisos.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return avisos;
+    }
+    // Devolve cada xaula xunto co seu numero de avisos aberto e pechado
+    public ObservableList contarAvisosXaulas() {
+        ObservableList avisos = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmAvisos = null, stmAvisos2 = null;
+        ResultSet rsAvisos, rsAvisos2;
+        con = this.getConexion();
+        try {
+            stmAvisos = con.prepareStatement("select av.xaula, count(av.xaula) as abertas, xa.idArea from avisosXaulas as av inner join xaulas as xa on (av.xaula = xa.id) and (av.dataFin is null) group by av.xaula, xa.idArea;");
+            rsAvisos = stmAvisos.executeQuery();
+            while (rsAvisos.next()) {
+                AvisosContador av = new AvisosContador("", rsAvisos.getString("xaula")+":Área "+rsAvisos.getString("idArea"), "", rsAvisos.getInt("abertas"), 0);
+                stmAvisos2 = con.prepareStatement("select count(area) as pechados from avisosXaulas where xaula = ? and area = ? and (not dataFin is null);");
+                stmAvisos2.setInt(1, rsAvisos.getInt("xaula"));
+                stmAvisos2.setInt(2, rsAvisos.getInt("idArea"));
+                rsAvisos2 = stmAvisos2.executeQuery();
+                while (rsAvisos2.next()) {
+                    av.setPechados(new SimpleIntegerProperty(rsAvisos2.getInt("pechados")));
+                    avisos.add(av);
+                }
+            }
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmAvisos.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return avisos;
+    }
     // Avisos de xaulas nas que estan animais que coida o coidador actual
     public ObservableList buscarAvisosXaulas() {
         ObservableList avisos = FXCollections.observableArrayList();
