@@ -217,4 +217,8 @@ public class FachadaAplicacion extends Application {
     public void transferirAnimais(Integer areaActual, Integer areaDestino, Integer xaulaActual, Integer xaulaDestino) {
         fbd.transferirAnimais(areaActual, areaDestino, xaulaActual, xaulaDestino);
     }
+
+    public Integer cargaTraballo(String usuario) {
+        return fbd.cargaTraballo(usuario);
+    }
 }

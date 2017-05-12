@@ -220,4 +220,8 @@ public class FachadaBaseDatos {
     public void transferirAnimais(Integer areaActual, Integer areaDestino, Integer xaulaActual, Integer xaulaDestino) {
         daoAnimales.transferirAnimais(areaActual, areaDestino, xaulaActual, xaulaDestino);
     }
+
+    public Integer cargaTraballo(String usuario) {
+        return daoUsuarios.cargaTraballo(usuario);
+    }
 }

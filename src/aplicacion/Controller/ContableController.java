@@ -100,6 +100,8 @@ public class ContableController implements Initializable {
     @FXML
     private Label labelEspeciesDentro;
     @FXML
+    private Label labelCargaTraballo;
+    @FXML
     private ChoiceBox choiceBoxAreaDestino;
     @FXML
     private ChoiceBox choiceBoxXaulaDestino;
@@ -566,9 +568,11 @@ public class ContableController implements Initializable {
             public void handle(ActionEvent event) {
                 if (comprobarCampos(fa)) {
                     if (textFieldID.getText().matches("^\\d+$")) {
+                        System.out.println(choiceBoxCoidador.getSelectionModel().getSelectedItem().toString());
                         Animal animal = new Animal(Integer.valueOf(textFieldID.getText()), textFieldNombre.getText(), textFieldEspecie.getText(), Integer.valueOf(textFieldEdad.getText()), Integer.valueOf(textFieldPeso.getText()), choiceBoxSexo.getSelectionModel().getSelectedItem().toString(), Integer.valueOf(choiceBoxArea.getSelectionModel().getSelectedItem().toString()), Integer.valueOf(choiceBoxXaula.getSelectionModel().getSelectedItem().toString()), choiceBoxCoidador.getSelectionModel().getSelectedItem().toString());
                         fa.updateAnimal(animal);
                         buscarButton.fire();
+                        labelCargaTraballo.setText(String.valueOf(fa.cargaTraballo((String) choiceBoxCoidador.getSelectionModel().getSelectedItem())));
                     } else {
                         fa.muestraExcepcion("El ID debe ser numérico");
                     }
@@ -802,6 +806,13 @@ public class ContableController implements Initializable {
                 }
             }
 
+        });
+
+        choiceBoxCoidador.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                labelCargaTraballo.setText(String.valueOf(fa.cargaTraballo((String) choiceBoxCoidador.getSelectionModel().getSelectedItem())));
+            }
         });
 
         buttonEliminarComida.setOnAction(new EventHandler<ActionEvent>() {

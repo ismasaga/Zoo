@@ -198,7 +198,7 @@ public class DAOAnimales extends DAOAbstracto {
         PreparedStatement stmAnimales = null;
         con = this.getConexion();
         try {
-            stmAnimales = con.prepareStatement("update animais set nome = ?, especie = ?, edad = ?, peso = ?, sexo = ?, idxaula = ?, idarea = ? idcoidador = ? where id = ?;");
+            stmAnimales = con.prepareStatement("update animais set nome = ?, especie = ?, edad = ?, peso = ?, sexo = ?, idxaula = ?, idarea = ?, idcoidador = ? where id = ?;");
             stmAnimales.setInt(9, animal.getId());
             stmAnimales.setString(1, animal.getNombre());
             stmAnimales.setString(2, animal.getEspecie());
@@ -207,7 +207,7 @@ public class DAOAnimales extends DAOAbstracto {
             stmAnimales.setString(5, animal.getSexo());
             stmAnimales.setInt(6, animal.getXaula());
             stmAnimales.setInt(7, animal.getArea());
-            stmAnimales.setString(8, animal.getSexo());
+            stmAnimales.setString(8, animal.getIdCoidador());
 
             stmAnimales.executeUpdate();
         } catch (SQLException e) {

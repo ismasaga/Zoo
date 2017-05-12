@@ -314,4 +314,35 @@ public class DAOUsuarios extends DAOAbstracto {
             }
         }
     }
+
+    public Integer cargaTraballo(String usuario) {
+        Integer carga = 0;
+        Connection con;
+        PreparedStatement stmUsuarios = null;
+        con = this.getConexion();
+        ResultSet rsUsuarios = null;
+
+        try {
+            stmUsuarios = con.prepareStatement("select sum(cantidaderacion)*count(animais) from comer join animais on comer.animal=animais.id where animais.idcoidador = ?");
+            stmUsuarios.setString(1, usuario);
+
+            rsUsuarios = stmUsuarios.executeQuery();
+            rsUsuarios.next();
+            carga = rsUsuarios.getInt(1);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            fa.muestraExcepcion(e.getMessage());
+
+        } finally {
+            try {
+                stmUsuarios.close();
+
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return carga;
+    }
 }
+
