@@ -1,23 +1,20 @@
 package aplicacion;
 
-import java.util.ArrayList;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-/**
- * Created by miguel on 3/04/17.
- */
 public class Comida {
 
     private IntegerProperty id;
     private StringProperty nombre;
     private StringProperty uds;
     private IntegerProperty stock;
-    
+    private IntegerProperty racionAnimal;
+
     public Comida(Integer id) {
-       this.id = new SimpleIntegerProperty(id); 
+        this.id = new SimpleIntegerProperty(id);
     }
 
     public Comida(Integer id, String nombre, String uds, Integer stock) {
@@ -25,6 +22,14 @@ public class Comida {
         this.nombre = new SimpleStringProperty(nombre);
         this.uds = new SimpleStringProperty(uds);
         this.stock = new SimpleIntegerProperty(stock);
+    }
+    
+    public Comida(Integer id, String nombre, Integer racionAnimal, String uds, Integer stock) {
+        this.id = new SimpleIntegerProperty(id);
+        this.nombre = new SimpleStringProperty(nombre);
+        this.uds = new SimpleStringProperty(uds);
+        this.stock = new SimpleIntegerProperty(stock);
+        this.racionAnimal = new SimpleIntegerProperty(racionAnimal);
     }
 
     public IntegerProperty idProperty() {
@@ -74,5 +79,12 @@ public class Comida {
     public void setUds(String uds) {
         this.uds.set(uds);
     }
+    
+    public IntegerProperty getRacionAnimal() {
+        return racionAnimal;
+    }
 
+    public void setRacionAnimal(IntegerProperty racionAnimal) {
+        this.racionAnimal = racionAnimal;
+    }
 }

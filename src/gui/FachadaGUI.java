@@ -115,5 +115,23 @@ public class FachadaGUI {
             Logger.getLogger(FachadaGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    // Para mostrar mensaxes que non son erros
+    public void muestraMensaje(String titulo, String mensaje) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/Excepcion.fxml"));
+        try {
+            Stage stage2 = new Stage();
+            Scene scene = new Scene(loader.load());
+            ExcepcionController controller = loader.getController();
+            controller.initExcepcion(mensaje, stage2);
+            stage2.initOwner(stage);
+            stage2.initModality(Modality.APPLICATION_MODAL);
+            stage2.setTitle(titulo);
+            stage2.setScene(scene);
+            stage2.centerOnScreen();
+            stage2.show();
 
+        } catch (IOException ex) {
+            Logger.getLogger(FachadaGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

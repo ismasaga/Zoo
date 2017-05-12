@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-         minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE"
-         xmlns="http://javafx.com/javafx/8.0.111" fx:controller="aplicacion.Controller.CoidadorController">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aplicacion.Controller.CoidadorController">
     <tabs>
         <Tab text="Tarefas">
             <content>
@@ -29,7 +45,47 @@
                         </AnchorPane>
                         <HBox prefHeight="510.0" prefWidth="800.0">
                             <children>
-                                <Pane fx:id="panelAnimaisTabla" prefHeight="528.0" prefWidth="302.0" />
+                                <Pane fx:id="panelAnimaisTabla" prefHeight="495.0" prefWidth="402.0" />
+                        <BorderPane prefHeight="495.0" prefWidth="475.0">
+                           <top>
+                              <CheckBox fx:id="radioMeus" mnemonicParsing="false" text="Visualizar so animais meus" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets top="30.0" />
+                                 </BorderPane.margin>
+                              </CheckBox>
+                           </top>
+                           <center>
+                              <TableView fx:id="tablaDatos" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="372.0" BorderPane.alignment="CENTER">
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                                 <BorderPane.margin>
+                                    <Insets bottom="50.0" left="10.0" right="10.0" top="40.0" />
+                                 </BorderPane.margin>
+                              </TableView>
+                           </center>
+                           <bottom>
+                              <GridPane prefHeight="30.0" prefWidth="378.0" BorderPane.alignment="CENTER">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="16.0" prefWidth="166.0" text="Comida para :" />
+                                    <TextField fx:id="calcularTextField" alignment="CENTER" GridPane.columnIndex="1" />
+                                    <Label alignment="CENTER" text="dias." GridPane.columnIndex="2">
+                                       <padding>
+                                          <Insets left="5.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                           </bottom>
+                        </BorderPane>
                             </children>
                             <padding>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
@@ -67,7 +123,7 @@
                         <RadioButton fx:id="radioTodos" mnemonicParsing="false" selected="true" text="Todos" toggleGroup="$grupoRadioButtons" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                      </children>
                        <BorderPane.margin>
-                           <Insets top="20.0"/>
+                           <Insets top="20.0" />
                        </BorderPane.margin>
                   </GridPane>
                </top>
@@ -76,33 +132,27 @@
                         <children>
                             <TableView fx:id="tablaIncidencias" prefHeight="227.0" prefWidth="770.0">
                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                 </columnResizePolicy>
                                 <VBox.margin>
-                                    <Insets left="15.0" right="15.0" top="15.0"/>
+                                    <Insets left="15.0" right="15.0" top="15.0" />
                                 </VBox.margin>
                             </TableView>
                             <AnchorPane prefHeight="185.0" prefWidth="800.0">
                                 <children>
-                                    <Button fx:id="buttonNovo" layoutX="448.0" layoutY="251.0" mnemonicParsing="false"
-                                            text="Nova"/>
-                                    <Button fx:id="buttonGardar" layoutX="572.0" layoutY="251.0" mnemonicParsing="false"
-                                            text="Gardar"/>
-                                    <Button fx:id="buttonEliminar" layoutX="681.0" layoutY="250.0"
-                                            mnemonicParsing="false" text="Eliminar"/>
-                                    <TableView fx:id="taboaElementos" layoutX="14.0" layoutY="34.0" prefHeight="243.0"
-                                               prefWidth="389.0">
+                                    <Button fx:id="buttonNovo" layoutX="448.0" layoutY="251.0" mnemonicParsing="false" text="Nova" />
+                                    <Button fx:id="buttonGardar" layoutX="572.0" layoutY="251.0" mnemonicParsing="false" text="Gardar" />
+                                    <Button fx:id="buttonEliminar" layoutX="681.0" layoutY="250.0" mnemonicParsing="false" text="Eliminar" />
+                                    <TableView fx:id="taboaElementos" layoutX="14.0" layoutY="34.0" prefHeight="243.0" prefWidth="389.0">
                                         <columnResizePolicy>
-                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                         </columnResizePolicy>
                                     </TableView>
-                                    <TextArea fx:id="textDescripIncidencia" layoutX="433.0" layoutY="113.0"
-                                              prefHeight="122.0" prefWidth="331.0" wrapText="true"/>
-                                    <TextField fx:id="textAsuntoIncidencia" layoutX="433.0" layoutY="54.0"
-                                               prefHeight="26.0" prefWidth="330.0"/>
-                                    <Label layoutX="445.0" layoutY="95.0" text="Descripcion :"/>
-                                    <Label layoutX="442.0" layoutY="34.0" text="Asunto :"/>
-                                    <Label fx:id="labelTaboaElementos" layoutX="14.0" layoutY="14.0" text="Label"/>
+                                    <TextArea fx:id="textDescripIncidencia" layoutX="433.0" layoutY="113.0" prefHeight="122.0" prefWidth="331.0" wrapText="true" />
+                                    <TextField fx:id="textAsuntoIncidencia" layoutX="433.0" layoutY="54.0" prefHeight="26.0" prefWidth="330.0" />
+                                    <Label layoutX="445.0" layoutY="95.0" text="Descripcion :" />
+                                    <Label layoutX="442.0" layoutY="34.0" text="Asunto :" />
+                                    <Label fx:id="labelTaboaElementos" layoutX="14.0" layoutY="14.0" text="Label" />
                                 </children>
                             </AnchorPane>
                         </children>

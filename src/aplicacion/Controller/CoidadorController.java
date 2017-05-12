@@ -24,12 +24,13 @@ public class CoidadorController implements Initializable {
     ObservableList<Animal> animales = FXCollections.observableArrayList();
     // Lista de incidencias
     ObservableList<Aviso> incidencias = FXCollections.observableArrayList();
-    // Lista de incidencias
+    // Lista de calquera cousa
     ObservableList elementos = FXCollections.observableArrayList();
     @FXML
     private Button sesionButton;
     @FXML
     private Button sairButton;
+    /***************** PESTANHA ANIMAIS ***************************************/
     @FXML
     private Button buscarButton;
     @FXML
@@ -39,11 +40,23 @@ public class CoidadorController implements Initializable {
     @FXML
     private Pane panelAnimaisTabla;
     @FXML
+    private CheckBox radioMeus;
+    @FXML
+    private TextField calcularTextField;
+    @FXML
     private TableView tabla;
     private TableColumn<Animal, Integer> first = new TableColumn<>("ID");
     private TableColumn<Animal, String> second = new TableColumn<>("Nombre");
     private TableColumn<Animal, String> third = new TableColumn<>("Especie");
-    private TableColumn<Animal, Integer> fourth = new TableColumn<>("Edad");
+    private TableColumn<Animal, Integer> fourth = new TableColumn<>("Area");
+    private TableColumn<Animal, Integer> five = new TableColumn<>("Xaula");
+    @FXML
+    private TableView tablaDatos;
+    private TableColumn<Comida, String> tipo = new TableColumn<>("Tipo comida");
+    private TableColumn<Comida, Integer> cantidade = new TableColumn<>("Ración diaria");
+    private TableColumn<Comida, String> unidade = new TableColumn<>("Unidade");
+    private TableColumn<Comida, Integer> stock = new TableColumn<>("Stock restante");
+    /**************** PESTANHA INCIDENCIAS ************************************/
     // Taboa superior(grande) da pestanha Incidencias
     @FXML
     private TableView tablaIncidencias;
@@ -96,6 +109,15 @@ public class CoidadorController implements Initializable {
         elemDousXaula.setCellValueFactory(cellData -> cellData.getValue().getIdAreaProperty().asObject());
         elemUnArea.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         elemDousArea.setCellValueFactory(cellData -> cellData.getValue().climatizacionProperty());
+        // Inicializamos a taboa da informacion de comidas dos animais(pestanha animais)
+        tipo.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        cantidade.setCellValueFactory(cellData -> cellData.getValue().getRacionAnimal().asObject());
+        unidade.setCellValueFactory(cellData -> cellData.getValue().udsProperty());
+        stock.setCellValueFactory(cellData -> cellData.getValue().stockProperty().asObject());
+        tablaDatos.getColumns().add(tipo);
+        tablaDatos.getColumns().add(cantidade);
+        tablaDatos.getColumns().add(unidade);
+        tablaDatos.getColumns().add(stock);
         // Pestanha pechar sesion
         sesionButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -118,17 +140,43 @@ public class CoidadorController implements Initializable {
                     tabla = (FXMLLoader.load(getClass().getResource("/gui/FXML/TaboaAnimais.fxml")));
                     panelAnimaisTabla.getChildren().add(tabla);
                     String animal = buscarTextField.getText();
-                    animales = fa.buscarAnimal(animal);
+                    if (radioMeus.isSelected()) {
+                        animales = fa.buscarAnimaisCoidador();
+                    } else {
+                        animales = fa.buscarAnimal(animal);
+                    }
                     tabla.setItems(animales);
                     first.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
                     second.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
                     third.setCellValueFactory(cellData -> cellData.getValue().especieProperty());
+                    fourth.setCellValueFactory(cellData -> cellData.getValue().areaProperty().asObject());
+                    five.setCellValueFactory(cellData -> cellData.getValue().xaulaProperty().asObject());
                     tabla.getColumns().add(first);
                     tabla.getColumns().add(second);
                     tabla.getColumns().add(third);
-                    tabla.getSelectionModel().select(0);
+                    tabla.getColumns().add(fourth);
+                    tabla.getColumns().add(five);
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+            }
+        });
+        // Executa o manexador de dito boton(Pestanha animais)
+        buscarButton.fire();
+        // Pestanha Animais
+        tabla.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // Se consigo obter a taboa
+                if (tabla.getSelectionModel().getSelectedItem() != null) {
+                    // Obtenho o aviso pulsado
+                    Animal animal = (Animal) tabla.getSelectionModel().getSelectedItem();
+                    // Borro datos antigos de habelos
+                    elementos.removeAll();
+                    // Obtenho as comidas que pode comer ese animal
+                    elementos = fa.buscarComidasAnimal(animal);
+                    // Inserto os datos
+                    tablaDatos.setItems(elementos);
                 }
             }
         });
@@ -138,6 +186,25 @@ public class CoidadorController implements Initializable {
             public void handle(KeyEvent event) {
                 if (event.getCode().equals(KeyCode.ENTER)) {
                     buscarButton.fire();
+                }
+            }
+        });
+        // Pestanha animais
+        calcularTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    // Se consigo obter a taboa
+                    if (tablaDatos.getSelectionModel().getSelectedItem() != null) {
+                        // Obtenho a comida pulsada
+                        Comida comida = (Comida) tablaDatos.getSelectionModel().getSelectedItem();
+                        // Faco o calculo
+                        int calc = Integer.parseInt(calcularTextField.getText()) * comida.getRacionAnimal().intValue();
+                        // Mostro resultado
+                        fa.muestraMensaje("Resultado", "Necesitaría " + calc + " unidades de comida para cubrir a demanda dese animal en " + Integer.parseInt(calcularTextField.getText()) + " días");
+                    } else {
+                        fa.muestraExcepcion("Debe seleccionar unha comida na táboa superior");
+                    }
                 }
             }
         });
@@ -260,8 +327,6 @@ public class CoidadorController implements Initializable {
                 textDescripIncidencia.setText("");
             }
         });
-        // Executa o manexador de dito boton(Pestanha animais)
-        buscarButton.fire();
         // Obtemos o radioButton que se ven pulsado por defecto
         selectedRadioButton = (RadioButton) grupoRadioButtons.getSelectedToggle();
         // Na primeira execucion recheo a taboa coas incidencias pertinentes

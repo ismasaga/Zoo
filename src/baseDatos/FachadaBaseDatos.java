@@ -72,6 +72,10 @@ public class FachadaBaseDatos {
     public ObservableList buscarAnimaisCoidador() {
         return daoAnimales.buscarAnimaisCoidador();
     }
+    
+    public ObservableList buscarComidasAnimal(Animal animal) {
+        return daoAnimales.buscarComidasAnimal(animal);
+    }
 
     public ObservableList buscarXaulasAnimaisCoidador() {
         return daoAnimales.buscarXaulasAnimaisCoidador();

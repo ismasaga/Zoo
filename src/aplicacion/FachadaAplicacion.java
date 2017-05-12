@@ -45,6 +45,10 @@ public class FachadaAplicacion extends Application {
     public void muestraExcepcion(String e) {
         fgui.muestraExcepcion(e);
     }
+    
+    public void muestraMensaje(String titulo, String mensaje) {
+        fgui.muestraMensaje(titulo, mensaje);
+    }
 
     public Usuario comprobarAutentificacion(String dni, String pass) {
         return xu.comprobarAutentificacion(dni, pass);
@@ -64,6 +68,10 @@ public class FachadaAplicacion extends Application {
 
     public ObservableList buscarAnimaisCoidador() {
         return fbd.buscarAnimaisCoidador();
+    }
+    
+    public ObservableList buscarComidasAnimal(Animal animal) {
+        return fbd.buscarComidasAnimal(animal);
     }
 
     public ObservableList buscarXaulasAnimaisCoidador() {

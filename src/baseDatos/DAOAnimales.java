@@ -2,6 +2,7 @@ package baseDatos;
 
 import aplicacion.Animal;
 import aplicacion.Area;
+import aplicacion.Comida;
 import aplicacion.Xaula;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -82,6 +83,32 @@ public class DAOAnimales extends DAOAbstracto {
             }
         }
         return animales;
+    }
+    
+    // Devolve os animais do coidador actual
+    public ObservableList buscarComidasAnimal(Animal animal) {
+        ObservableList comidas = FXCollections.observableArrayList();
+        Connection con;
+        PreparedStatement stmComidas = null;
+        ResultSet rsComidas;
+        con = this.getConexion();
+        try {
+            stmComidas = con.prepareStatement("select c.nome, comer.cantidadeRacion, c.unidades, c.stock from comer inner join comidas as c on (c.id = comer.comida) and (comer.animal = ?);");
+            stmComidas.setInt(1, animal.getId());
+            rsComidas = stmComidas.executeQuery();
+            while (rsComidas.next()) {
+                comidas.add(new Comida(0,rsComidas.getString("nome"),rsComidas.getInt("cantidadeRacion"),rsComidas.getString("unidades"),rsComidas.getInt("stock")));
+            }
+        } catch (SQLException e) {
+            fa.muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stmComidas.close();
+            } catch (SQLException e) {
+                fa.muestraExcepcion("Imposible cerrar cursores");
+            }
+        }
+        return comidas;
     }
 
     // Devolve as xaulas dos animais do coidador actual
