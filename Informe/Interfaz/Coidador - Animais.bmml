@@ -1,0 +1,81 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1224" measuredH="687" mockupW="829" mockupH="648">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="395" y="39" w="829" h="648" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <close>true</close>
+        <dragger>true</dragger>
+        <maximizeRestore>true</maximizeRestore>
+        <minimize>true</minimize>
+        <text>Coidador</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::TabBar" x="395" y="65" w="829" h="601" measuredW="424" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>none</borderStyle>
+        <selectedIndex>1</selectedIndex>
+        <size>16</size>
+        <text>Estat%EDsticas%2C%20Animais%2C%20Incidencias%2C%20Pechar%20sesi%F3n</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::DataGrid" x="416" y="175" w="428" h="468" measuredW="180" measuredH="110" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hasHeader>true</hasHeader>
+        <rowHeight>16</rowHeight>
+        <selectedIndex>0</selectedIndex>
+        <size>18</size>
+        <text>Id%2C%20Nome%2C%20Especie%0A1%2C%20Simba%2C%20Le%F3n%0A2%2C%20Baloo%2C%20Oso%0A3%2C%20Tim%F3n%2C%20Suricato%0A4%2C%20Pumba%2C%20Jabal%ED</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::TextInput" x="597" y="120" w="203" h="-1" measuredW="79" measuredH="26" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Button" x="800" y="120" w="95" h="26" measuredW="81" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <state>up</state>
+        <text>Buscar</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Button" x="910" y="120" w="112" h="26" measuredW="101" measuredH="27" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <state>up</state>
+        <text>Ver%20todos</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::CheckBox" x="910" y="184" w="-1" h="-1" measuredW="218" measuredH="25" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <state>selected</state>
+        <text>Visualizar%20s%F3%20animais%20meus</text>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::DataGrid" x="859" y="231" w="350" h="299" measuredW="279" measuredH="47" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hasHeader>true</hasHeader>
+        <rowHeight>16</rowHeight>
+        <size>18</size>
+        <text>Comida%2C%20Raci%F3n%2C%20Unidades%0ACarne%20de%20res%2C%201%2C%20kilos</text>
+      </controlProperties>
+    </control>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::Label" x="878" y="545" w="-1" h="-1" measuredW="313" measuredH="24" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>Hai%20existencias%20de%20comida%20suficientes%20para</text>
+      </controlProperties>
+    </control>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::TextInput" x="976" y="569" w="-1" h="-1" measuredW="79" measuredH="26" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Label" x="1061" y="570" w="-1" h="-1" measuredW="32" measuredH="24" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>d%EDas.</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

@@ -9,7 +9,7 @@
         <text>Contable</text>
       </controlProperties>
     </control>
-    <control controlID="1" controlTypeID="com.balsamiq.mockups::TabBar" x="395" y="65" w="829" h="601" measuredW="553" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::TabBar" x="395" y="65" w="829" h="601" measuredW="556" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
         <borderStyle>none</borderStyle>
         <selectedIndex>1</selectedIndex>
@@ -154,16 +154,23 @@
         <text>Macho</text>
       </controlProperties>
     </control>
-    <control controlID="30" controlTypeID="com.balsamiq.mockups::Label" x="895" y="472" w="-1" h="-1" measuredW="78" measuredH="26" zOrder="24" locked="false" isInGroup="-1">
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Label" x="895" y="500" w="-1" h="-1" measuredW="78" measuredH="26" zOrder="24" locked="false" isInGroup="-1">
       <controlProperties>
         <size>18</size>
         <text>Coidador%3A</text>
       </controlProperties>
     </control>
-    <control controlID="31" controlTypeID="com.balsamiq.mockups::ComboBox" x="895" y="501" w="115" h="-1" measuredW="114" measuredH="27" zOrder="25" locked="false" isInGroup="-1">
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::ComboBox" x="895" y="529" w="115" h="-1" measuredW="114" measuredH="27" zOrder="25" locked="false" isInGroup="-1">
       <controlProperties>
         <size>16</size>
         <text>12345678B</text>
+      </controlProperties>
+    </control>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::HRule" x="895" y="475" w="284" h="-1" measuredW="100" measuredH="10" zOrder="26" locked="false" isInGroup="-1"/>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Paragraph" x="1030" y="523" w="155" h="39" measuredW="200" measuredH="80" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>Este%20coidador%20coida%205%20animais.</text>
       </controlProperties>
     </control>
   </controls>
